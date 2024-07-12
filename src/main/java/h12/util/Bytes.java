@@ -8,16 +8,16 @@ public class Bytes {
     private Bytes() {
     }
 
-    public static int getBit(byte value, int position) {
-        if (position < 0 || position > 7) {
-            throw new IllegalArgumentException("Byte contains only 8 bits: %d".formatted(position));
+    public static int getBit(int value, int position) {
+        if (position < 0) {
+            throw new IllegalArgumentException("Position must be non-negative: %d".formatted(position));
         }
         return (value >> position) & 1;
     }
 
-    public static byte setBit(byte value, int position, int bit) {
-        if (position < 0 || position > 7) {
-            throw new IllegalArgumentException("Byte contains only 8 bits: %d".formatted(position));
+    public static int setBit(int value, int position, int bit) {
+        if (position < 0) {
+            throw new IllegalArgumentException("Position must be non-negative: %d".formatted(position));
         }
         if (bit != 0 && bit != 1) {
             throw new IllegalArgumentException("Bit must be 0 or 1: %d".formatted(bit));

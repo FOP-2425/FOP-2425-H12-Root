@@ -1,46 +1,77 @@
 package h12.io;
 
 import h12.util.Bytes;
+import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 public class BitOutputstream extends OutputStream {
 
-    private final ByteArrayOutputStream stream;
+    private static final int MAX_POSITION = 7;
 
-    private byte buffer;
-    private int position = 7;
+    private static final int MIN_POSITION = 0;
 
-    public BitOutputstream(ByteArrayOutputStream stream) {
-        this.stream = stream;
+    private static final int INVALID = -1;
+
+    private static final int DEFAULT_BUFFER = 0;
+
+    private final OutputStream delegate;
+
+    private byte buffer = DEFAULT_BUFFER;
+
+    private int position = MAX_POSITION;
+
+    public BitOutputstream(OutputStream delegate) {
+        this.delegate = delegate;
+    }
+
+    private void resetBuffer() {
+        buffer = DEFAULT_BUFFER;
+        position = MAX_POSITION;
     }
 
     @StudentImplementationRequired("H2.2")
-    @Override
-    public void write(int b) {
-        buffer = Bytes.setBit(buffer, position--, b);
-        if (position < 0) {
-            stream.write(buffer);
-            buffer = 0;
-            position = 7;
+    public void writeBit(int bit) throws IOException {
+        buffer = (byte) Bytes.setBit(buffer, position--, bit);
+        if (position < MIN_POSITION) {
+            delegate.write(buffer);
+            resetBuffer();
         }
     }
 
     @StudentImplementationRequired("H2.2")
     @Override
-    public void flush() {
-        if (position >= 0) {
-            stream.write(buffer);
+    public void write(int b) throws IOException {
+        if (position != MAX_POSITION) {
+            delegate.write(buffer);
         }
-        buffer = 0;
-        position = 7;
+        resetBuffer();
+        delegate.write(b);
+    }
+
+    @StudentImplementationRequired("H2.2")
+    @Override
+    public void write(byte @NotNull [] b, int off, int len) throws IOException {
+        if (position != MAX_POSITION) {
+            delegate.write(b, off, len);
+        }
+        resetBuffer();
+        delegate.write(b, off, len);
+    }
+
+    @StudentImplementationRequired("H2.2")
+    @Override
+    public void flush() throws IOException {
+        if (position >= MIN_POSITION) {
+            delegate.write(buffer);
+        }
+        resetBuffer();
     }
 
     @Override
     public void close() throws IOException {
-        stream.close();
+        delegate.close();
     }
 }
