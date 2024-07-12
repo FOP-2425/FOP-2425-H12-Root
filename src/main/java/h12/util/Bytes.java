@@ -2,8 +2,12 @@ package h12.util;
 
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
+import java.nio.ByteBuffer;
+
 @DoNotTouch
 public class Bytes {
+
+    private static final ByteBuffer buffer = ByteBuffer.allocate(4);
 
     private Bytes() {
     }
@@ -23,5 +27,9 @@ public class Bytes {
             throw new IllegalArgumentException("Bit must be 0 or 1: %d".formatted(bit));
         }
         return (byte) (bit == 1 ? value | (1 << position) : value & ~(1 << position));
+    }
+
+    public static byte[] toBytes(int value) {
+        return buffer.putInt(value).array();
     }
 }
