@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.algomate)
+    alias(libs.plugins.style)
 }
 
 val id = "h12"
