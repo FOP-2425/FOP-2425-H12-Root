@@ -5,13 +5,32 @@ import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Map;
 
 public class HuffmanCodingEncoder implements Encoder {
+
+    public static void main(String[] args) {
+        String text = "abc";
+        ByteArrayInputStream in = new ByteArrayInputStream(text.getBytes());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            new HuffmanCodingEncoder().encode(in, out);
+            System.out.println(out);
+            in = new ByteArrayInputStream(out.toByteArray());
+            out = new ByteArrayOutputStream();
+            new HuffmanCodingDecoder().decode(in, out);
+            System.out.println(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @StudentImplementationRequired("H5.1")
     @Override
@@ -29,17 +48,24 @@ public class HuffmanCodingEncoder implements Encoder {
         TreeNode<Character> root = huffman.buildTree(encodingTable);
         Map<Character, String> encoded = huffman.buildEncodingTable(root);
 
-        writeHeader(bOut, encoded);
-        decodeContent(bOut, text, encoded);
+        encodeTree(root, bOut);
+        encodeContent(bOut, text, encoded);
     }
 
     @StudentImplementationRequired("H5.2")
-    void writeHeader(BitOutputstream out, Map<Character, String> encodingTable) throws IOException {
-        // TODO: We need to figure out how to write the encoding table to the output stream
+    void encodeTree(TreeNode<Character> node, BitOutputstream out) throws IOException {
+        if (node.isLeaf()) {
+            out.writeBit(1);
+            out.write(node.getValue());
+        } else {
+            out.writeBit(0);
+            encodeTree(node.getLeft(), out);
+            encodeTree(node.getRight(), out);
+        }
     }
 
     @StudentImplementationRequired("H5.3")
-    void decodeContent(BitOutputstream out, String text, Map<Character, String> encoded) throws IOException {
+    void encodeContent(BitOutputstream out, String text, Map<Character, String> encoded) throws IOException {
         for (char c : text.toCharArray()) {
             for (char bit : encoded.get(c).toCharArray()) {
                 out.writeBit(bit == '1' ? 1 : 0);
