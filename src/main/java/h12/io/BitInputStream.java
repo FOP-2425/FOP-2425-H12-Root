@@ -47,17 +47,31 @@ public class BitInputStream extends InputStream {
     @StudentImplementationRequired("H2.1")
     @Override
     public int read() throws IOException {
-        if (position != MAX_POSITION) {
-            fetchNextByte();
+        int value = 0;
+        for (int i = MAX_POSITION; i >= MIN_POSITION; i--) {
+            int bit = readBit();
+            if (bit == INVALID) {
+                return value;
+            }
+            value = Bytes.setBit(value, i, bit);
         }
-        position = INVALID;
-        return buffer;
+        return value;
     }
 
     @Override
     public int read(byte @NotNull [] b, int off, int len) throws IOException {
-        position = INVALID;
-        return delegate.read(b, off, len);
+        int read = 0;
+        for (int i = 0; i < len; i++) {
+            int value = read();
+            if (value == INVALID && i == 0) {
+                return -1;
+            } else if (value == INVALID) {
+                return read;
+            }
+            b[off + i] = (byte) value;
+            read++;
+        }
+        return read;
     }
 
     @Override

@@ -44,21 +44,16 @@ public class BitOutputstream extends OutputStream {
     @StudentImplementationRequired("H2.2")
     @Override
     public void write(int b) throws IOException {
-        if (position != MAX_POSITION) {
-            delegate.write(buffer);
+        for (int i = MAX_POSITION; i >= MIN_POSITION; i--) {
+            writeBit(Bytes.getBit(b, i));
         }
-        resetBuffer();
-        delegate.write(b);
     }
 
-    @StudentImplementationRequired("H2.2")
     @Override
     public void write(byte @NotNull [] b, int off, int len) throws IOException {
-        if (position != MAX_POSITION) {
-            delegate.write(b, off, len);
+        for (int i = off; i < off + len; i++) {
+            write(b[i]);
         }
-        resetBuffer();
-        delegate.write(b, off, len);
     }
 
     @StudentImplementationRequired("H2.2")
