@@ -15,6 +15,7 @@ public class HuffmanCodingDecompressor implements Decompressor {
         BitInputStream bIn = new BitInputStream(in);
         TreeNode<Character> root = decodeTree(bIn);
         decodeContent(bIn, out, root);
+        out.flush();
     }
 
     @StudentImplementationRequired("H6.1")

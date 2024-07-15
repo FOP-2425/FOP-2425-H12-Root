@@ -76,4 +76,20 @@ public class Bytes {
     public static byte[] toBytes(int value) {
         return buffer.putInt(value).array();
     }
+
+    /**
+     * Converts a byte array to a string of bits.
+     *
+     * @param bytes the byte array to convert
+     * @return the string of bits
+     */
+    public static String toBits(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            for (int i = MAX_POSITION; i >= MIN_POSITION; i--) {
+                sb.append(getBit(b, i));
+            }
+        }
+        return sb.toString();
+    }
 }

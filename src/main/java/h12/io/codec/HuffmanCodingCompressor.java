@@ -5,8 +5,6 @@ import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,6 +31,7 @@ public class HuffmanCodingCompressor implements Compressor {
 
         encodeTree(root, bOut);
         encodeContent(bOut, text, encoded);
+        bOut.flush();
     }
 
     @StudentImplementationRequired("H5.2")
