@@ -15,22 +15,6 @@ import java.util.Map;
 
 public class HuffmanCodingCompressor implements Compressor {
 
-    public static void main(String[] args) {
-        String text = "abc";
-        ByteArrayInputStream in = new ByteArrayInputStream(text.getBytes());
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try {
-            new HuffmanCodingCompressor().compress(in, out);
-            System.out.println(out);
-            in = new ByteArrayInputStream(out.toByteArray());
-            out = new ByteArrayOutputStream();
-            new HuffmanCodingDecompressor().decompress(in, out);
-            System.out.println(out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @StudentImplementationRequired("H5.1")
     @Override
     public void compress(InputStream in, OutputStream out) throws IOException {
