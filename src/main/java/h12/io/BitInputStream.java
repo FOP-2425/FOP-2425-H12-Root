@@ -67,6 +67,7 @@ public class BitInputStream extends InputStream {
      */
     @StudentImplementationRequired("H2.1")
     public int readBit() throws IOException {
+        // TODO H2.1
         // If we already read all bits from the buffer, fetch the next byte.
         if (position < Bytes.MIN_POSITION) {
             fetchNextByte();
@@ -90,6 +91,7 @@ public class BitInputStream extends InputStream {
     @StudentImplementationRequired("H2.1")
     @Override
     public int read() throws IOException {
+        // TODO H2.1
         int value = 0;
 
         // Loop needs to start from the most significant bit.

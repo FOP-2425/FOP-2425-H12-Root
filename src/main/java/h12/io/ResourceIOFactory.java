@@ -10,6 +10,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * A resource-based implementation of the {@link IOFactory} interface which allows creating readers for files on the
+ * classpath.
+ *
+ * <p>For this implementation, the {@link #supportsReader()} method should always return {@code true} and the
+ * {@link #supportsWriter()} method should always return {@code false}.
+ *
+ * @author Nhan Huynh, Per Goettlicher
+ */
 @DoNotTouch
 public class ResourceIOFactory implements IOFactory {
 
@@ -19,10 +28,10 @@ public class ResourceIOFactory implements IOFactory {
     }
 
     @Override
-    public BufferedReader createReader(String ioName) throws FileNotFoundException {
-        InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(ioName);
+    public BufferedReader createReader(String path) throws IOException {
+        InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(path);
         if (resourceStream == null) {
-            throw new FileNotFoundException("Resource does not exist: %s".formatted(ioName));
+            throw new FileNotFoundException("Resource does not exist: %s".formatted(path));
         }
         return new BufferedReader(new InputStreamReader(resourceStream, StandardCharsets.UTF_8));
     }
@@ -33,7 +42,7 @@ public class ResourceIOFactory implements IOFactory {
     }
 
     @Override
-    public BufferedWriter createWriter(String ioName) throws IOException {
-        throw new UnsupportedOperationException("Cannot write to resource directory");
+    public BufferedWriter createWriter(String path) throws IOException {
+        throw new IOException("Cannot write to resource directory");
     }
 }

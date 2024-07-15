@@ -67,6 +67,7 @@ public class BitOutputstream extends OutputStream {
      */
     @StudentImplementationRequired("H2.2")
     public void writeBit(int bit) throws IOException {
+        // TODO H2.2
         if (bit != 0 && bit != 1) {
             throw new IllegalArgumentException("Bit must be 0 or 1: %d".formatted(bit));
         }
@@ -89,6 +90,7 @@ public class BitOutputstream extends OutputStream {
     @StudentImplementationRequired("H2.2")
     @Override
     public void write(int b) throws IOException {
+        // TODO H2.2
         if (b < 0 || b > 255) {
             throw new IllegalArgumentException("Byte must be in the range of 0 to 255: %d".formatted(b));
         }
@@ -121,6 +123,7 @@ public class BitOutputstream extends OutputStream {
     @StudentImplementationRequired("H2.2")
     @Override
     public void flush() throws IOException {
+        // TODO H2.2
         if (position >= Bytes.MIN_POSITION) {
             underlying.write(buffer);
         }

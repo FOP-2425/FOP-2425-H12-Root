@@ -9,6 +9,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * A filesystem-based implementation of the {@link IOFactory} interface which allows creating readers and writers for files
+ * on the filesystem.
+ *
+ * <p>For this implementation, the {@link #supportsReader()} and {@link #supportsWriter()} methods should always return {@code true}.
+ *
+ * @author Nhan Huynh, Per Goettlicher
+ */
 public class FileSystemIOFactory implements IOFactory {
 
     @StudentImplementationRequired("H1")
@@ -20,9 +28,9 @@ public class FileSystemIOFactory implements IOFactory {
 
     @StudentImplementationRequired("H1")
     @Override
-    public BufferedReader createReader(String ioName) throws FileNotFoundException {
+    public BufferedReader createReader(String path) throws FileNotFoundException {
         // TODO H1
-        return new BufferedReader(new FileReader(ioName));
+        return new BufferedReader(new FileReader(path));
     }
 
     @StudentImplementationRequired("H1")
@@ -34,8 +42,8 @@ public class FileSystemIOFactory implements IOFactory {
 
     @StudentImplementationRequired("H1")
     @Override
-    public BufferedWriter createWriter(String ioName) throws IOException {
+    public BufferedWriter createWriter(String path) throws IOException {
         // TODO H1
-        return new BufferedWriter(new FileWriter(ioName));
+        return new BufferedWriter(new FileWriter(path));
     }
 }
