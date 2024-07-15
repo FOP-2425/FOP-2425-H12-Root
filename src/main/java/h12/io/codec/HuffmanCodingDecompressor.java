@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class HuffmanCodingDecoder implements Decoder {
+public class HuffmanCodingDecompressor implements Decompressor {
 
     @Override
-    public void decode(InputStream in, OutputStream out) throws IOException {
+    public void decompress(InputStream in, OutputStream out) throws IOException {
         BitInputStream bIn = new BitInputStream(in);
         TreeNode<Character> root = decodeTree(bIn);
         decodeContent(bIn, out, root);

@@ -10,11 +10,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 
-public class BitRunningLengthEncoder implements Encoder {
+public class BitRunningLengthCompressor implements Compressor {
 
     @StudentImplementationRequired("H3.1")
     @Override
-    public void encode(InputStream in, OutputStream out) throws IOException {
+    public void compress(InputStream in, OutputStream out) throws IOException {
         BitInputStream bis = new BitInputStream(in);
         BitOutputstream bos = new BitOutputstream(out);
 

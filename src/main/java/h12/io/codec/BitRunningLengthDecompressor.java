@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class BitRunningLengthDecoder implements Decoder {
+public class BitRunningLengthDecompressor implements Decompressor {
 
     @StudentImplementationRequired("H3.2")
     @Override
-    public void decode(InputStream in, OutputStream out) throws IOException {
+    public void decompress(InputStream in, OutputStream out) throws IOException {
         BitInputStream bis = new BitInputStream(in);
         BitOutputstream bout = new BitOutputstream(out);
 

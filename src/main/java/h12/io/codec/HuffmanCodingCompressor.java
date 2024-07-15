@@ -11,21 +11,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.Map;
 
-public class HuffmanCodingEncoder implements Encoder {
+public class HuffmanCodingCompressor implements Compressor {
 
     public static void main(String[] args) {
         String text = "abc";
         ByteArrayInputStream in = new ByteArrayInputStream(text.getBytes());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-            new HuffmanCodingEncoder().encode(in, out);
+            new HuffmanCodingCompressor().compress(in, out);
             System.out.println(out);
             in = new ByteArrayInputStream(out.toByteArray());
             out = new ByteArrayOutputStream();
-            new HuffmanCodingDecoder().decode(in, out);
+            new HuffmanCodingDecompressor().decompress(in, out);
             System.out.println(out);
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,7 +33,7 @@ public class HuffmanCodingEncoder implements Encoder {
 
     @StudentImplementationRequired("H5.1")
     @Override
-    public void encode(InputStream in, OutputStream out) throws IOException {
+    public void compress(InputStream in, OutputStream out) throws IOException {
         HuffmanCoding huffman = new HuffmanCoding();
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         BitOutputstream bOut = new BitOutputstream(out);
