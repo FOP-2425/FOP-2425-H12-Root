@@ -12,13 +12,5 @@ import java.io.OutputStream;
  */
 public interface Decompressor {
 
-    /**
-     * Decompresses the given input stream into the output stream. The decompressed data is written to the output
-     * stream.
-     *
-     * @param in  the input stream to decompress
-     * @param out the output stream to write the decompressed data to
-     * @throws IOException if an I/O error occurs
-     */
-    void decompress(InputStream in, OutputStream out) throws IOException;
+    void decompress() throws IOException;
 }

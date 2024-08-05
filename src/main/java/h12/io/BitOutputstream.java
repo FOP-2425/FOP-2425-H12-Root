@@ -6,6 +6,7 @@ import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A BitOutputStream allows writing individual bits from an underlying OutputStream.
@@ -27,7 +28,7 @@ public class BitOutputstream extends OutputStream {
     /**
      * The underlying OutputStream to write bytes to.
      */
-    private final OutputStream underlying;
+    final OutputStream underlying;
 
     /**
      * The current byte to write bits to.
@@ -35,11 +36,9 @@ public class BitOutputstream extends OutputStream {
     private int buffer = DEFAULT_BUFFER;
 
     /**
-     * The current position in the buffer to write the next bit to. The value is always in the range of
-     * {@value Bytes#MIN_POSITION} and {@value Bytes#MAX_POSITION} or {@value  #INVALID} if the buffer is full.
-     * Attention: We always start at the highest bit (from left to right).
+     * The position of the next bit to write to the buffer.
      */
-    private int position = Bytes.MAX_POSITION;
+    private int position = Bytes.NUMBER_OF_BITS - 1;
 
     /**
      * Creates a BitOutputStream that writes bits to the given underlying OutputStream.
@@ -55,7 +54,7 @@ public class BitOutputstream extends OutputStream {
      */
     private void resetBuffer() {
         buffer = DEFAULT_BUFFER;
-        position = Bytes.MAX_POSITION;
+        position = Bytes.NUMBER_OF_BITS - 1;
     }
 
     /**
@@ -74,7 +73,7 @@ public class BitOutputstream extends OutputStream {
         buffer = Bytes.setBit(buffer, position--, bit);
 
         // if the buffer is full, write it to the underlying OutputStream and reset the buffer
-        if (position < Bytes.MIN_POSITION) {
+        if (position < 0) {
             underlying.write(buffer);
             resetBuffer();
         }
@@ -95,7 +94,7 @@ public class BitOutputstream extends OutputStream {
             throw new IllegalArgumentException("Byte must be in the range of 0 to 255: %d".formatted(b));
         }
         // Always start at the highest bit (from left to right)
-        for (int i = Bytes.MAX_POSITION; i >= Bytes.MIN_POSITION; i--) {
+        for (int i = Bytes.NUMBER_OF_BITS - 1; i >= 0; i--) {
             writeBit(Bytes.getBit(b, i));
         }
     }
@@ -116,6 +115,16 @@ public class BitOutputstream extends OutputStream {
     }
 
     /**
+     * Writes the specified string to this output stream.
+     *
+     * @param s the string to write
+     * @throws IOException if an I/O error occurs
+     */
+    public void writeString(String s) throws IOException {
+        write(s.getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
      * Flushes this output stream and forces any buffered output bits to be written out.
      *
      * @throws IOException if an I/O error occurs.
@@ -124,7 +133,7 @@ public class BitOutputstream extends OutputStream {
     @Override
     public void flush() throws IOException {
         // TODO H2.2
-        if (position >= Bytes.MIN_POSITION) {
+        if (position >= 0) {
             underlying.write(buffer);
         }
         resetBuffer();

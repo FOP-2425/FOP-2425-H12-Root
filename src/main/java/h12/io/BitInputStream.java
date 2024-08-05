@@ -32,9 +32,7 @@ public class BitInputStream extends InputStream {
     private int buffer;
 
     /**
-     * The current position in the buffer to read the next bit from. The value is always in the range of
-     * {@value Bytes#MIN_POSITION} and {@value Bytes#MAX_POSITION} or {@value  #INVALID} if the buffer is empty.
-     * Attention: We always start at the highest bit (from left to right).
+     * The position of the next bit to read from the buffer.
      */
     private int position = INVALID;
 
@@ -56,7 +54,7 @@ public class BitInputStream extends InputStream {
     @SolutionOnly
     private void fetchNextByte() throws IOException {
         buffer = underlying.read();
-        position = Bytes.MAX_POSITION;
+        position = Bytes.NUMBER_OF_BITS - 1;
     }
 
     /**
@@ -69,7 +67,7 @@ public class BitInputStream extends InputStream {
     public int readBit() throws IOException {
         // TODO H2.1
         // If we already read all bits from the buffer, fetch the next byte.
-        if (position < Bytes.MIN_POSITION) {
+        if (position < 0) {
             fetchNextByte();
         }
 
@@ -95,10 +93,10 @@ public class BitInputStream extends InputStream {
         int value = 0;
 
         // Loop needs to start from the most significant bit.
-        for (int i = Bytes.MAX_POSITION; i >= Bytes.MIN_POSITION; i--) {
+        for (int i = Bytes.NUMBER_OF_BITS - 1; i >= 0; i--) {
             int bit = readBit();
             // In case we reached the end of the stream and the buffer is empty, return -1.
-            if (bit == INVALID && i == Bytes.MAX_POSITION) {
+            if (bit == INVALID && i == Bytes.NUMBER_OF_BITS - 1) {
                 return -1;
             }
             // In case we reached the end of the stream, return the value read so far.

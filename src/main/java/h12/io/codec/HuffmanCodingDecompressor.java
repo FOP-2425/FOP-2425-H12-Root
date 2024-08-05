@@ -1,6 +1,7 @@
 package h12.io.codec;
 
 import h12.io.BitInputStream;
+import h12.util.Bytes;
 import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
@@ -10,29 +11,49 @@ import java.io.OutputStream;
 
 public class HuffmanCodingDecompressor implements Decompressor {
 
+    private final BitInputStream in;
+
+    private final OutputStream out;
+
+    public HuffmanCodingDecompressor(InputStream in, OutputStream out) {
+        this.in = new BitInputStream(in);
+        this.out = out;
+    }
+
     @Override
-    public void decompress(InputStream in, OutputStream out) throws IOException {
-        BitInputStream bIn = new BitInputStream(in);
-        TreeNode<Character> root = decodeTree(bIn);
-        decodeContent(bIn, out, root);
+    public void decompress() throws IOException {
+        skip();
+        TreeNode<Character> root = decodeTree();
+        decodeContent(root);
         out.flush();
     }
 
     @StudentImplementationRequired("H6.1")
-    TreeNode<Character> decodeTree(BitInputStream in) throws IOException {
+    void skip() throws IOException {
+        int value = 0;
+        for (int i = Bytes.NUMBER_OF_BITS - 1; i >= 0; i--) {
+            value = Bytes.setBit(value, i, in.readBit());
+        }
+        for (int i = 0; i < value; i++) {
+            in.readBit();
+        }
+    }
+
+    @StudentImplementationRequired("H6.2")
+    TreeNode<Character> decodeTree() throws IOException {
         if (in.readBit() == 1) {
             return new TreeNode<>((char) in.read());
         }
-        TreeNode<Character> left = decodeTree(in);
-        TreeNode<Character> right = decodeTree(in);
+        TreeNode<Character> left = decodeTree();
+        TreeNode<Character> right = decodeTree();
         TreeNode<Character> parent = new TreeNode<>(left, right, null);
         left.setParent(parent);
         right.setParent(parent);
         return parent;
     }
 
-    @StudentImplementationRequired("H6.2")
-    void decodeContent(BitInputStream in, OutputStream out, TreeNode<Character> root) throws IOException {
+    @StudentImplementationRequired("H6.3")
+    void decodeContent(TreeNode<Character> root) throws IOException {
         int bit;
         while ((bit = in.readBit()) != -1) {
             TreeNode<Character> current = root;
@@ -46,6 +67,5 @@ public class HuffmanCodingDecompressor implements Decompressor {
             }
             out.write(current.getValue());
         }
-        out.flush();
     }
 }

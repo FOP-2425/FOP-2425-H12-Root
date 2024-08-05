@@ -27,16 +27,17 @@ public class Main {
     }
 
     private static void test() throws Exception {
-        String text = "abc";
+        String text = "ab";
         ByteArrayInputStream in = new ByteArrayInputStream(text.getBytes());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        HuffmanCodingCompressor compressor = new HuffmanCodingCompressor();
-        compressor.compress(in, out);
+        HuffmanCodingCompressor compressor = new HuffmanCodingCompressor(in, out);
+        compressor.compress();
+        // 00000001 0110001001011000011011000111001100000000
         System.out.println(Bytes.toBits(out.toByteArray()));
         in = new ByteArrayInputStream(out.toByteArray());
         out = new ByteArrayOutputStream();
-        HuffmanCodingDecompressor decompressor = new HuffmanCodingDecompressor();
-        decompressor.decompress(in, out);
-        System.out.println(out);
+        HuffmanCodingDecompressor decompressor = new HuffmanCodingDecompressor(in, out);
+        decompressor.decompress();
+        System.out.println(out.toString());
     }
 }

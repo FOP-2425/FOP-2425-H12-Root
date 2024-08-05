@@ -28,43 +28,54 @@ import java.util.Map;
  */
 public class BitRunningLengthCompressor implements Compressor {
 
+    private final BitInputStream in;
+    private final BitOutputstream out;
+
+    public BitRunningLengthCompressor(InputStream in, OutputStream out) {
+        this.in = new BitInputStream(in);
+        this.out = new BitOutputstream(out);
+    }
+
     @StudentImplementationRequired("H3.1")
     @Override
-    public void compress(InputStream in, OutputStream out) throws IOException {
-        BitInputStream bis = new BitInputStream(in);
-        BitOutputstream bos = new BitOutputstream(out);
-
-        int bit = bis.readBit();
+    public void compress() throws IOException {
+        int bit = in.readBit();
         while (bit != -1) {
-            Map.Entry<Integer, Integer> rle = count(bis, bit);
+            Map.Entry<Integer, Integer> rle = count(bit);
 
             // Store count as 4 bytes
-            bos.write(Bytes.toBytes(rle.getKey()));
+            out.write(Bytes.toBytes(rle.getKey()));
 
             // Store bit
-            bos.writeBit(bit);
+            out.writeBit(bit);
 
             // Since we are reading the next bit in the loop, we need to remember it
             bit = rle.getValue();
         }
+        out.flush();
     }
 
     /**
      * Count the number of consecutive bits of the same value.
      *
-     * @param in  the bits to read
      * @param bit the bit value to count
      * @return a map entry with the count as the key and the next bit as the value
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H3.2")
-    Map.Entry<Integer, Integer> count(BitInputStream in, int bit) throws IOException {
+    Map.Entry<Integer, Integer> count(int bit) throws IOException {
         int count = 1;
         int next;
         while ((next = in.readBit()) == bit) {
             count++;
         }
         return Map.entry(count, next);
+    }
+
+    @Override
+    public void close() throws Exception {
+        in.close();
+        out.close();
     }
 }
 

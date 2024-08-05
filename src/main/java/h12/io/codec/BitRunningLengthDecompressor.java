@@ -26,29 +26,34 @@ import java.io.OutputStream;
  */
 public class BitRunningLengthDecompressor implements Decompressor {
 
+    private final BitInputStream in;
+    private final BitOutputstream out;
+
+    public BitRunningLengthDecompressor(InputStream in, OutputStream out) {
+        this.in = new BitInputStream(in);
+        this.out = new BitOutputstream(out);
+    }
+
     @StudentImplementationRequired("H3.2")
     @Override
-    public void decompress(InputStream in, OutputStream out) throws IOException {
-        BitInputStream bis = new BitInputStream(in);
-        BitOutputstream bout = new BitOutputstream(out);
+    public void decompress() throws IOException {
 
-        int count = bis.read();
+        int count = in.read();
         while (count != -1) {
-            writeCount(bout, count, bis.readBit());
-            count = bis.read();
+            writeCount(count, in.readBit());
+            count = in.read();
         }
     }
 
     /**
      * Write the given bit count times to the output stream.
      *
-     * @param out   the output stream to write to the bit
      * @param count the number of times to write the bit
      * @param bit   the bit to write
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H3.2")
-    void writeCount(BitOutputstream out, int count, int bit) throws IOException {
+    void writeCount(int count, int bit) throws IOException {
         for (int i = 0; i < count; i++) {
             out.writeBit(bit);
         }
