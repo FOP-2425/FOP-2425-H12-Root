@@ -27,12 +27,16 @@ public class Main {
     }
 
     private static void test() throws Exception {
-        String text = "ab";
+        String text = "a";
         ByteArrayInputStream in = new ByteArrayInputStream(text.getBytes());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         HuffmanCodingCompressor compressor = new HuffmanCodingCompressor(in, out);
         compressor.compress();
-        // 00000001 0110001001011000011011000111001100000000
+        // 00000110 000000 10000000 00000000 00000000 00110000 10
+        // Skips: 6 bits - 00000110
+        // 000000 (skipped bits)
+        // Tree: 10000000 00000000 00000000 00110000 1 (1 bit for leaf and 4 bytes for character a)
+        // Content: 0 (1 bit for a)
         System.out.println(Bytes.toBits(out.toByteArray()));
         in = new ByteArrayInputStream(out.toByteArray());
         out = new ByteArrayOutputStream();

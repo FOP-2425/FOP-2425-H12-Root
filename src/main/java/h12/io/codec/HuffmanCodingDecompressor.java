@@ -42,7 +42,8 @@ public class HuffmanCodingDecompressor implements Decompressor {
     @StudentImplementationRequired("H6.2")
     TreeNode<Character> decodeTree() throws IOException {
         if (in.readBit() == 1) {
-            return new TreeNode<>((char) in.read());
+            byte[] bytes = new byte[2];
+            return new TreeNode<>((char) in.read(bytes));
         }
         TreeNode<Character> left = decodeTree();
         TreeNode<Character> right = decodeTree();
@@ -65,7 +66,7 @@ public class HuffmanCodingDecompressor implements Decompressor {
                 }
                 bit = in.readBit();
             }
-            out.write(current.getValue());
+            out.write(Bytes.toBytes(current.getValue()));
         }
     }
 }

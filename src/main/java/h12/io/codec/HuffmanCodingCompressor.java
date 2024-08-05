@@ -57,7 +57,7 @@ public class HuffmanCodingCompressor implements Compressor {
     @SolutionOnly("H5.2")
     private int getTreeSize(TreeNode<Character> node) {
         if (node.isLeaf()) {
-            return 1 + 16;
+            return 1 + 32;
         } else {
             return 1 + +getTreeSize(node.getLeft()) + getTreeSize(node.getRight());
         }
@@ -83,7 +83,7 @@ public class HuffmanCodingCompressor implements Compressor {
     void encodeTree(TreeNode<Character> node) throws IOException {
         if (node.isLeaf()) {
             out.writeBit(1);
-            out.write(node.getValue());
+            out.write(Bytes.toBytes(node.getValue()));
         } else {
             out.writeBit(0);
             encodeTree(node.getLeft());
