@@ -46,13 +46,12 @@ public class BitInputStream extends InputStream {
     }
 
     /**
-     * Fetches the next byte from the underlying InputStream into the buffer and resets the position to read the
-     * next bit from the buffer.
+     * Fetches the next byte from the underlying InputStream into the buffer.
      *
      * @throws IOException if an I/O error occurs
      */
-    @SolutionOnly
-    private void fetchNextByte() throws IOException {
+    @SolutionOnly("H2.1")
+    private void fetch() throws IOException {
         buffer = underlying.read();
         position = Bytes.NUMBER_OF_BITS - 1;
     }
@@ -68,7 +67,7 @@ public class BitInputStream extends InputStream {
         // TODO H2.1
         // If we already read all bits from the buffer, fetch the next byte.
         if (position < 0) {
-            fetchNextByte();
+            fetch();
         }
 
         // If buffer is empty, it means we reached the end of the stream.

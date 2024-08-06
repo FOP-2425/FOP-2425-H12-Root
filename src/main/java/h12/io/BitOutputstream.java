@@ -2,6 +2,7 @@ package h12.io;
 
 import h12.util.Bytes;
 import org.jetbrains.annotations.NotNull;
+import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.io.IOException;
@@ -10,8 +11,6 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * A BitOutputStream allows writing individual bits from an underlying OutputStream.
- *
- * @author Nhan Huynh, Per Goettlicher
  */
 public class BitOutputstream extends OutputStream {
 
@@ -50,14 +49,6 @@ public class BitOutputstream extends OutputStream {
     }
 
     /**
-     * Resets the buffer and its position to the default values.
-     */
-    private void resetBuffer() {
-        buffer = DEFAULT_BUFFER;
-        position = Bytes.NUMBER_OF_BITS - 1;
-    }
-
-    /**
      * Writes a single bit to the buffer.
      *
      * @param bit the bit to write
@@ -70,17 +61,15 @@ public class BitOutputstream extends OutputStream {
         if (bit != 0 && bit != 1) {
             throw new IllegalArgumentException("Bit must be 0 or 1: %d".formatted(bit));
         }
-        buffer = Bytes.setBit(buffer, position--, bit);
 
-        // if the buffer is full, write it to the underlying OutputStream and reset the buffer
         if (position < 0) {
-            underlying.write(buffer);
-            resetBuffer();
+            flushBuffer();
         }
+        buffer = Bytes.setBit(buffer, position--, bit);
     }
 
     /**
-     * Writes the specified byte to this output stream. The general contract for write is that one byte is written to
+     * Writes the specified byte to this output stream.
      *
      * @param b the {@code byte}.
      * @throws IOException              if an I/O error occurs.
@@ -93,7 +82,6 @@ public class BitOutputstream extends OutputStream {
         if (b < 0 || b > 255) {
             throw new IllegalArgumentException("Byte must be in the range of 0 to 255: %d".formatted(b));
         }
-        // Always start at the highest bit (from left to right)
         for (int i = Bytes.NUMBER_OF_BITS - 1; i >= 0; i--) {
             writeBit(Bytes.getBit(b, i));
         }
@@ -125,6 +113,18 @@ public class BitOutputstream extends OutputStream {
     }
 
     /**
+     * Flushes the buffer to the underlying OutputStream.
+     */
+    @SolutionOnly("H2.2")
+    private void flushBuffer() throws IOException {
+        if (position != Bytes.NUMBER_OF_BITS - 1) {
+            underlying.write(buffer);
+            buffer = DEFAULT_BUFFER;
+            position = Bytes.NUMBER_OF_BITS - 1;
+        }
+    }
+
+    /**
      * Flushes this output stream and forces any buffered output bits to be written out.
      *
      * @throws IOException if an I/O error occurs.
@@ -132,15 +132,13 @@ public class BitOutputstream extends OutputStream {
     @StudentImplementationRequired("H2.2")
     @Override
     public void flush() throws IOException {
-        // TODO H2.2
-        if (position >= 0) {
-            underlying.write(buffer);
-        }
-        resetBuffer();
+        flushBuffer();
+        underlying.flush();
     }
 
     @Override
     public void close() throws IOException {
+        flush();
         underlying.close();
     }
 }

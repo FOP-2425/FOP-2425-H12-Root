@@ -59,7 +59,7 @@ public class HuffmanCodingCompressor implements Compressor {
         if (node.isLeaf()) {
             return 1 + 32;
         } else {
-            return 1 + +getTreeSize(node.getLeft()) + getTreeSize(node.getRight());
+            return 1 + getTreeSize(node.getLeft()) + getTreeSize(node.getRight());
         }
     }
 
