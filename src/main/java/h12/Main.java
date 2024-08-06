@@ -1,7 +1,7 @@
 package h12;
 
-import h12.io.codec.HuffmanCodingCompressor;
-import h12.io.codec.HuffmanCodingDecompressor;
+import h12.io.compress.HuffmanCodingCompressor;
+import h12.io.compress.HuffmanCodingDecompressor;
 import h12.util.Bytes;
 
 import java.io.ByteArrayInputStream;

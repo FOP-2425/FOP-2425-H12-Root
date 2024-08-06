@@ -74,7 +74,9 @@ public class BitInputStream extends InputStream {
         if (buffer == INVALID) {
             return INVALID;
         }
-        return Bytes.getBit(buffer, position--);
+        int b = Bytes.getBit(buffer, position--);
+        System.out.print(b);
+        return b;
     }
 
     /**

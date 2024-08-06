@@ -1,4 +1,4 @@
-package h12.io.codec;
+package h12.io.compress;
 
 import h12.io.BitInputStream;
 import h12.io.BitOutputstream;
@@ -28,9 +28,22 @@ import java.util.Map;
  */
 public class BitRunningLengthCompressor implements Compressor {
 
+    /**
+     * The input stream to read the data from.
+     */
     private final BitInputStream in;
+
+    /**
+     * The output stream to write the compressed data to.
+     */
     private final BitOutputstream out;
 
+    /**
+     * Creates a new compressor that reads data from the given input stream and writes the compressed data to the given.
+     *
+     * @param in  the input stream to read the data from
+     * @param out the output stream to write the compressed data to
+     */
     public BitRunningLengthCompressor(InputStream in, OutputStream out) {
         this.in = new BitInputStream(in);
         this.out = new BitOutputstream(out);
@@ -39,6 +52,7 @@ public class BitRunningLengthCompressor implements Compressor {
     @StudentImplementationRequired("H3.1")
     @Override
     public void compress() throws IOException {
+        // TODO H3.1
         int bit = in.readBit();
         while (bit != -1) {
             Map.Entry<Integer, Integer> rle = count(bit);
@@ -64,6 +78,7 @@ public class BitRunningLengthCompressor implements Compressor {
      */
     @StudentImplementationRequired("H3.2")
     Map.Entry<Integer, Integer> count(int bit) throws IOException {
+        // TODO H3.2
         int count = 1;
         int next;
         while ((next = in.readBit()) == bit) {

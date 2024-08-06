@@ -1,4 +1,4 @@
-package h12.io.codec;
+package h12.io.compress;
 
 import h12.util.TreeNode;
 import org.jetbrains.annotations.NotNull;
@@ -62,6 +62,7 @@ public class HuffmanCoding {
      */
     @StudentImplementationRequired("H4.1")
     public Map<Character, Double> buildFrequencyTable(String text) {
+        // TODO H4.1
         double relativeFactor = 1.0 / text.length();
         Map<Character, Double> frequency = new HashMap<>();
         for (char c : text.toCharArray()) {
@@ -78,6 +79,7 @@ public class HuffmanCoding {
      */
     @StudentImplementationRequired("H4.2")
     public TreeNode<Character> buildTree(Map<Character, Double> frequency) {
+        // TODO H4.2
         Queue<HuffmanTreeNode> builder = new PriorityQueue<>();
 
         for (Map.Entry<Character, Double> entry : frequency.entrySet()) {
@@ -107,6 +109,7 @@ public class HuffmanCoding {
      */
     @StudentImplementationRequired("H4.3")
     public Map<Character, String> buildEncodingTable(TreeNode<Character> root) {
+        // TODO H4.3
         Map<Character, String> encodingTable = new HashMap<>();
         StringBuilder builder = new StringBuilder();
 
@@ -133,6 +136,7 @@ public class HuffmanCoding {
      */
     @SolutionOnly("H4.3")
     void buildEncodingTable(TreeNode<Character> node, Map<Character, String> encodingTable, StringBuilder path) {
+        // TODO H4.3
         StringBuilder newPath = new StringBuilder(path);
 
         // Cannot happen since calling method checks for leaf

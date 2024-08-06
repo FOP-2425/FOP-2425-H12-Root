@@ -1,4 +1,4 @@
-package h12.io.codec;
+package h12.io.compress;
 
 import java.io.IOException;
 
@@ -10,5 +10,9 @@ import java.io.IOException;
  */
 public interface Compressor extends AutoCloseable {
 
+    /**
+     * Compresses the input stream into the output stream.
+     * @throws IOException if an I/O error occurs
+     */
     void compress() throws IOException;
 }

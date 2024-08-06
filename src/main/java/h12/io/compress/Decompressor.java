@@ -1,8 +1,6 @@
-package h12.io.codec;
+package h12.io.compress;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * A decompressor that decompresses an input stream into an output stream. Decompression is the process of restoring a
@@ -10,7 +8,11 @@ import java.io.OutputStream;
  *
  * @author Nhan Huynh, Per Goettlicher
  */
-public interface Decompressor {
+public interface Decompressor extends AutoCloseable {
 
+    /**
+     * Decompresses the input stream into the output stream.
+     * @throws IOException if an I/O error occurs
+     */
     void decompress() throws IOException;
 }

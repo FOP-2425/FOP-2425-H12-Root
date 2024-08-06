@@ -1,4 +1,4 @@
-package h12.io.codec;
+package h12.io.compress;
 
 import h12.io.BitOutputstream;
 import h12.util.Bytes;
@@ -13,17 +13,50 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Map;
 
+/**
+ * Compressor that uses Huffman coding to compress the input.
+ * <p>
+ * For example, the input
+ * <pre>{@code
+ *      a
+ * }</pre>
+ * would be compressed to
+ * <pre>{@code
+ *      00000110 | 000000 | 1 00000000 00000000 00000000 01100001 0
+ * } </pre>
+ * where
+ * <li>00000110 is the number of bits to skip (used to fill the remaining bits) </li>
+ * <li>000000 are the filled bits which should be skipped</li>
+ * <li>1 represents the tree and since we encoded a single character, the tree is a leaf</li>
+ * <li>00000000 00000000 00000000 01100001 is the byte representation of the character 'a'</li>
+ * <li>0 is the encoded content where 'a' is encoded as '0'</li>
+ *
+ * @author Nhan Huynh, Per Goettlicher
+ */
 public class HuffmanCodingCompressor implements Compressor {
 
+    /**
+     * The input stream to read the data from.
+     */
     private final BufferedReader reader;
+
+    /**
+     * The output stream to write the compressed data to.
+     */
     private final BitOutputstream out;
 
+    /**
+     * Creates a new compressor that reads data from the given input stream and writes the compressed data to the given.
+     *
+     * @param in  the input stream to read the data from
+     * @param out the output stream to write the compressed data to
+     */
     public HuffmanCodingCompressor(InputStream in, OutputStream out) {
         this.reader = new BufferedReader(new InputStreamReader(in));
         this.out = new BitOutputstream(out);
     }
 
-    @StudentImplementationRequired("H5.1")
+
     @Override
     public void compress() throws IOException {
         HuffmanCoding huffman = new HuffmanCoding();
@@ -39,8 +72,15 @@ public class HuffmanCodingCompressor implements Compressor {
         out.flush();
     }
 
+    /**
+     * Returns the content of the input stream as a string.
+     *
+     * @return the content of the input stream as a string
+     * @throws IOException if an I/O error occurs
+     */
     @StudentImplementationRequired("H5.1")
     String getContent() throws IOException {
+        // TODO H5.1
         StringBuilder builder = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
@@ -49,11 +89,26 @@ public class HuffmanCodingCompressor implements Compressor {
         return builder.toString();
     }
 
+    /**
+     * Returns the number of bits used to encode the data.
+     *
+     * @param node    the root of the tree to encode
+     * @param text    the text to encode
+     * @param encoded the encoding table
+     * @return the number of bits used to encode the data
+     */
     @StudentImplementationRequired("H5.2")
     int getEncodingSize(TreeNode<Character> node, String text, Map<Character, String> encoded) {
+        // TODO H5.2
         return getTreeSize(node) + getContentSize(text, encoded);
     }
 
+    /**
+     * Returns the number of bits used to encode the tree.
+     *
+     * @param node the root of the tree to encode
+     * @return the number of bits used to encode the tree
+     */
     @SolutionOnly("H5.2")
     private int getTreeSize(TreeNode<Character> node) {
         if (node.isLeaf()) {
@@ -63,6 +118,13 @@ public class HuffmanCodingCompressor implements Compressor {
         }
     }
 
+    /**
+     * Returns the number of bits used to encode the content.
+     *
+     * @param text    the text to encode
+     * @param encoded the encoding table
+     * @return the number of bits used to encode the content
+     */
     @SolutionOnly("H5.2")
     private int getContentSize(String text, Map<Character, String> encoded) {
         int bits = 0;
@@ -72,6 +134,12 @@ public class HuffmanCodingCompressor implements Compressor {
         return bits;
     }
 
+    /**
+     * Fills the output stream with n bits.
+     *
+     * @param n the number of bits to fill
+     * @throws IOException if an I/O error occurs
+     */
     void fill(int n) throws IOException {
         out.write(n);
         for (int i = 0; i < n; i++) {
@@ -79,8 +147,15 @@ public class HuffmanCodingCompressor implements Compressor {
         }
     }
 
+    /**
+     * Encodes the tree in the output stream.
+     *
+     * @param node the root of the tree to encode
+     * @throws IOException if an I/O error occurs
+     */
     @StudentImplementationRequired("H5.3")
     void encodeTree(TreeNode<Character> node) throws IOException {
+        // TODO H5.3
         if (node.isLeaf()) {
             out.writeBit(1);
             out.write(Bytes.toBytes(node.getValue()));
@@ -91,8 +166,16 @@ public class HuffmanCodingCompressor implements Compressor {
         }
     }
 
+    /**
+     * Encodes the content in the output stream.
+     *
+     * @param text    the text to encode
+     * @param encoded the encoding table
+     * @throws IOException if an I/O error occurs
+     */
     @StudentImplementationRequired("H5.4")
     void encodeContent(String text, Map<Character, String> encoded) throws IOException {
+        // TODO H5.4
         for (char c : text.toCharArray()) {
             for (char bit : encoded.get(c).toCharArray()) {
                 out.writeBit(bit == '1' ? 1 : 0);
