@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -39,7 +40,7 @@ public class HuffmanCodingDecompressor implements Decompressor {
     /**
      * The output stream to write the decompressed data to.
      */
-    private final BufferedWriter out;
+    private final Writer out;
 
     /**
      * Creates a new decompressor that reads compressed data from the given input stream and writes the decompressed.
