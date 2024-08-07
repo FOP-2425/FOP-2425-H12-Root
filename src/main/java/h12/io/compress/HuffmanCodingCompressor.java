@@ -65,7 +65,7 @@ public class HuffmanCodingCompressor implements Compressor {
         Map<Character, String> encoded = huffman.buildEncodingTable(root);
 
         int bits = getEncodingSize(root, content, encoded);
-        fill(Bytes.fillLastByte(bits));
+        fill(Bytes.computeMissingBits(bits));
         encodeTree(root);
         encodeContent(content, encoded);
         out.flush();
@@ -110,6 +110,9 @@ public class HuffmanCodingCompressor implements Compressor {
         if (node.isLeaf()) {
             return 1 + 32;
         } else {
+            // Cannot happen since the node is not a leaf
+            assert node.getLeft() != null;
+            assert node.getRight() != null;
             return 1 + getTreeSize(node.getLeft()) + getTreeSize(node.getRight());
         }
     }
@@ -153,9 +156,13 @@ public class HuffmanCodingCompressor implements Compressor {
         // TODO H5.3
         if (node.isLeaf()) {
             out.writeBit(1);
+            assert node.getValue() != null;
             out.write(Bytes.toBytes(node.getValue()));
         } else {
             out.writeBit(0);
+            // Cannot happen since the node is not a leaf
+            assert node.getLeft() != null;
+            assert node.getRight() != null;
             encodeTree(node.getLeft());
             encodeTree(node.getRight());
         }

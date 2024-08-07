@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 
 /**
  * A resource-based implementation of the {@link IOFactory} interface which allows creating readers for files on the
@@ -33,7 +32,7 @@ public class ResourceIOFactory implements IOFactory {
         if (resourceStream == null) {
             throw new FileNotFoundException("Resource does not exist: %s".formatted(path));
         }
-        return new BufferedReader(new InputStreamReader(resourceStream, StandardCharsets.UTF_8));
+        return new BufferedReader(new InputStreamReader(resourceStream));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package h12.io;
 
+import h12.util.Bits;
 import h12.util.Bytes;
 import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
@@ -14,7 +15,6 @@ import java.io.InputStream;
  * @author Nhan Huynh, Per Goettlicher
  */
 public class BitInputStream extends InputStream {
-
 
     /**
      * A marker to indicate that all bits are read from the buffer.
@@ -74,7 +74,8 @@ public class BitInputStream extends InputStream {
         if (buffer == INVALID) {
             return INVALID;
         }
-        return Bytes.getBit(buffer, position--);
+
+        return Bits.get(buffer, position--);
     }
 
     /**
@@ -103,7 +104,7 @@ public class BitInputStream extends InputStream {
                 return value;
             }
 
-            value = Bytes.setBit(value, i, bit);
+            value = Bits.set(value, i, bit);
         }
         return value;
     }
@@ -126,9 +127,12 @@ public class BitInputStream extends InputStream {
         int read = 0;
         for (int i = 0; i < len; i++) {
             int value = read();
+            // In case we reached the end of the stream and the buffer is empty, return -1.
             if (value == INVALID && i == 0) {
                 return -1;
-            } else if (value == INVALID) {
+            }
+            // In case we reached the end of the stream, return the value read so far.
+            if (value == INVALID) {
                 return read;
             }
             b[off + i] = (byte) value;

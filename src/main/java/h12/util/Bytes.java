@@ -29,51 +29,6 @@ public class Bytes {
     }
 
     /**
-     * Returns the bit at the given position in the value.
-     * <p>
-     * For example, the input
-     * <pre>{@code
-     *     0000_00001
-     *     }</pre>
-     * which represents the number 1, would return 1 for position 0 and 0 for position 1.
-     *
-     * @param value    the value to get the bit from
-     * @param position the position of the bit to get
-     * @return the bit at the given position in the value
-     */
-    public static int getBit(int value, int position) {
-        if (position < 0) {
-            throw new IllegalArgumentException("Position must be non-negative: %d".formatted(position));
-        }
-        return (value >> position) & 1;
-    }
-
-    /**
-     * Sets the bit at the given position in the value.
-     * <p>
-     * For example, the input
-     * <pre>{@code
-     *     0000_00001, 0, 0
-     *     }</pre>
-     * would return 0000_00000.
-     *
-     * @param value    the value to set the bit in
-     * @param position the position of the bit to set
-     * @param bit      the bit to set
-     * @return the value with the bit set at the given position
-     */
-    public static int setBit(int value, int position, int bit) {
-        if (position < 0) {
-            throw new IllegalArgumentException("Position must be non-negative: %d".formatted(position));
-        }
-        if (bit != 0 && bit != 1) {
-            throw new IllegalArgumentException("Bit must be 0 or 1: %d".formatted(bit));
-        }
-        return (byte) (bit == 1 ? value | (1 << position) : value & ~(1 << position));
-    }
-
-
-    /**
      * Converts the given bytes to an integer.
      *
      * @param bytes the bytes to convert
@@ -99,11 +54,11 @@ public class Bytes {
      * @param bytes the bytes to convert
      * @return the bits representation of the bytes
      */
-    public static String toBitsRepresentation(byte[] bytes) {
+    public static String toBits(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
             for (int i = NUMBER_OF_BITS - 1; i >= 0; i--) {
-                sb.append(getBit(b, i));
+                sb.append(Bits.get(b, i));
             }
         }
         return sb.toString();
@@ -115,7 +70,7 @@ public class Bytes {
      * @param length the length of the current bits
      * @return the number of bits needed to fill the last byte
      */
-    public static int fillLastByte(int length) {
+    public static int computeMissingBits(int length) {
         return length % (NUMBER_OF_BITS - 1);
     }
 }

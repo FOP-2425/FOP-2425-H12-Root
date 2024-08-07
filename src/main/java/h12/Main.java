@@ -33,7 +33,7 @@ public class Main {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         HuffmanCodingCompressor compressor = new HuffmanCodingCompressor(in, out);
         compressor.compress();
-        System.out.printf("Compressed: %s%n", Bytes.toBitsRepresentation(out.toByteArray()));
+        System.out.printf("Compressed: %s%n", Bytes.toBits(out.toByteArray()));
         in = new ByteArrayInputStream(out.toByteArray());
         out = new ByteArrayOutputStream();
         HuffmanCodingDecompressor decompressor = new HuffmanCodingDecompressor(in, out);

@@ -38,7 +38,12 @@ public class TreeNode<T> {
      * @param parent the parent of the node
      * @param value  the value stored in the node
      */
-    public TreeNode(TreeNode<T> left, TreeNode<T> right, TreeNode<T> parent, T value) {
+    public TreeNode(
+        @Nullable TreeNode<T> left,
+        @Nullable TreeNode<T> right,
+        @Nullable TreeNode<T> parent,
+        @Nullable T value
+    ) {
         this.left = left;
         this.right = right;
         this.parent = parent;
@@ -70,7 +75,7 @@ public class TreeNode<T> {
      *
      * @return the left child of the node
      */
-    public TreeNode<T> getLeft() {
+    public @Nullable TreeNode<T> getLeft() {
         return left;
     }
 
@@ -88,7 +93,7 @@ public class TreeNode<T> {
      *
      * @return the right child of the node
      */
-    public TreeNode<T> getRight() {
+    public @Nullable TreeNode<T> getRight() {
         return right;
     }
 
@@ -106,7 +111,7 @@ public class TreeNode<T> {
      *
      * @return the parent of the node
      */
-    public TreeNode<T> getParent() {
+    public @Nullable TreeNode<T> getParent() {
         return parent;
     }
 
@@ -124,7 +129,7 @@ public class TreeNode<T> {
      *
      * @return the value stored in the node
      */
-    public T getValue() {
+    public @Nullable T getValue() {
         return value;
     }
 

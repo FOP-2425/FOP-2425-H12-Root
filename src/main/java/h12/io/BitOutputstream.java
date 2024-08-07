@@ -1,5 +1,6 @@
 package h12.io;
 
+import h12.util.Bits;
 import h12.util.Bytes;
 import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
@@ -62,10 +63,12 @@ public class BitOutputstream extends OutputStream {
             throw new IllegalArgumentException("Bit must be 0 or 1: %d".formatted(bit));
         }
 
+        // If buffer is full, flush it
         if (position < 0) {
             flushBuffer();
         }
-        buffer = Bytes.setBit(buffer, position--, bit);
+
+        buffer = Bits.set(buffer, position--, bit);
     }
 
     /**
@@ -83,7 +86,7 @@ public class BitOutputstream extends OutputStream {
             throw new IllegalArgumentException("Byte must be in the range of 0 to 255: %d".formatted(b));
         }
         for (int i = Bytes.NUMBER_OF_BITS - 1; i >= 0; i--) {
-            writeBit(Bytes.getBit(b, i));
+            writeBit(Bits.get(b, i));
         }
     }
 
@@ -117,6 +120,7 @@ public class BitOutputstream extends OutputStream {
      */
     @SolutionOnly("H2.2")
     private void flushBuffer() throws IOException {
+        // Flush the buffer if it is not empty
         if (position != Bytes.NUMBER_OF_BITS - 1) {
             underlying.write(buffer);
             buffer = DEFAULT_BUFFER;

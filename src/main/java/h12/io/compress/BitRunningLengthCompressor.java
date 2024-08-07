@@ -55,7 +55,7 @@ public class BitRunningLengthCompressor implements Compressor {
         // TODO H3.2
         int bit = in.readBit();
         while (bit != -1) {
-            Map.Entry<Integer, Integer> rle = count(bit);
+            Map.Entry<Integer, Integer> rle = getBitCount(bit);
 
             // Store count as 4 bytes
             out.write(Bytes.toBytes(rle.getKey()));
@@ -77,7 +77,7 @@ public class BitRunningLengthCompressor implements Compressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H3.1")
-    Map.Entry<Integer, Integer> count(int bit) throws IOException {
+    Map.Entry<Integer, Integer> getBitCount(int bit) throws IOException {
         // TODO H3.1
         int count = 1;
         int next;

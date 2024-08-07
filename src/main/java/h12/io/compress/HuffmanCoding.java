@@ -2,7 +2,6 @@ package h12.io.compress;
 
 import h12.util.TreeNode;
 import org.jetbrains.annotations.NotNull;
-import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.util.HashMap;
@@ -132,7 +131,11 @@ public class HuffmanCoding {
      * @param encodingTable the encoding table to store the binary codes
      * @param path          the current path to the node
      */
-    void buildEncodingTable(TreeNode<Character> node, Map<Character, String> encodingTable, StringBuilder path) {
+    private void buildEncodingTable(
+        TreeNode<Character> node,
+        Map<Character, String> encodingTable,
+        StringBuilder path
+    ) {
         StringBuilder newPath = new StringBuilder(path);
 
         // Cannot happen since calling method checks for leaf

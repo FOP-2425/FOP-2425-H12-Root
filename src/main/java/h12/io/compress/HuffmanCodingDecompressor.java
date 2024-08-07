@@ -1,6 +1,7 @@
 package h12.io.compress;
 
 import h12.io.BitInputStream;
+import h12.util.Bits;
 import h12.util.Bytes;
 import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
@@ -49,7 +50,7 @@ public class HuffmanCodingDecompressor implements Decompressor {
 
     @Override
     public void decompress() throws IOException {
-        skip();
+        skipBits();
         TreeNode<Character> root = decodeTree();
         decodeContent(root);
         out.flush();
@@ -61,11 +62,11 @@ public class HuffmanCodingDecompressor implements Decompressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H6.1")
-    void skip() throws IOException {
+    void skipBits() throws IOException {
         // TODO H6.1
         int value = 0;
         for (int i = Bytes.NUMBER_OF_BITS - 1; i >= 0; i--) {
-            value = Bytes.setBit(value, i, in.readBit());
+            value = Bits.set(value, i, in.readBit());
         }
         for (int i = 0; i < value; i++) {
             in.readBit();
@@ -79,6 +80,7 @@ public class HuffmanCodingDecompressor implements Decompressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H6.2")
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     TreeNode<Character> decodeTree() throws IOException {
         // TODO H6.2
         if (in.readBit() == 1) {
@@ -106,14 +108,17 @@ public class HuffmanCodingDecompressor implements Decompressor {
         int bit;
         while ((bit = in.readBit()) != -1) {
             TreeNode<Character> current = root;
+            assert current != null;
             while (!current.isLeaf()) {
                 if (bit == 0) {
                     current = current.getLeft();
                 } else {
                     current = current.getRight();
                 }
+                assert current != null;
                 bit = in.readBit();
             }
+             assert current.getValue() != null;
             out.write(Bytes.toBytes(current.getValue()));
         }
     }
