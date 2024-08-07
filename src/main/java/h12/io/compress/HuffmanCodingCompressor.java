@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -51,7 +52,7 @@ public class HuffmanCodingCompressor implements Compressor {
      * @param out the output stream to write the compressed data to
      */
     public HuffmanCodingCompressor(InputStream in, OutputStream out) {
-        this.reader = new BufferedReader(new InputStreamReader(in));
+        this.reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
         this.out = new BitOutputstream(out);
     }
 

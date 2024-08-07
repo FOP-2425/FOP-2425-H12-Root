@@ -6,9 +6,13 @@ import h12.util.Bytes;
 import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Decompressor that uses Huffman coding to decompress the input.
@@ -35,7 +39,7 @@ public class HuffmanCodingDecompressor implements Decompressor {
     /**
      * The output stream to write the decompressed data to.
      */
-    private final OutputStream out;
+    private final BufferedWriter out;
 
     /**
      * Creates a new decompressor that reads compressed data from the given input stream and writes the decompressed.
@@ -45,7 +49,7 @@ public class HuffmanCodingDecompressor implements Decompressor {
      */
     public HuffmanCodingDecompressor(InputStream in, OutputStream out) {
         this.in = new BitInputStream(in);
-        this.out = out;
+        this.out = new BufferedWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
     }
 
     @Override
@@ -119,7 +123,7 @@ public class HuffmanCodingDecompressor implements Decompressor {
                 bit = in.readBit();
             }
              assert current.getValue() != null;
-            out.write(Bytes.toBytes(current.getValue()));
+            out.write(current.getValue());
         }
     }
 
