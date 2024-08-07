@@ -80,10 +80,7 @@ public class Bytes {
      * @return the integer value of the bytes
      */
     public static int toInt(byte[] bytes) {
-        buffer.clear();
-        buffer.put(bytes);
-        buffer.flip();
-        return buffer.getInt();
+        return buffer.clear().put(bytes).flip().getInt();
     }
 
     /**
@@ -93,8 +90,7 @@ public class Bytes {
      * @return the bytes of the integer
      */
     public static byte[] toBytes(int value) {
-        buffer.clear();
-        return buffer.putInt(value).array();
+        return buffer.clear().putInt(value).array();
     }
 
     /**
@@ -103,7 +99,7 @@ public class Bytes {
      * @param bytes the bytes to convert
      * @return the bits representation of the bytes
      */
-    public static String toBits(byte[] bytes) {
+    public static String toBitsRepresentation(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
             for (int i = NUMBER_OF_BITS - 1; i >= 0; i--) {
@@ -119,7 +115,7 @@ public class Bytes {
      * @param length the length of the current bits
      * @return the number of bits needed to fill the last byte
      */
-    public static int getFillBits(int length) {
+    public static int fillLastByte(int length) {
         return length % (NUMBER_OF_BITS - 1);
     }
 }

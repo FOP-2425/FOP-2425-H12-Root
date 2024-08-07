@@ -107,9 +107,7 @@ public class HuffmanCoding {
      * @param root the root node of the Huffman tree to build the encoding table fromo
      * @return a map that assigns a binary code to each character
      */
-    @StudentImplementationRequired("H4.3")
     public Map<Character, String> buildEncodingTable(TreeNode<Character> root) {
-        // TODO H4.3
         Map<Character, String> encodingTable = new HashMap<>();
         StringBuilder builder = new StringBuilder();
 
@@ -134,9 +132,7 @@ public class HuffmanCoding {
      * @param encodingTable the encoding table to store the binary codes
      * @param path          the current path to the node
      */
-    @SolutionOnly("H4.3")
     void buildEncodingTable(TreeNode<Character> node, Map<Character, String> encodingTable, StringBuilder path) {
-        // TODO H4.3
         StringBuilder newPath = new StringBuilder(path);
 
         // Cannot happen since calling method checks for leaf

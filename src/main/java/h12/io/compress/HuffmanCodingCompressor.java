@@ -3,7 +3,6 @@ package h12.io.compress;
 import h12.io.BitOutputstream;
 import h12.util.Bytes;
 import h12.util.TreeNode;
-import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.io.BufferedReader;
@@ -66,7 +65,7 @@ public class HuffmanCodingCompressor implements Compressor {
         Map<Character, String> encoded = huffman.buildEncodingTable(root);
 
         int bits = getEncodingSize(root, content, encoded);
-        fill(Bytes.getFillBits(bits));
+        fill(Bytes.fillLastByte(bits));
         encodeTree(root);
         encodeContent(content, encoded);
         out.flush();
@@ -97,9 +96,7 @@ public class HuffmanCodingCompressor implements Compressor {
      * @param encoded the encoding table
      * @return the number of bits used to encode the data
      */
-    @StudentImplementationRequired("H5.2")
     int getEncodingSize(TreeNode<Character> node, String text, Map<Character, String> encoded) {
-        // TODO H5.2
         return getTreeSize(node) + getContentSize(text, encoded);
     }
 
@@ -109,7 +106,6 @@ public class HuffmanCodingCompressor implements Compressor {
      * @param node the root of the tree to encode
      * @return the number of bits used to encode the tree
      */
-    @SolutionOnly("H5.2")
     private int getTreeSize(TreeNode<Character> node) {
         if (node.isLeaf()) {
             return 1 + 32;
@@ -125,7 +121,6 @@ public class HuffmanCodingCompressor implements Compressor {
      * @param encoded the encoding table
      * @return the number of bits used to encode the content
      */
-    @SolutionOnly("H5.2")
     private int getContentSize(String text, Map<Character, String> encoded) {
         int bits = 0;
         for (char c : text.toCharArray()) {
@@ -153,7 +148,7 @@ public class HuffmanCodingCompressor implements Compressor {
      * @param node the root of the tree to encode
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H5.3")
+    @StudentImplementationRequired("H5.2")
     void encodeTree(TreeNode<Character> node) throws IOException {
         // TODO H5.3
         if (node.isLeaf()) {
@@ -173,7 +168,7 @@ public class HuffmanCodingCompressor implements Compressor {
      * @param encoded the encoding table
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H5.4")
+    @StudentImplementationRequired("H5.3")
     void encodeContent(String text, Map<Character, String> encoded) throws IOException {
         // TODO H5.4
         for (char c : text.toCharArray()) {

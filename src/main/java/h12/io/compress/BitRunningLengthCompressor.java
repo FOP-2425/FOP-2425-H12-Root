@@ -49,10 +49,10 @@ public class BitRunningLengthCompressor implements Compressor {
         this.out = new BitOutputstream(out);
     }
 
-    @StudentImplementationRequired("H3.1")
+    @StudentImplementationRequired("H3.2")
     @Override
     public void compress() throws IOException {
-        // TODO H3.1
+        // TODO H3.2
         int bit = in.readBit();
         while (bit != -1) {
             Map.Entry<Integer, Integer> rle = count(bit);
@@ -76,9 +76,9 @@ public class BitRunningLengthCompressor implements Compressor {
      * @return a map entry with the count as the key and the next bit as the value
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H3.2")
+    @StudentImplementationRequired("H3.1")
     Map.Entry<Integer, Integer> count(int bit) throws IOException {
-        // TODO H3.2
+        // TODO H3.1
         int count = 1;
         int next;
         while ((next = in.readBit()) == bit) {
