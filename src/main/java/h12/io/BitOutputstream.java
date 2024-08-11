@@ -11,9 +11,10 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
- * A BitOutputStream allows writing individual bits from an underlying OutputStream.
+ * A BitOutputStream allows writing individual bits from an underlying
+ * OutputStream.
  */
-public class BitOutputstream extends OutputStream {
+public class BitOutputStream extends OutputStream {
 
     /**
      * A marker to indicate that the buffer is full.
@@ -41,11 +42,12 @@ public class BitOutputstream extends OutputStream {
     private int position = Bytes.NUMBER_OF_BITS - 1;
 
     /**
-     * Creates a BitOutputStream that writes bits to the given underlying OutputStream.
+     * Creates a BitOutputStream that writes bits to the given underlying
+     * OutputStream.
      *
      * @param underlying the underlying OutputStream to write bytes to
      */
-    public BitOutputstream(OutputStream underlying) {
+    public BitOutputStream(OutputStream underlying) {
         this.underlying = underlying;
     }
 
@@ -91,7 +93,8 @@ public class BitOutputstream extends OutputStream {
     }
 
     /**
-     * Writes {@code len} bytes from the specified byte array starting at offset {@code off} to this output stream.
+     * Writes {@code len} bytes from the specified byte array starting at offset
+     * {@code off} to this output stream.
      *
      * @param b   the data.
      * @param off the start offset in the data.
@@ -129,7 +132,8 @@ public class BitOutputstream extends OutputStream {
     }
 
     /**
-     * Flushes this output stream and forces any buffered output bits to be written out.
+     * Flushes this output stream and forces any buffered output bits to be written
+     * out.
      *
      * @throws IOException if an I/O error occurs.
      */

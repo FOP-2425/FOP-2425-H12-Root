@@ -1,10 +1,5 @@
 package h12.io.compress;
 
-import h12.io.BitOutputstream;
-import h12.util.Bytes;
-import h12.util.TreeNode;
-import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +7,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
+
+import h12.io.BitOutputStream;
+import h12.util.Bytes;
+import h12.util.TreeNode;
 
 /**
  * Compressor that uses Huffman coding to compress the input.
@@ -43,7 +44,7 @@ public class HuffmanCodingCompressor implements Compressor {
     /**
      * The output stream to write the compressed data to.
      */
-    private final BitOutputstream out;
+    private final BitOutputStream out;
 
     /**
      * Creates a new compressor that reads data from the given input stream and writes the compressed data to the given.
@@ -53,9 +54,8 @@ public class HuffmanCodingCompressor implements Compressor {
      */
     public HuffmanCodingCompressor(InputStream in, OutputStream out) {
         this.reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-        this.out = new BitOutputstream(out);
+        this.out = new BitOutputStream(out);
     }
-
 
     @Override
     public void compress() throws IOException {

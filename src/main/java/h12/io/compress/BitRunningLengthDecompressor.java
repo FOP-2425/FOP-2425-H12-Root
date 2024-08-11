@@ -1,12 +1,13 @@
 package h12.io.compress;
 
-import h12.io.BitInputStream;
-import h12.io.BitOutputstream;
-import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
+
+import h12.io.BitInputStream;
+import h12.io.BitOutputStream;
 
 /**
  * Decompressor that uses a simple run-length encoding scheme to decompress the input. The input is read bit by bit and
@@ -34,7 +35,7 @@ public class BitRunningLengthDecompressor implements Decompressor {
     /**
      * The output stream to write the decompressed data to.
      */
-    private final BitOutputstream out;
+    private final BitOutputStream out;
 
     /**
      * Creates a new decompressor that reads compressed data from the given input stream and writes the decompressed.
@@ -44,7 +45,7 @@ public class BitRunningLengthDecompressor implements Decompressor {
      */
     public BitRunningLengthDecompressor(InputStream in, OutputStream out) {
         this.in = new BitInputStream(in);
-        this.out = new BitOutputstream(out);
+        this.out = new BitOutputStream(out);
     }
 
     @StudentImplementationRequired("H3.2")
