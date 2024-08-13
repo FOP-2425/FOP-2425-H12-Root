@@ -6,7 +6,6 @@ import h12.util.Bytes;
 import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -121,9 +120,12 @@ public class HuffmanCodingDecompressor implements Decompressor {
                     current = current.getRight();
                 }
                 assert current != null;
+                if (current.isLeaf()) {
+                    break;
+                }
                 bit = in.readBit();
             }
-             assert current.getValue() != null;
+            assert current.getValue() != null;
             out.write(current.getValue());
         }
     }
