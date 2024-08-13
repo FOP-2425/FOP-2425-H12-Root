@@ -71,6 +71,6 @@ public class Bytes {
      * @return the number of bits needed to fill the last byte
      */
     public static int computeMissingBits(int length) {
-        return length % (NUMBER_OF_BITS - 1);
+        return (NUMBER_OF_BITS - (length % NUMBER_OF_BITS)) % NUMBER_OF_BITS;
     }
 }
