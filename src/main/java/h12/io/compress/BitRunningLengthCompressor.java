@@ -50,7 +50,7 @@ public class BitRunningLengthCompressor implements Compressor {
         this.out = new BitOutputStream(out);
     }
 
-    @StudentImplementationRequired("H3.2")
+    @StudentImplementationRequired("H3.1")
     @Override
     public void compress() throws IOException {
         // TODO H3.2
