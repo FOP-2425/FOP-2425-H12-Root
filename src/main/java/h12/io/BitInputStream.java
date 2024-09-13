@@ -3,7 +3,6 @@ package h12.io;
 import h12.util.Bits;
 import h12.util.Bytes;
 import org.jetbrains.annotations.NotNull;
-import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.io.IOException;
@@ -50,8 +49,8 @@ public class BitInputStream extends InputStream {
      *
      * @throws IOException if an I/O error occurs
      */
-    @SolutionOnly("H2.1")
-    private void fetch() throws IOException {
+    @StudentImplementationRequired("H2.1")
+    void fetch() throws IOException {
         buffer = underlying.read();
         position = Bytes.NUMBER_OF_BITS - 1;
     }

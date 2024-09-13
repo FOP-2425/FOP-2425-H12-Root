@@ -3,7 +3,6 @@ package h12.io;
 import h12.util.Bits;
 import h12.util.Bytes;
 import org.jetbrains.annotations.NotNull;
-import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.io.IOException;
@@ -121,8 +120,8 @@ public class BitOutputStream extends OutputStream {
     /**
      * Flushes the buffer to the underlying OutputStream.
      */
-    @SolutionOnly("H2.2")
-    private void flushBuffer() throws IOException {
+    @StudentImplementationRequired("H2.2")
+    void flushBuffer() throws IOException {
         // Flush the buffer if it is not empty
         if (position != Bytes.NUMBER_OF_BITS - 1) {
             underlying.write(buffer);

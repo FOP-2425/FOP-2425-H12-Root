@@ -1,15 +1,17 @@
 package h12.io.compress;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Map;
-
-import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
-
 import h12.io.BitInputStream;
 import h12.io.BitOutputStream;
 import h12.util.Bytes;
+import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.Map;
 
 /**
  * Compressor that uses a simple run-length encoding scheme to compress the input. The input is read bit by bit and
@@ -62,7 +64,7 @@ public class BitRunningLengthCompressor implements Compressor {
             out.write(Bytes.toBytes(rle.getKey()));
 
             // Store bit
-            out.writeBit(bit);
+            out.write(bit);
 
             // Since we are reading the next bit in the loop, we need to remember it
             bit = rle.getValue();
