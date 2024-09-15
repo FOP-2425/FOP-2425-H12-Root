@@ -49,8 +49,9 @@ public class BitInputStream extends InputStream {
      *
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H2.1")
+    @StudentImplementationRequired("H12.1.1")
     void fetch() throws IOException {
+        // TODO H12.1.1
         buffer = underlying.read();
         position = Bytes.NUMBER_OF_BITS - 1;
     }
@@ -61,9 +62,9 @@ public class BitInputStream extends InputStream {
      * @return the next bit read from the underlying InputStream or {@code -1} if the end of the stream is reached.
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H2.1")
+    @StudentImplementationRequired("H12.1.1")
     public int readBit() throws IOException {
-        // TODO H2.1
+        // TODO H12.1.1
         // If we already read all bits from the buffer, fetch the next byte.
         if (position < 0) {
             fetch();
@@ -85,10 +86,10 @@ public class BitInputStream extends InputStream {
      * @return the next 8 bits read from the underlying InputStream as an integer
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H2.1")
+    @StudentImplementationRequired("H12.1.1")
     @Override
     public int read() throws IOException {
-        // TODO H2.1
+        // TODO H12.1.1
         int value = 0;
 
         // Loop needs to start from the most significant bit.

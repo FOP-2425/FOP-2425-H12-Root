@@ -48,10 +48,10 @@ public class BitRunningLengthDecompressor implements Decompressor {
         this.out = new BitOutputStream(out);
     }
 
-    @StudentImplementationRequired("H3.2")
+    @StudentImplementationRequired("H12.2.2")
     @Override
     public void decompress() throws IOException {
-        // TODO H3.2
+        // TODO H12.2.2
         byte[] bytes = new byte[4];
         int read = in.read(bytes);
         while (read != -1) {
@@ -68,9 +68,9 @@ public class BitRunningLengthDecompressor implements Decompressor {
      * @param bit   the bit to write
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H3.2")
+    @StudentImplementationRequired("H12.2.2")
     void writeBit(int count, int bit) throws IOException {
-        // TODO H3.2
+        // TODO H12.2.2
         for (int i = 0; i < count; i++) {
             out.writeBit(bit);
         }

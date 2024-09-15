@@ -57,9 +57,9 @@ public class BitOutputStream extends OutputStream {
      * @throws IOException              if an I/O error occurs
      * @throws IllegalArgumentException if the bit is not 0 or 1
      */
-    @StudentImplementationRequired("H2.2")
+    @StudentImplementationRequired("H12.1.2")
     public void writeBit(int bit) throws IOException {
-        // TODO H2.2
+        // TODO H12.1.2
         if (bit != 0 && bit != 1) {
             throw new IllegalArgumentException("Bit must be 0 or 1: %d".formatted(bit));
         }
@@ -79,10 +79,10 @@ public class BitOutputStream extends OutputStream {
      * @throws IOException              if an I/O error occurs.
      * @throws IllegalArgumentException if the byte is not in the range of 0 to 255
      */
-    @StudentImplementationRequired("H2.2")
+    @StudentImplementationRequired("HH12.1.2")
     @Override
     public void write(int b) throws IOException {
-        // TODO H2.2
+        // TODO H12.1.2
         if (b < 0 || b > 255) {
             throw new IllegalArgumentException("Byte must be in the range of 0 to 255: %d".formatted(b));
         }
@@ -120,8 +120,9 @@ public class BitOutputStream extends OutputStream {
     /**
      * Flushes the buffer to the underlying OutputStream.
      */
-    @StudentImplementationRequired("H2.2")
+    @StudentImplementationRequired("H12.1.2")
     void flushBuffer() throws IOException {
+        // TODO H12.1.2
         // Flush the buffer if it is not empty
         if (position != Bytes.NUMBER_OF_BITS - 1) {
             underlying.write(buffer);
@@ -136,7 +137,6 @@ public class BitOutputStream extends OutputStream {
      *
      * @throws IOException if an I/O error occurs.
      */
-    @StudentImplementationRequired("H2.2")
     @Override
     public void flush() throws IOException {
         flushBuffer();

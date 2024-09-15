@@ -78,9 +78,9 @@ public class HuffmanCodingCompressor implements Compressor {
      * @return the content of the input stream as a string
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H5.1")
+    @StudentImplementationRequired("H12.4.1")
     String getContent() throws IOException {
-        // TODO H5.1
+        // TODO H12.4.1
         StringBuilder builder = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
@@ -107,13 +107,11 @@ public class HuffmanCodingCompressor implements Compressor {
      * @param node the root of the tree to encode
      * @return the number of bits used to encode the tree
      */
+    @SuppressWarnings("ConstantConditions")
     private int getTreeSize(TreeNode<Character> node) {
         if (node.isLeaf()) {
             return 1 + 32;
         } else {
-            // Cannot happen since the node is not a leaf
-            assert node.getLeft() != null;
-            assert node.getRight() != null;
             return 1 + getTreeSize(node.getLeft()) + getTreeSize(node.getRight());
         }
     }
@@ -152,18 +150,15 @@ public class HuffmanCodingCompressor implements Compressor {
      * @param node the root of the tree to encode
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H5.2")
+    @StudentImplementationRequired("H12.4.1")
+    @SuppressWarnings("ConstantConditions")
     void encodeTree(TreeNode<Character> node) throws IOException {
-        // TODO H5.3
+        // TODO H12.4.1
         if (node.isLeaf()) {
             out.writeBit(1);
-            assert node.getValue() != null;
             out.write(Bytes.toBytes(node.getValue()));
         } else {
             out.writeBit(0);
-            // Cannot happen since the node is not a leaf
-            assert node.getLeft() != null;
-            assert node.getRight() != null;
             encodeTree(node.getLeft());
             encodeTree(node.getRight());
         }
@@ -176,9 +171,9 @@ public class HuffmanCodingCompressor implements Compressor {
      * @param encoded the encoding table
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H5.3")
+    @StudentImplementationRequired("H12.4.1")
     void encodeContent(String text, Map<Character, String> encoded) throws IOException {
-        // TODO H5.4
+        // TODO H12.4.1
         for (char c : text.toCharArray()) {
             for (char bit : encoded.get(c).toCharArray()) {
                 out.writeBit(bit == '1' ? 1 : 0);

@@ -59,9 +59,9 @@ public class HuffmanCoding {
      * @param text the input text to build the frequency table from
      * @return a map that assigns a relative frequency to each character
      */
-    @StudentImplementationRequired("H4.1")
+    @StudentImplementationRequired("H12.3.1")
     public Map<Character, Double> buildFrequencyTable(String text) {
-        // TODO H4.1
+        // TODO H12.3.1
         double relativeFactor = 1.0 / text.length();
         Map<Character, Double> frequency = new HashMap<>();
         for (char c : text.toCharArray()) {
@@ -70,15 +70,25 @@ public class HuffmanCoding {
         return frequency;
     }
 
+    public static void main(String[] args) {
+        HuffmanCoding huffmanCoding = new HuffmanCoding();
+        Map<Character, Double> frequency = huffmanCoding.buildFrequencyTable("abracadabra");
+        System.out.println(frequency);
+        TreeNode<Character> root = huffmanCoding.buildTree(frequency);
+        System.out.println(root);
+        System.out.println(huffmanCoding.buildEncodingTable(root));
+    }
+
     /**
      * Builds a Huffman tree from the frequency table.
      *
      * @param frequency the frequency table to build the tree from
      * @return the root node of the Huffman tree
      */
-    @StudentImplementationRequired("H4.2")
+    @StudentImplementationRequired("H12.3.2")
+    @SuppressWarnings("ConstantConditions")
     public TreeNode<Character> buildTree(Map<Character, Double> frequency) {
-        // TODO H4.2
+        // TODO H12.3.2
         Queue<HuffmanTreeNode> builder = new PriorityQueue<>();
 
         for (Map.Entry<Character, Double> entry : frequency.entrySet()) {
@@ -89,8 +99,6 @@ public class HuffmanCoding {
             HuffmanTreeNode left = builder.poll();
             HuffmanTreeNode right = builder.poll();
 
-            // Cannot happen since while loop condition checks for size > 1
-            assert right != null;
             HuffmanTreeNode parent = new HuffmanTreeNode(left, right, left.getFrequency() + right.getFrequency());
             left.setParent(parent);
             right.setParent(parent);
@@ -106,6 +114,7 @@ public class HuffmanCoding {
      * @param root the root node of the Huffman tree to build the encoding table fromo
      * @return a map that assigns a binary code to each character
      */
+    @SuppressWarnings("ConstantConditions")
     public Map<Character, String> buildEncodingTable(TreeNode<Character> root) {
         Map<Character, String> encodingTable = new HashMap<>();
         StringBuilder builder = new StringBuilder();
@@ -113,10 +122,6 @@ public class HuffmanCoding {
         if (root.isLeaf()) {
             encodingTable.put(root.getValue(), "0");
         } else {
-            // If node is not a leaf, it must have two children
-            assert root.getLeft() != null;
-            assert root.getRight() != null;
-
             buildEncodingTable(root.getLeft(), encodingTable, builder);
             buildEncodingTable(root.getRight(), encodingTable, builder);
         }
@@ -131,15 +136,13 @@ public class HuffmanCoding {
      * @param encodingTable the encoding table to store the binary codes
      * @param path          the current path to the node
      */
+    @SuppressWarnings("ConstantConditions")
     private void buildEncodingTable(
         TreeNode<Character> node,
         Map<Character, String> encodingTable,
         StringBuilder path
     ) {
         StringBuilder newPath = new StringBuilder(path);
-
-        // Cannot happen since calling method checks for leaf
-        assert node.getParent() != null;
         if (node == node.getParent().getLeft()) {
             newPath.append("0");
         } else {
@@ -150,11 +153,6 @@ public class HuffmanCoding {
             encodingTable.put(node.getValue(), newPath.toString());
             return;
         }
-
-        // If node is not a leaf, it must have two children
-        assert node.getLeft() != null;
-        assert node.getRight() != null;
-
         buildEncodingTable(node.getLeft(), encodingTable, newPath);
         buildEncodingTable(node.getRight(), encodingTable, newPath);
     }

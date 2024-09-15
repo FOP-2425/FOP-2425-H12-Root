@@ -65,9 +65,9 @@ public class HuffmanCodingDecompressor implements Decompressor {
      *
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H6.1")
+    @StudentImplementationRequired("H12.4.2")
     void skipBits() throws IOException {
-        // TODO H6.1
+        // TODO H12.4.2
         int value = 0;
         for (int i = Bytes.NUMBER_OF_BITS - 1; i >= 0; i--) {
             value = Bits.set(value, i, in.readBit());
@@ -83,10 +83,10 @@ public class HuffmanCodingDecompressor implements Decompressor {
      * @return the root of the tree
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H6.2")
+    @StudentImplementationRequired("H12.4.2")
     @SuppressWarnings("ResultOfMethodCallIgnored")
     TreeNode<Character> decodeTree() throws IOException {
-        // TODO H6.2
+        // TODO H12.4.2
         if (in.readBit() == 1) {
             byte[] bytes = new byte[4];
             in.read(bytes);
@@ -106,26 +106,26 @@ public class HuffmanCodingDecompressor implements Decompressor {
      * @param root the root of the tree
      * @throws IOException if an I/O error occurs
      */
-    @StudentImplementationRequired("H6.3")
+    @StudentImplementationRequired("H12.4.2")
+    @SuppressWarnings("ConstantConditions")
     void decodeContent(TreeNode<Character> root) throws IOException {
-        // TODO H6.3
+        // TODO H12.4.2
         int bit;
         while ((bit = in.readBit()) != -1) {
             TreeNode<Character> current = root;
-            assert current != null;
+
             while (!current.isLeaf()) {
                 if (bit == 0) {
                     current = current.getLeft();
                 } else {
                     current = current.getRight();
                 }
-                assert current != null;
                 if (current.isLeaf()) {
                     break;
                 }
                 bit = in.readBit();
             }
-            assert current.getValue() != null;
+
             out.write(current.getValue());
         }
     }
