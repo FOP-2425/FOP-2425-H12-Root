@@ -70,15 +70,6 @@ public class HuffmanCoding {
         return frequency;
     }
 
-    public static void main(String[] args) {
-        HuffmanCoding huffmanCoding = new HuffmanCoding();
-        Map<Character, Double> frequency = huffmanCoding.buildFrequencyTable("abracadabra");
-        System.out.println(frequency);
-        TreeNode<Character> root = huffmanCoding.buildTree(frequency);
-        System.out.println(root);
-        System.out.println(huffmanCoding.buildEncodingTable(root));
-    }
-
     /**
      * Builds a Huffman tree from the frequency table.
      *
