@@ -4,10 +4,11 @@ import h12.util.TreeNode;
 import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 /**
  * Huffman coding is a lossless data compression algorithm. The idea is to assign variable-length codes to input
@@ -71,6 +72,29 @@ public class HuffmanCoding {
     }
 
     /**
+     * Removes the node with the smallest frequency from the collection of nodes.
+     * <p>
+     * The smallest node is determined by the natural ordering of the nodes and only the first occurrence is removed.
+     *
+     * @param nodes the collection of nodes to remove the smallest node from
+     * @return the node with the smallest frequency
+     */
+    @StudentImplementationRequired("H12.3.2")
+    HuffmanTreeNode removeMin(Collection<HuffmanTreeNode> nodes) {
+        // TODO H12.3.2
+        Iterator<HuffmanTreeNode> it = nodes.iterator();
+        HuffmanTreeNode min = it.next();
+        while (it.hasNext()) {
+            HuffmanTreeNode node = it.next();
+            if (node.compareTo(min) < 0) {
+                min = node;
+            }
+        }
+        nodes.remove(min);
+        return min;
+    }
+
+    /**
      * Builds a Huffman tree from the frequency table.
      *
      * @param frequency the frequency table to build the tree from
@@ -80,22 +104,20 @@ public class HuffmanCoding {
     @SuppressWarnings("ConstantConditions")
     public TreeNode<Character> buildTree(Map<Character, Double> frequency) {
         // TODO H12.3.2
-        Queue<HuffmanTreeNode> builder = new PriorityQueue<>();
+        Collection<HuffmanTreeNode> builder = new ArrayList<>();
 
-        for (Map.Entry<Character, Double> entry : frequency.entrySet()) {
-            builder.add(new HuffmanTreeNode(entry.getKey(), entry.getValue()));
-        }
+        frequency.forEach((character, freq) -> builder.add(new HuffmanTreeNode(character, freq)));
 
         while (builder.size() > 1) {
-            HuffmanTreeNode left = builder.poll();
-            HuffmanTreeNode right = builder.poll();
+            HuffmanTreeNode left = removeMin(builder);
+            HuffmanTreeNode right = removeMin(builder);
 
             HuffmanTreeNode parent = new HuffmanTreeNode(left, right, left.getFrequency() + right.getFrequency());
             left.setParent(parent);
             right.setParent(parent);
             builder.add(parent);
         }
-        return builder.poll();
+        return removeMin(builder);
     }
 
     /**
