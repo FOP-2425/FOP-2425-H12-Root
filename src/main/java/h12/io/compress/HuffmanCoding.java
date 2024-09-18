@@ -54,19 +54,18 @@ import java.util.Map;
 public class HuffmanCoding {
 
     /**
-     * Builds a relative frequency table of the input text. The relative frequency of a character is the number of times
-     * it appears in the text divided by the total number of characters in the text.
+     * Builds an absolute frequency table of the input text. The absolute frequency of a character is the number of
+     * times the character appears in the text.
      *
      * @param text the input text to build the frequency table from
-     * @return a map that assigns a relative frequency to each character
+     * @return a map that assigns a absolute frequency to each character
      */
     @StudentImplementationRequired("H12.3.1")
-    public Map<Character, Double> buildFrequencyTable(String text) {
+    public Map<Character, Integer> buildFrequencyTable(String text) {
         // TODO H12.3.1
-        double relativeFactor = 1.0 / text.length();
-        Map<Character, Double> frequency = new HashMap<>();
+        Map<Character, Integer> frequency = new HashMap<>();
         for (char c : text.toCharArray()) {
-            frequency.put(c, frequency.getOrDefault(c, 0.0) + relativeFactor);
+            frequency.put(c, frequency.getOrDefault(c, 0) + 1);
         }
         return frequency;
     }
@@ -102,7 +101,7 @@ public class HuffmanCoding {
      */
     @StudentImplementationRequired("H12.3.2")
     @SuppressWarnings("ConstantConditions")
-    public TreeNode<Character> buildTree(Map<Character, Double> frequency) {
+    public TreeNode<Character> buildTree(Map<Character, Integer> frequency) {
         // TODO H12.3.2
         Collection<HuffmanTreeNode> builder = new ArrayList<>();
 
@@ -180,7 +179,7 @@ public class HuffmanCoding {
         /**
          * The frequency of the character.
          */
-        private final double frequency;
+        private final int frequency;
 
         /**
          * Creates a new Huffman tree node with the given left and right children and frequency.
@@ -189,7 +188,7 @@ public class HuffmanCoding {
          * @param right     the right child of the node
          * @param frequency the frequency of the character
          */
-        public HuffmanTreeNode(TreeNode<Character> left, TreeNode<Character> right, double frequency) {
+        public HuffmanTreeNode(TreeNode<Character> left, TreeNode<Character> right, int frequency) {
             super(left, right, null);
             this.frequency = frequency;
         }
@@ -200,7 +199,7 @@ public class HuffmanCoding {
          * @param value     the value stored in the node
          * @param frequency the frequency of the character
          */
-        public HuffmanTreeNode(Character value, double frequency) {
+        public HuffmanTreeNode(Character value, int frequency) {
             super(value);
             this.frequency = frequency;
         }
@@ -210,13 +209,13 @@ public class HuffmanCoding {
          *
          * @return the frequency of the character
          */
-        public double getFrequency() {
+        public int getFrequency() {
             return frequency;
         }
 
         @Override
         public int compareTo(@NotNull HuffmanTreeNode o) {
-            return Double.compare(frequency, o.frequency);
+            return Integer.compare(frequency, o.frequency);
         }
     }
 }
