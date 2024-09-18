@@ -29,13 +29,13 @@ public class Bytes {
     }
 
     /**
-     * Converts the given bytes to an integer.
+     * Converts the given bytes to a character.
      *
      * @param bytes the bytes to convert
-     * @return the integer value of the bytes
+     * @return the character value of the bytes
      */
-    public static int toInt(byte[] bytes) {
-        return buffer.clear().put(bytes).flip().getInt();
+    public static char toChar(byte[] bytes) {
+        return (char) buffer.clear().put(bytes).flip().getInt();
     }
 
     /**

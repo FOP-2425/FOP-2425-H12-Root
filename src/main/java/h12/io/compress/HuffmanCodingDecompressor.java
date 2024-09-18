@@ -90,7 +90,7 @@ public class HuffmanCodingDecompressor implements Decompressor {
         if (in.readBit() == 1) {
             byte[] bytes = new byte[4];
             in.read(bytes);
-            return new TreeNode<>((char) Bytes.toInt(bytes));
+            return new TreeNode<>(Bytes.toChar(bytes));
         }
         TreeNode<Character> left = decodeTree();
         TreeNode<Character> right = decodeTree();

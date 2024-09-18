@@ -55,7 +55,7 @@ public class BitRunningLengthDecompressor implements Decompressor {
         byte[] bytes = new byte[4];
         int read = in.read(bytes);
         while (read != -1) {
-            writeBit(Bytes.toInt(bytes), in.read());
+            writeBit(Bytes.toChar(bytes), in.read());
             read = in.read(bytes);
         }
         out.flush();
