@@ -100,6 +100,25 @@ public class HuffmanCodingDecompressor implements Decompressor {
         return parent;
     }
 
+    @StudentImplementationRequired("H12.4.2")
+    @SuppressWarnings("ConstantConditions")
+    TreeNode<Character> getCharacter(TreeNode<Character> root, int bit) throws IOException {
+        TreeNode<Character> current = root;
+        int next = bit;
+        while (!current.isLeaf()) {
+            if (next == 0) {
+                current = current.getLeft();
+            } else {
+                current = current.getRight();
+            }
+            if (current.isLeaf()) {
+                break;
+            }
+            next = in.readBit();
+        }
+        return current;
+    }
+
     /**
      * Decodes the content from the input stream.
      *
@@ -107,25 +126,12 @@ public class HuffmanCodingDecompressor implements Decompressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.2")
-    @SuppressWarnings("ConstantConditions")
+      @SuppressWarnings("ConstantConditions")
     void decodeContent(TreeNode<Character> root) throws IOException {
         // TODO H12.4.2
         int bit;
         while ((bit = in.readBit()) != -1) {
-            TreeNode<Character> current = root;
-
-            while (!current.isLeaf()) {
-                if (bit == 0) {
-                    current = current.getLeft();
-                } else {
-                    current = current.getRight();
-                }
-                if (current.isLeaf()) {
-                    break;
-                }
-                bit = in.readBit();
-            }
-
+            TreeNode<Character> current = getCharacter(root, bit);
             out.write(current.getValue());
         }
     }
