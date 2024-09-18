@@ -12,6 +12,7 @@ public interface Decompressor extends AutoCloseable {
 
     /**
      * Decompresses the input stream into the output stream.
+     *
      * @throws IOException if an I/O error occurs
      */
     void decompress() throws IOException;

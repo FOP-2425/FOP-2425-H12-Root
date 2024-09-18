@@ -5,12 +5,9 @@ import h12.io.BitOutputStream;
 import h12.util.Bytes;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.Map;
 
 /**

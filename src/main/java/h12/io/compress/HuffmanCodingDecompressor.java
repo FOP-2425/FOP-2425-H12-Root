@@ -126,7 +126,7 @@ public class HuffmanCodingDecompressor implements Decompressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.2")
-      @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings("ConstantConditions")
     void decodeContent(TreeNode<Character> root) throws IOException {
         // TODO H12.4.2
         int bit;
