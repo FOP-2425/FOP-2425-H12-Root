@@ -1,6 +1,7 @@
-package h12.io.encoding;
+package h12.io.encoding.huffman;
 
 import h12.io.BitOutputStream;
+import h12.io.encoding.Encoder;
 import h12.util.Bytes;
 import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;

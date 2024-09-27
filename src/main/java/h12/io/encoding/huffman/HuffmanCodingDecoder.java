@@ -1,6 +1,7 @@
-package h12.io.encoding;
+package h12.io.encoding.huffman;
 
 import h12.io.BitInputStream;
+import h12.io.encoding.Decoder;
 import h12.util.Bits;
 import h12.util.Bytes;
 import h12.util.TreeNode;

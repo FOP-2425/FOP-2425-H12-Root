@@ -1,7 +1,8 @@
-package h12.io.encoding;
+package h12.io.encoding.rle;
 
 import h12.io.BitInputStream;
 import h12.io.BitOutputStream;
+import h12.io.encoding.Encoder;
 import h12.util.Bytes;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 

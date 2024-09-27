@@ -2,8 +2,8 @@ package h12;
 
 import h12.io.encoding.Decoder;
 import h12.io.encoding.Encoder;
-import h12.io.encoding.HuffmanCodingDecoder;
-import h12.io.encoding.HuffmanCodingEncoder;
+import h12.io.encoding.huffman.HuffmanCodingDecoder;
+import h12.io.encoding.huffman.HuffmanCodingEncoder;
 import h12.util.Bytes;
 
 import java.io.ByteArrayInputStream;

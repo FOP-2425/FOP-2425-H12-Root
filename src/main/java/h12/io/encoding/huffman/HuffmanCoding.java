@@ -1,4 +1,4 @@
-package h12.io.encoding;
+package h12.io.encoding.huffman;
 
 import h12.util.TreeNode;
 import org.jetbrains.annotations.NotNull;
