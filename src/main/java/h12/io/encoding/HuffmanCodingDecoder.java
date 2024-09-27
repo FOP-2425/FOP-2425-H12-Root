@@ -1,4 +1,4 @@
-package h12.io.compress;
+package h12.io.encoding;
 
 import h12.io.BitInputStream;
 import h12.util.Bits;
@@ -27,9 +27,9 @@ import java.nio.charset.StandardCharsets;
  * } </pre>
  *
  * @author Nhan Huynh, Per Goettlicher
- * @see HuffmanCodingDecompressor
+ * @see HuffmanCodingDecoder
  */
-public class HuffmanCodingDecompressor implements Decompressor {
+public class HuffmanCodingDecoder implements Decoder {
 
     /**
      * The input stream to read the compressed data from.
@@ -47,13 +47,13 @@ public class HuffmanCodingDecompressor implements Decompressor {
      * @param in  the input stream to read the compressed data from
      * @param out the output stream to write the decompressed data to
      */
-    public HuffmanCodingDecompressor(InputStream in, OutputStream out) {
+    public HuffmanCodingDecoder(InputStream in, OutputStream out) {
         this.in = new BitInputStream(in);
         this.out = new BufferedWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
     }
 
     @Override
-    public void decompress() throws IOException {
+    public void decode() throws IOException {
         skipBits();
         TreeNode<Character> root = decodeTree();
         decodeContent(root);

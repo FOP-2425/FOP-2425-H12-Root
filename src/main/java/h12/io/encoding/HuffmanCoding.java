@@ -1,4 +1,4 @@
-package h12.io.compress;
+package h12.io.encoding;
 
 import h12.util.TreeNode;
 import org.jetbrains.annotations.NotNull;

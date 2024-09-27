@@ -1,4 +1,4 @@
-package h12.io.compress;
+package h12.io.encoding;
 
 import java.io.IOException;
 
@@ -8,12 +8,12 @@ import java.io.IOException;
  *
  * @author Nhan Huynh, Per Goettlicher
  */
-public interface Compressor extends AutoCloseable {
+public interface Encoder extends AutoCloseable {
 
     /**
      * Compresses the input stream into the output stream.
      *
      * @throws IOException if an I/O error occurs
      */
-    void compress() throws IOException;
+    void encode() throws IOException;
 }

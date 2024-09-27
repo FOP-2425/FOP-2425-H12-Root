@@ -1,4 +1,4 @@
-package h12.io.compress;
+package h12.io.encoding;
 
 import h12.io.BitOutputStream;
 import h12.util.Bytes;
@@ -33,7 +33,7 @@ import java.util.Map;
  *
  * @author Nhan Huynh, Per Goettlicher
  */
-public class HuffmanCodingCompressor implements Compressor {
+public class HuffmanCodingEncoder implements Encoder {
 
     /**
      * The input stream to read the data from.
@@ -51,13 +51,13 @@ public class HuffmanCodingCompressor implements Compressor {
      * @param in  the input stream to read the data from
      * @param out the output stream to write the compressed data to
      */
-    public HuffmanCodingCompressor(InputStream in, OutputStream out) {
+    public HuffmanCodingEncoder(InputStream in, OutputStream out) {
         this.reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
         this.out = new BitOutputStream(out);
     }
 
     @Override
-    public void compress() throws IOException {
+    public void encode() throws IOException {
         HuffmanCoding huffman = new HuffmanCoding();
         String content = getContent();
         Map<Character, Integer> encodingTable = huffman.buildFrequencyTable(content);

@@ -1,4 +1,4 @@
-package h12.io.compress;
+package h12.io.encoding;
 
 import h12.io.BitInputStream;
 import h12.io.BitOutputStream;
@@ -25,7 +25,7 @@ import java.io.OutputStream;
  *
  * @author Nhan Huynh, Per Goettlicher
  */
-public class BitRunningLengthDecompressor implements Decompressor {
+public class BitRunningLengthDecoder implements Decoder {
 
     /**
      * The input stream to read the compressed data from.
@@ -43,14 +43,14 @@ public class BitRunningLengthDecompressor implements Decompressor {
      * @param in  the input stream to read the compressed data from
      * @param out the output stream to write the decompressed data to
      */
-    public BitRunningLengthDecompressor(InputStream in, OutputStream out) {
+    public BitRunningLengthDecoder(InputStream in, OutputStream out) {
         this.in = new BitInputStream(in);
         this.out = new BitOutputStream(out);
     }
 
     @StudentImplementationRequired("H12.2.2")
     @Override
-    public void decompress() throws IOException {
+    public void decode() throws IOException {
         // TODO H12.2.2
         byte[] bytes = new byte[4];
         int read = in.read(bytes);
