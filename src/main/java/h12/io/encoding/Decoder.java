@@ -1,19 +1,12 @@
 package h12.io.encoding;
 
+import org.tudalgo.algoutils.student.annotation.DoNotTouch;
+
 import java.io.IOException;
 
-/**
- * A decompressor that decompresses an input stream into an output stream. Decompression is the process of restoring a
- * compressed file to its original size and content.
- *
- * @author Nhan Huynh, Per Goettlicher
- */
+@DoNotTouch
 public interface Decoder extends AutoCloseable {
 
-    /**
-     * Decompresses the input stream into the output stream.
-     *
-     * @throws IOException if an I/O error occurs
-     */
+    @DoNotTouch
     void decode() throws IOException;
 }

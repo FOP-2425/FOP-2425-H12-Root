@@ -2,8 +2,10 @@ package h12.io.encoding.huffman;
 
 import h12.io.BitOutputStream;
 import h12.io.encoding.Encoder;
-import h12.util.Bytes;
+import h12.lang.Bit;
+import h12.lang.Bytes;
 import h12.util.TreeNode;
+import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.io.BufferedReader;
@@ -14,176 +16,112 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-/**
- * Compressor that uses Huffman coding to compress the input.
- * <p>
- * For example, the input
- * <pre>{@code
- *      a
- * }</pre>
- * would be compressed to
- * <pre>{@code
- *      00000110 | 000000 | 1 00000000 00000000 00000000 01100001 0
- * } </pre>
- * where
- * <li>00000110 is the number of bits to skip (used to fill the remaining bits) </li>
- * <li>000000 are the filled bits which should be skipped</li>
- * <li>1 represents the tree and since we encoded a single character, the tree is a leaf</li>
- * <li>00000000 00000000 00000000 01100001 is the byte representation of the character 'a'</li>
- * <li>0 is the encoded content where 'a' is encoded as '0'</li>
- *
- * @author Nhan Huynh, Per Goettlicher
- */
-public class HuffmanCodingEncoder implements Encoder {
+@DoNotTouch
+public final class HuffmanCodingEncoder implements Encoder {
 
-    /**
-     * The input stream to read the data from.
-     */
-    private final BufferedReader reader;
+    @DoNotTouch
+    private final BufferedReader in;
 
-    /**
-     * The output stream to write the compressed data to.
-     */
+    @DoNotTouch
     private final BitOutputStream out;
 
-    /**
-     * Creates a new compressor that reads data from the given input stream and writes the compressed data to the given.
-     *
-     * @param in  the input stream to read the data from
-     * @param out the output stream to write the compressed data to
-     */
+    @DoNotTouch
     public HuffmanCodingEncoder(InputStream in, OutputStream out) {
-        this.reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-        this.out = new BitOutputStream(out);
+        this.in = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+        this.out = out instanceof BitOutputStream bitOut ? bitOut : new BitOutputStream(out);
     }
 
-    @Override
-    public void encode() throws IOException {
-        HuffmanCoding huffman = new HuffmanCoding();
-        String content = getContent();
-        Map<Character, Integer> encodingTable = huffman.buildFrequencyTable(content);
-        TreeNode<Character> root = huffman.buildTree(encodingTable);
-        Map<Character, String> encoded = huffman.buildEncodingTable(root);
-
-        int bits = getEncodingSize(root, content, encoded);
-        fill(Bytes.computeMissingBits(bits));
-        encodeTree(root);
-        encodeContent(content, encoded);
-        out.flush();
-    }
-
-    /**
-     * Returns the content of the input stream as a string.
-     *
-     * @return the content of the input stream as a string
-     * @throws IOException if an I/O error occurs
-     */
-    @StudentImplementationRequired("H12.4.1")
-    String getContent() throws IOException {
-        // TODO H12.4.1
+    @StudentImplementationRequired("H12")
+    String getText() throws IOException {
+        // TODO H12
         StringBuilder builder = new StringBuilder();
         String line;
-        while ((line = reader.readLine()) != null) {
+        while ((line = in.readLine()) != null) {
             builder.append(line);
         }
         return builder.toString();
     }
 
-    /**
-     * Returns the number of bits used to encode the data.
-     *
-     * @param node    the root of the tree to encode
-     * @param text    the text to encode
-     * @param encoded the encoding table
-     * @return the number of bits used to encode the data
-     */
-    int getEncodingSize(TreeNode<Character> node, String text, Map<Character, String> encoded) {
-        return getTreeSize(node) + getContentSize(text, encoded);
+    @DoNotTouch
+    int computeFillBits(String text, EncodingTable encodingTable) {
+        return Bytes.computeMissingBits(computeHeaderSize(encodingTable) + computeTextSize(text, encodingTable));
     }
 
-    /**
-     * Returns the number of bits used to encode the tree.
-     *
-     * @param node the root of the tree to encode
-     * @return the number of bits used to encode the tree
-     */
+    @DoNotTouch
+    private int computeHeaderSize(EncodingTable encodingTable) {
+        return computeHeaderSize(encodingTable.getRoot());
+    }
+
     @SuppressWarnings("ConstantConditions")
-    private int getTreeSize(TreeNode<Character> node) {
+    private int computeHeaderSize(TreeNode<Character> node) {
         if (node.isLeaf()) {
             return 1 + 32;
         } else {
-            return 1 + getTreeSize(node.getLeft()) + getTreeSize(node.getRight());
+            return 1 + computeHeaderSize(node.getLeft()) + computeHeaderSize(node.getRight());
         }
     }
 
-    /**
-     * Returns the number of bits used to encode the content.
-     *
-     * @param text    the text to encode
-     * @param encoded the encoding table
-     * @return the number of bits used to encode the content
-     */
-    private int getContentSize(String text, Map<Character, String> encoded) {
-        int bits = 0;
-        for (char c : text.toCharArray()) {
-            bits += encoded.get(c).length();
-        }
-        return bits;
+    @StudentImplementationRequired("H12")
+    int computeTextSize(String text, EncodingTable encodingTable) {
+        // TODO H12
+        return text.chars().map(c -> encodingTable.get((char) c).length()).sum();
     }
 
-    /**
-     * Fills the output stream with n bits.
-     *
-     * @param n the number of bits to fill
-     * @throws IOException if an I/O error occurs
-     */
-    void fill(int n) throws IOException {
-        out.write(n);
-        for (int i = 0; i < n; i++) {
-            out.writeBit(0);
+    @StudentImplementationRequired("H12")
+    void fillBits(int count) throws IOException {
+        // TODO H12
+        out.write(count);
+        for (int i = 0; i < count; i++) {
+            out.writeBit(Bit.ZERO);
         }
     }
 
-    /**
-     * Encodes the tree in the output stream.
-     *
-     * @param node the root of the tree to encode
-     * @throws IOException if an I/O error occurs
-     */
-    @StudentImplementationRequired("H12.4.1")
+    @DoNotTouch
+    private void encodeHeader(EncodingTable encodingTable) throws IOException {
+        encodeHeader(encodingTable.getRoot());
+    }
+
+    @DoNotTouch
     @SuppressWarnings("ConstantConditions")
-    void encodeTree(TreeNode<Character> node) throws IOException {
-        // TODO H12.4.1
+    private void encodeHeader(TreeNode<Character> node) throws IOException {
         if (node.isLeaf()) {
-            out.writeBit(1);
+            out.writeBit(Bit.ONE);
             out.write(Bytes.toBytes(node.getValue()));
         } else {
-            out.writeBit(0);
-            encodeTree(node.getLeft());
-            encodeTree(node.getRight());
+            out.writeBit(Bit.ZERO);
+            encodeHeader(node.getLeft());
+            encodeHeader(node.getRight());
         }
     }
 
-    /**
-     * Encodes the content in the output stream.
-     *
-     * @param text    the text to encode
-     * @param encoded the encoding table
-     * @throws IOException if an I/O error occurs
-     */
-    @StudentImplementationRequired("H12.4.1")
-    void encodeContent(String text, Map<Character, String> encoded) throws IOException {
-        // TODO H12.4.1
+    @StudentImplementationRequired("H12")
+    void encodeContent(String text, EncodingTable encodingTable) throws IOException {
+        // TODO H12
         for (char c : text.toCharArray()) {
-            for (char bit : encoded.get(c).toCharArray()) {
-                out.writeBit(bit == '1' ? 1 : 0);
+            for (char bit : encodingTable.get(c).toCharArray()) {
+                out.writeBit(bit == '1' ? Bit.ONE : Bit.ZERO);
             }
         }
     }
 
+    @StudentImplementationRequired("H12")
+    @Override
+    public void encode() throws IOException {
+        // TODO H12
+        HuffmanCoding huffman = new HuffmanCoding();
+        String text = getText();
+        Map<Character, Integer> frequencyTable = huffman.buildFrequencyTable(text);
+        EncodingTable encodingTable = huffman.buildEncodingTable(frequencyTable);
+        fillBits(computeFillBits(text, encodingTable));
+        encodeHeader(encodingTable);
+        encodeContent(text, encodingTable);
+        out.flush();
+    }
+
+    @DoNotTouch
     @Override
     public void close() throws Exception {
-        reader.close();
+        in.close();
         out.close();
     }
 }
