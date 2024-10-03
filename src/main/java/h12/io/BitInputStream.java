@@ -37,6 +37,7 @@ public final class BitInputStream extends InputStream {
         } catch (IllegalArgumentException e) {
             // Case when the read value is EOF (-1)
             buffer = null;
+            return;
         }
         position = Byte.NUMBER_OF_BITS - 1;
     }

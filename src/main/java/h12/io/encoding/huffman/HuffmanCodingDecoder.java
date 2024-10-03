@@ -47,7 +47,6 @@ public final class HuffmanCodingDecoder implements Decoder {
 
     @DoNotTouch
     private EncodingTable decodeHeader() throws IOException {
-        // TODO H12
         return new EncodingTable(decodeTree());
     }
 
