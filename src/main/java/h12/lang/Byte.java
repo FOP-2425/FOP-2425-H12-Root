@@ -38,7 +38,8 @@ public final class Byte {
         }
         this.value = value;
         for (int i = 0; i < NUMBER_OF_BITS; i++) {
-            bits[i] = Bit.fromInt((value >> (NUMBER_OF_BITS - i - 1)) & 1);  // Reverse the bit indexing here
+            // Reverse the bit indexing here
+            bits[i] = Bit.fromInt((value >> (NUMBER_OF_BITS - i - 1)) & 1);
         }
     }
 
@@ -76,7 +77,8 @@ public final class Byte {
         }
         value += n;
         for (int i = 0; i < NUMBER_OF_BITS; i++) {
-            bits[i] = Bit.fromInt((value >> (NUMBER_OF_BITS - i - 1)) & 1);  // Reverse bit indexing here as well
+            // Reverse bit indexing here as well
+            bits[i] = Bit.fromInt((value >> (NUMBER_OF_BITS - i - 1)) & 1);
         }
         return this;
     }
@@ -91,7 +93,8 @@ public final class Byte {
         if (index < 0 || index >= NUMBER_OF_BITS) {
             throw new IllegalArgumentException("Index must be between 0 and %s: %s".formatted(NUMBER_OF_BITS - 1, index));
         }
-        return bits[NUMBER_OF_BITS - index - 1];  // Reverse index when accessing the bit
+        // Reverse index when accessing the bit
+        return bits[NUMBER_OF_BITS - index - 1];
     }
 
     @DoNotTouch
@@ -99,15 +102,18 @@ public final class Byte {
         if (index < 0 || index >= NUMBER_OF_BITS) {
             throw new IllegalArgumentException("Index must be between 0 and %s: %s".formatted(NUMBER_OF_BITS - 1, index));
         }
-        Bit old = bits[NUMBER_OF_BITS - index - 1];  // Reverse index when setting the bit
+        // Reverse index when setting the bit
+        Bit old = bits[NUMBER_OF_BITS - index - 1];
         bits[NUMBER_OF_BITS - index - 1] = bit;
         if (old == bit) {
             return;
         }
         if (bit == Bit.ZERO) {
-            value = value & ~(1 << index);  // Clear the bit at the correct index
+            // Clear the bit at the correct index
+            value = value & ~(1 << index);
         } else {
-            value = value | (1 << index);   // Set the bit at the correct index
+            // Set the bit at the correct index
+            value = value | (1 << index);
         }
     }
 

@@ -11,6 +11,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @DoNotTouch
 public final class HuffmanCoding {
@@ -18,24 +22,19 @@ public final class HuffmanCoding {
     @StudentImplementationRequired("H12")
     public Map<Character, Integer> buildFrequencyTable(String text) {
         // TODO H12
-        Map<Character, Integer> frequency = new HashMap<>();
-        for (char c : text.toCharArray()) {
-            frequency.put(c, frequency.getOrDefault(c, 0) + 1);
-        }
-        return frequency;
+        return text.chars()
+               .mapToObj(c -> (char) c)
+               .collect(Collectors.toMap(
+                   Function.identity(),
+                   c -> 1,
+                   Integer::sum
+               ));
     }
 
     @StudentImplementationRequired("H12")
     <T> T removeMin(Collection<? extends T> elements, Comparator<? super T> cmp) {
         // TODO H12
-        Iterator<? extends T> it = elements.iterator();
-        T min = it.next();
-        while (it.hasNext()) {
-            T element = it.next();
-            if (cmp.compare(element, min) < 0) {
-                min = element;
-            }
-        }
+        T min = elements.stream().min(cmp).orElseThrow();
         elements.remove(min);
         return min;
     }

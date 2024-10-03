@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @DoNotTouch
 public final class HuffmanCodingEncoder implements Encoder {
@@ -34,12 +35,7 @@ public final class HuffmanCodingEncoder implements Encoder {
     @StudentImplementationRequired("H12")
     String getText() throws IOException {
         // TODO H12
-        StringBuilder builder = new StringBuilder();
-        String line;
-        while ((line = in.readLine()) != null) {
-            builder.append(line);
-        }
-        return builder.toString();
+        return in.lines().collect(Collectors.joining());
     }
 
     @DoNotTouch
