@@ -1,8 +1,8 @@
-package h12.io.encoding.rle;
+package h12.io.compression.rle;
 
 import h12.io.BitInputStream;
 import h12.io.BitOutputStream;
-import h12.io.encoding.Decoder;
+import h12.io.compression.Decompressor;
 import h12.lang.Bit;
 import h12.lang.Bytes;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 @DoNotTouch
-public final class BitRunningLengthDecoder implements Decoder {
+public final class BitRunningLengthDecompressor implements Decompressor {
 
     @DoNotTouch
     private final BitInputStream in;
@@ -22,7 +22,7 @@ public final class BitRunningLengthDecoder implements Decoder {
     private final BitOutputStream out;
 
     @DoNotTouch
-    public BitRunningLengthDecoder(InputStream in, OutputStream out) {
+    public BitRunningLengthDecompressor(InputStream in, OutputStream out) {
         this.in = in instanceof BitInputStream bitIn ? bitIn : new BitInputStream(in);
         this.out = out instanceof BitOutputStream bitOut ? bitOut : new BitOutputStream(out);
     }
@@ -37,7 +37,7 @@ public final class BitRunningLengthDecoder implements Decoder {
 
     @StudentImplementationRequired("H12")
     @Override
-    public void decode() throws IOException {
+    public void decompress() throws IOException {
         // TODO H12
         byte[] bytes = new byte[4];
         while (in.read(bytes) != -1) {

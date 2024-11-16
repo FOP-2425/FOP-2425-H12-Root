@@ -1,7 +1,7 @@
-package h12.io.encoding.huffman;
+package h12.io.compression.huffman;
 
 import h12.io.BitOutputStream;
-import h12.io.encoding.Encoder;
+import h12.io.compression.Compressor;
 import h12.lang.Bit;
 import h12.lang.Bytes;
 import h12.util.TreeNode;
@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @DoNotTouch
-public final class HuffmanCodingEncoder implements Encoder {
+public final class HuffmanCodingCompressor implements Compressor {
 
     @DoNotTouch
     private final BufferedReader in;
@@ -27,7 +27,7 @@ public final class HuffmanCodingEncoder implements Encoder {
     private final BitOutputStream out;
 
     @DoNotTouch
-    public HuffmanCodingEncoder(InputStream in, OutputStream out) {
+    public HuffmanCodingCompressor(InputStream in, OutputStream out) {
         this.in = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
         this.out = out instanceof BitOutputStream bitOut ? bitOut : new BitOutputStream(out);
     }
@@ -102,7 +102,7 @@ public final class HuffmanCodingEncoder implements Encoder {
 
     @StudentImplementationRequired("H12")
     @Override
-    public void encode() throws IOException {
+    public void compress() throws IOException {
         // TODO H12
         HuffmanCoding huffman = new HuffmanCoding();
         String text = getText();

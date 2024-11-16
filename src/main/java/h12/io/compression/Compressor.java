@@ -1,12 +1,12 @@
-package h12.io.encoding;
+package h12.io.compression;
 
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
 import java.io.IOException;
 
 @DoNotTouch
-public interface Encoder extends AutoCloseable {
+public interface Compressor extends AutoCloseable {
 
     @DoNotTouch
-    void encode() throws IOException;
+    void compress() throws IOException;
 }

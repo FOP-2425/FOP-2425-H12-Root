@@ -1,4 +1,4 @@
-package h12.io.encoding.huffman;
+package h12.io.compression.huffman;
 
 import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
@@ -7,14 +7,10 @@ import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 @DoNotTouch
 public final class HuffmanCoding {
