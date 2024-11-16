@@ -47,7 +47,7 @@ public final class BitRunningLengthCompressor implements Compressor {
             int count = getBitCount(bit);
             // Store count as 4 bytes
             out.write(Bytes.toBytes(count));
-            // Store bit
+            // Store bit as 1 byte since Java can only read/write bytes
             out.write(bit);
             // Since we are reading the next bit in the loop from getBitCount, we need to remember it
             bit = lastRead;

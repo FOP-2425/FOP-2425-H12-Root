@@ -41,7 +41,7 @@ public final class BitRunningLengthDecompressor implements Decompressor {
         // TODO H12
         byte[] bytes = new byte[4];
         while (in.read(bytes) != -1) {
-            writeBit(Bytes.toChar(bytes), Bit.fromInt(in.read()));
+            writeBit(Bytes.toInt(bytes), Bit.fromInt(in.read()));
         }
         out.flush();
     }
