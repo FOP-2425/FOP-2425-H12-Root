@@ -26,6 +26,11 @@ public final class Bytes {
         return buffer.clear().put(bytes).flip().getInt();
     }
 
+    @DoNotTouch
+    public static char toChar(byte[] bytes) {
+        return (char) toInt(bytes);
+    }
+
     public static Bit[] toBits(byte[] bytes) {
         Bit[] bits = new Bit[bytes.length * Byte.NUMBER_OF_BITS];
         int offset = -java.lang.Byte.MIN_VALUE;

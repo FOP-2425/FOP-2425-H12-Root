@@ -104,8 +104,8 @@ public final class HuffmanCodingCompressor implements Compressor {
     @Override
     public void compress() throws IOException {
         // TODO H12
-        HuffmanCoding huffman = new HuffmanCoding();
         String text = getText();
+        HuffmanCoding huffman = new HuffmanCoding();
         Map<Character, Integer> frequencyTable = huffman.buildFrequencyTable(text);
         EncodingTable encodingTable = huffman.buildEncodingTable(frequencyTable);
         fillBits(computeFillBits(text, encodingTable));
