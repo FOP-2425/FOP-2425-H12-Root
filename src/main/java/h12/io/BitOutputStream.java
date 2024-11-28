@@ -10,25 +10,45 @@ import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * An output stream that writes bits to an underlying output stream.
+ *
+ * @author Per Göttlicher, Nhan Huynh
+ */
 @DoNotTouch
 public final class BitOutputStream extends OutputStream {
 
-    @SolutionOnly
-    private static final int INVALID = -1;
-
+    /**
+     * The underlying output stream.
+     */
     @DoNotTouch
     private final OutputStream underlying;
 
+    /**
+     * The buffer used for writing bits.
+     */
     private MyByte buffer = new MyByte();
 
+    /**
+     * The position of the next bit to write in the buffer.
+     */
     private int position = MyByte.NUMBER_OF_BITS - 1;
 
+    /**
+     * Constructs a new bit output stream with the specified underlying output stream.
+     *
+     * @param underlying the underlying output stream
+     */
     @DoNotTouch
     public BitOutputStream(OutputStream underlying) {
         this.underlying = underlying;
     }
 
-
+    /**
+     * Flushes the buffer if it is not empty to write the remaining bits to the underlying output stream.
+     *
+     * @throws IOException if an I/O error occurso
+     */
     @StudentImplementationRequired("H12.1.2")
     void flushBuffer() throws IOException {
         // TODO H12.1.2
@@ -41,6 +61,12 @@ public final class BitOutputStream extends OutputStream {
         }
     }
 
+    /**
+     * Writes the specified bit to the output stream.
+     *
+     * @param bit the bit to write
+     * @throws IOException if an I/O error occurs
+     */
     @StudentImplementationRequired("H12.1.2")
     public void writeBit(MyBit bit) throws IOException {
         // TODO H12.1.2

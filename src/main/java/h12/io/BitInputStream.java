@@ -11,24 +11,51 @@ import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * An input stream that reads bits from an underlying input stream.
+ *
+ * @author Per Göttlicher, Nhan Huynh
+ */
 @DoNotTouch
 public final class BitInputStream extends InputStream {
 
+    /**
+     * The value returned when the stream has reached the end or the beginning of the stream.
+     */
     @SolutionOnly
     private static final int INVALID = -1;
 
+    /**
+     * The underlying input stream.
+     */
     @DoNotTouch
     private final InputStream underlying;
 
+    /**
+     * The buffer used for reading bits.
+     */
     private @Nullable MyByte buffer;
 
+    /**
+     * The position of the next bit to read in the buffer.
+     */
     private int position = INVALID;
 
+    /**
+     * Constructs a new bit input stream with the specified underlying input stream.
+     *
+     * @param underlying the underlying input stream
+     */
     @DoNotTouch
     public BitInputStream(InputStream underlying) {
         this.underlying = underlying;
     }
 
+    /**
+     * Fetches the next byte from the underlying input stream to the buffer.
+     *
+     * @throws IOException if an I/O error occurs
+     */
     @StudentImplementationRequired("H12.1.1")
     void fetch() throws IOException {
         // TODO H12.1.1
@@ -42,6 +69,12 @@ public final class BitInputStream extends InputStream {
         position = MyByte.NUMBER_OF_BITS - 1;
     }
 
+    /**
+     * Reads a single bit from the input stream.
+     *
+     * @return the bit read from the stream
+     * @throws IOException if an I/O error occurs
+     */
     @StudentImplementationRequired("H12.1.1")
     public int readBit() throws IOException {
         // TODO H12.1.1
@@ -59,6 +92,7 @@ public final class BitInputStream extends InputStream {
     }
 
     @StudentImplementationRequired("H12.1.1")
+    @Override
     public int read() throws IOException {
         // TODO H12.1.1
         MyByte value = new MyByte();
@@ -79,6 +113,17 @@ public final class BitInputStream extends InputStream {
         return value.getValue();
     }
 
+    /**
+     * Reads up to {@code len} bytes of data from the input stream into an array of bytes.
+     *
+     * @param b   the buffer into which the data is read.
+     * @param off the start offset in array {@code b}
+     *            at which the data is written.
+     * @param len the maximum number of bytes to read.
+     * @return the total number of bytes read into the buffer, or -1 if there is no more data because the end of the
+     * stream has been reached.
+     * @throws IOException if an I/O error occurs.
+     */
     @DoNotTouch
     public int read(byte @NotNull [] b, int off, int len) throws IOException {
         int read = 0;

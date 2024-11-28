@@ -11,23 +11,52 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * A simple compressor that uses the running length encoding algorithm to compress data.
+ *
+ * <p>E.g. the input 111111110000111111 would be compressed to 8 1 4 0 6 1 to represent 8 ones, 4 zeros, and 6 ones.
+ *
+ * @author Per Göttlicher, Nhan Huynh
+ */
 @DoNotTouch
 public final class BitRunningLengthCompressor implements Compressor {
 
+    /**
+     * The input stream to read from.
+     */
     @DoNotTouch
     private final BitInputStream in;
 
+    /**
+     * The output stream to write to.
+     */
     @DoNotTouch
     private final BitOutputStream out;
 
+    /**
+     * The last read bit.
+     */
     private int lastRead = -1;
 
+    /**
+     * Creates a new compressor with the given input to compress and output to write to.
+     *
+     * @param in  the input stream to read from
+     * @param out the output stream to write to
+     */
     @DoNotTouch
     public BitRunningLengthCompressor(InputStream in, OutputStream out) {
         this.in = in instanceof BitInputStream bitIn ? bitIn : new BitInputStream(in);
         this.out = out instanceof BitOutputStream bitOut ? bitOut : new BitOutputStream(out);
     }
 
+    /**
+     * Returns the number of bits that are the same as the given bit.
+     *
+     * @param bit the bit to count
+     * @return the number of bits that are the same as the given bit
+     * @throws IOException if an I/O error occurs
+     */
     @StudentImplementationRequired("H12.2.1")
     int getBitCount(int bit) throws IOException {
         // TODO H12.2.1

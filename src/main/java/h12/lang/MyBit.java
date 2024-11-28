@@ -4,23 +4,49 @@ import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
 import java.util.Objects;
 
+/**
+ * Represents a bit with the value of 0 or 1.
+ *
+ * @author Per Göttlicher, Nhan Huynh
+ */
 @DoNotTouch
 public final class MyBit {
 
+    /**
+     * The bit with the value of 0.
+     */
     @DoNotTouch
     public static final MyBit ZERO = new MyBit(0);
 
+    /**
+     * The bit with the value of 1.
+     */
     @DoNotTouch
     public static final MyBit ONE = new MyBit(1);
 
+    /**
+     * The value of the bit.
+     */
     @DoNotTouch
     private final int value;
 
+    /**
+     * Constructs a new bit with the specified value.
+     *
+     * @param value the value of the bit
+     */
     @DoNotTouch
     private MyBit(int value) {
         this.value = value;
     }
 
+    /**
+     * Returns the bit with the specified value.
+     *
+     * @param value the value of the bit
+     * @return the bit with the specified value
+     * @throws IllegalArgumentException if the value is not 0 or 1
+     */
     @DoNotTouch
     public static MyBit fromInt(int value) {
         if (value != 0 && value != 1) {
@@ -29,6 +55,10 @@ public final class MyBit {
         return value == ONE.getValue() ? ONE : ZERO;
     }
 
+    /**
+     * Returns the value of the bit.
+     * @return the value of the bit
+     */
     @DoNotTouch
     public int getValue() {
         return value;
