@@ -7,6 +7,7 @@ import org.tudalgo.algoutils.student.annotation.DoNotTouch;
  * Represents a node in a binary tree.
  *
  * @param <T> the type of the value stored in the node
+ *
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
@@ -46,10 +47,10 @@ public class TreeNode<T> {
      */
     @DoNotTouch
     public TreeNode(
-        @Nullable TreeNode<T> left,
-        @Nullable TreeNode<T> right,
-        @Nullable TreeNode<T> parent,
-        @Nullable T value
+            @Nullable TreeNode<T> left,
+            @Nullable TreeNode<T> right,
+            @Nullable TreeNode<T> parent,
+            @Nullable T value
     ) {
         this.left = left;
         this.right = right;

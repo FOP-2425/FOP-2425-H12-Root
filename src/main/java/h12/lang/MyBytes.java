@@ -31,6 +31,7 @@ public final class MyBytes {
      * Convert an integer to a 4-byte array.
      *
      * @param value the integer to convert
+     *
      * @return the 4-byte array representing the integer
      */
     @DoNotTouch
@@ -42,6 +43,7 @@ public final class MyBytes {
      * Convert a character to a 4-byte array.
      *
      * @param bytes the character to convert
+     *
      * @return the 4-byte array representing the character
      */
     @DoNotTouch
@@ -53,6 +55,7 @@ public final class MyBytes {
      * Convert a 4-byte array to a character.
      *
      * @param bytes the 4-byte array to convert
+     *
      * @return the character represented by the 4-byte array
      */
     @DoNotTouch
@@ -64,6 +67,7 @@ public final class MyBytes {
      * Convert a byte array to a bit sequence array.
      *
      * @param bytes the byte array to convert
+     *
      * @return the bit sequence array representing the byte array
      */
     public static MyBit[] toBits(byte[] bytes) {
@@ -83,13 +87,14 @@ public final class MyBytes {
      * Returns a string representation of the byte array in binary format.
      *
      * @param bytes the byte array to convert
+     *
      * @return the string representation of the byte array in binary format
      */
     public static String toBinaryString(byte[] bytes) {
         return Arrays.stream(toBits(bytes))
-            .map(MyBit::getValue)
-            .map(String::valueOf)
-            .collect(Collectors.joining());
+                .map(MyBit::getValue)
+                .map(String::valueOf)
+                .collect(Collectors.joining());
     }
 
 
@@ -99,6 +104,7 @@ public final class MyBytes {
      * <p>E.g. if the length is 5, then the number of missing bits is 3 to fill the byte.
      *
      * @param length the length of the byte array
+     *
      * @return the number of missing bits to fill the byte
      */
     public static int computeMissingBits(int length) {

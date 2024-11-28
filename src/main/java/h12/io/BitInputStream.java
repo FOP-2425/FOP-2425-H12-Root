@@ -120,8 +120,9 @@ public final class BitInputStream extends InputStream {
      * @param off the start offset in array {@code b}
      *            at which the data is written.
      * @param len the maximum number of bytes to read.
+     *
      * @return the total number of bytes read into the buffer, or -1 if there is no more data because the end of the
-     * stream has been reached.
+     *         stream has been reached.
      * @throws IOException if an I/O error occurs.
      */
     @DoNotTouch

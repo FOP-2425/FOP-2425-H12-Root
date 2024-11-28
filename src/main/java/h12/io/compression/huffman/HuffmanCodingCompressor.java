@@ -66,6 +66,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      *
      * @param text          the text to compress
      * @param encodingTable the encoding table to use
+     *
      * @return the number of fill bits needed
      */
     @DoNotTouch
@@ -77,6 +78,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      * Computes the size of the header in bits needed to encode the Huffman tree.
      *
      * @param encodingTable the encoding table to use
+     *
      * @return the size of the header in bitso
      */
     @DoNotTouch
@@ -88,6 +90,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      * Computes the size of the header in bits needed to encode the Huffman tree.
      *
      * @param node the node to compute the size from
+     *
      * @return the size of the header in bits
      */
     @SuppressWarnings("ConstantConditions")
@@ -104,6 +107,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      *
      * @param text          the text to compress
      * @param encodingTable the encoding table to use
+     *
      * @return the size of the text in bits
      */
     @StudentImplementationRequired("H12.4.1")
@@ -116,6 +120,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      * Fills the last byte with the given number of bits.
      *
      * @param count the number of bits to fill
+     *
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.1")
@@ -131,6 +136,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      * Encodes the header of the compressed data using the given encoding table.
      *
      * @param encodingTable the encoding table to use
+     *
      * @throws IOException if an I/O error occurs
      */
     @DoNotTouch
@@ -142,6 +148,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      * Encodes the header of the compressed data using the given node until a leaf node is reached.
      *
      * @param node the node to encode
+     *
      * @throws IOException if an I/O error occurs
      */
     @DoNotTouch
@@ -162,6 +169,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      *
      * @param text          the text to compress
      * @param encodingTable the encoding table to use
+     *
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.1")

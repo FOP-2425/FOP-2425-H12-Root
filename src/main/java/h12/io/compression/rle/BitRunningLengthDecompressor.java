@@ -51,6 +51,7 @@ public final class BitRunningLengthDecompressor implements Decompressor {
      *
      * @param count the number of bits to write
      * @param bit   the bit to write
+     *
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.2.2")

@@ -89,6 +89,7 @@ public final class EncodingTable {
      * Returns whether the encoding table contains the given character.
      *
      * @param character the character to check
+     *
      * @return true if the encoding table contains the character, false otherwise
      */
     @DoNotTouch
@@ -103,6 +104,7 @@ public final class EncodingTable {
      * Returns whether the encoding table contains the given code.
      *
      * @param code the code to check
+     *
      * @return true if the encoding table contains the code, false otherwise
      */
     @DoNotTouch
@@ -119,19 +121,21 @@ public final class EncodingTable {
      * Returns whether the encoding table contains the given code.
      *
      * @param iterable the Huffman code to check
+     *
      * @return {@code true} if the encoding table contains the code, {@code false} otherwise
      */
     @DoNotTouch
     public boolean contains(Iterable<Integer> iterable) {
         return contains(StreamSupport.stream(iterable.spliterator(), false)
-            .map(String::valueOf)
-            .collect(Collectors.joining()));
+                .map(String::valueOf)
+                .collect(Collectors.joining()));
     }
 
     /**
      * Returns the Huffman code of the given character.
      *
      * @param character the character to get the code for
+     *
      * @return the Huffman code of the character
      */
     @DoNotTouch
@@ -146,6 +150,7 @@ public final class EncodingTable {
      * Returns the character of the given Huffman code.
      *
      * @param code the Huffman code to get the character for
+     *
      * @return the character of the code
      */
     @DoNotTouch
@@ -172,13 +177,14 @@ public final class EncodingTable {
      * Returns the character of the given Huffman code.
      *
      * @param iterable the Huffman code to get the character for
+     *
      * @return the character of the code
      */
     @DoNotTouch
     public Character get(Iterable<Integer> iterable) {
         return get(StreamSupport.stream(iterable.spliterator(), false)
-            .map(String::valueOf)
-            .collect(Collectors.joining()));
+                .map(String::valueOf)
+                .collect(Collectors.joining()));
     }
 
     @DoNotTouch
