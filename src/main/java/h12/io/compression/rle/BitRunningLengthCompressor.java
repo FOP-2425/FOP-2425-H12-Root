@@ -54,6 +54,7 @@ public final class BitRunningLengthCompressor implements Compressor {
      * Returns the number of bits that are the same as the given bit.
      *
      * @param bit the bit to count
+     *
      * @return the number of bits that are the same as the given bit
      * @throws IOException if an I/O error occurs
      */

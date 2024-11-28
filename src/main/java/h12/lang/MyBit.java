@@ -44,6 +44,7 @@ public final class MyBit {
      * Returns the bit with the specified value.
      *
      * @param value the value of the bit
+     *
      * @return the bit with the specified value
      * @throws IllegalArgumentException if the value is not 0 or 1
      */
@@ -57,6 +58,7 @@ public final class MyBit {
 
     /**
      * Returns the value of the bit.
+     *
      * @return the value of the bit
      */
     @DoNotTouch

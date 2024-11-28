@@ -56,13 +56,14 @@ public final class MyByte {
      * Constructs a new byte with the specified value.
      *
      * @param value the value of the byte
+     *
      * @throws IllegalArgumentException if the value is not between the {@value MIN_VALUE} and {@value MAX_VALUE}
      */
     @DoNotTouch
     public MyByte(int value) {
         if (value < MIN_VALUE || value > MAX_VALUE) {
             throw new IllegalArgumentException(
-                "Value must be between %s and %s: %s".formatted(MIN_VALUE, MAX_VALUE, value)
+                    "Value must be between %s and %s: %s".formatted(MIN_VALUE, MAX_VALUE, value)
             );
         }
         this.value = value;
@@ -96,6 +97,7 @@ public final class MyByte {
      * Decreases the value of the byte by the specified amount.
      *
      * @param n the amount to decrease the value by
+     *
      * @return the decreased byte
      * @throws IllegalArgumentException if the value cannot be decreased below {@value MIN_VALUE}
      */
@@ -125,6 +127,7 @@ public final class MyByte {
      * Increases the value of the byte by the specified amount.
      *
      * @param n the amount to increase the value by
+     *
      * @return the increased byte
      * @throws IllegalArgumentException if the value cannot be increased above {@value MAX_VALUE}
      */
@@ -155,6 +158,7 @@ public final class MyByte {
      * Returns the bit at the specified index.
      *
      * @param index the index of the bit to return
+     *
      * @return the bit at the specified index
      * @throws IllegalArgumentException if the index is out of bounds
      */
@@ -172,6 +176,7 @@ public final class MyByte {
      *
      * @param index the index of the bit to set
      * @param bit   the bit to set
+     *
      * @throws IllegalArgumentException if the index is out of bounds
      */
     @DoNotTouch
@@ -210,11 +215,11 @@ public final class MyByte {
     @Override
     public String toString() {
         return "Byte{value=%s, bits=%s}".formatted(
-            value,
-            Arrays.stream(bits)
-                .map(MyBit::getValue)
-                .map(String::valueOf)
-                .collect(Collectors.joining())
+                value,
+                Arrays.stream(bits)
+                        .map(MyBit::getValue)
+                        .map(String::valueOf)
+                        .collect(Collectors.joining())
         );
     }
 }

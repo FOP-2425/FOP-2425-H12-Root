@@ -105,6 +105,7 @@ public final class HuffmanCodingDecompressor implements Decompressor {
      *
      * @param startBit      the first bit of the character
      * @param encodingTable the encoding table to use
+     *
      * @return the decoded character from the compressed data
      * @throws IOException if an I/O error occurs
      */
@@ -123,6 +124,7 @@ public final class HuffmanCodingDecompressor implements Decompressor {
      * Decodes the content of the compressed data using the given encoding table.
      *
      * @param encodingTable the encoding table to use
+     *
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.2")

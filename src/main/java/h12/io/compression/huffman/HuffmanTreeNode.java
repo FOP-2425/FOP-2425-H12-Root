@@ -36,7 +36,8 @@ public final class HuffmanTreeNode extends TreeNode<Character> implements Compar
 
     /**
      * Creates a new leaf node with the given value and frequency.
-     * @param value the value of this node
+     *
+     * @param value     the value of this node
      * @param frequency the frequency of this node
      */
     @DoNotTouch
@@ -47,6 +48,7 @@ public final class HuffmanTreeNode extends TreeNode<Character> implements Compar
 
     /**
      * Returns the frequency of this node.
+     *
      * @return the frequency of this node
      */
     @DoNotTouch

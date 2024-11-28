@@ -3,37 +3,37 @@ plugins {
     alias(libs.plugins.style)
 }
 
-val id = "h12"
 version = file("version").readLines().first()
 
 exercise {
-    assignmentId.set(id)
+    assignmentId.set("h12")
 }
 
 submission {
     // ACHTUNG!
     // Setzen Sie im folgenden Bereich Ihre TU-ID (NICHT Ihre Matrikelnummer!), Ihren Nachnamen und Ihren Vornamen
     // in Anführungszeichen (z.B. "ab12cdef" für Ihre TU-ID) ein!
+    // BEISPIEL:
+    // studentId = "ab12cdef"
+    // firstName = "sol_first"
+    // lastName = "sol_last"
     studentId = "ab12cdef"
     firstName = "sol_first"
     lastName = "sol_last"
 
     // Optionally require own tests for mainBuildSubmission task. Default is false
-    requireTests = true
+    requireTests = false
 }
 
 jagr {
     graders {
         val graderPublic by getting {
-            val name = "Public"
-            graderName.set("${id.uppercase()}-$name")
-            rubricProviderName.set("$id.${id.uppercase()}_RubricProvider$name")
+            rubricProviderName.set("h12.H12_RubricProviderPublic")
         }
         val graderPrivate by creating {
             parent(graderPublic)
-            val name = "Private"
-            graderName.set("${id.uppercase()}-$name")
-            rubricProviderName.set("$id.${id.uppercase()}_RubricProvider$name")
+            graderName.set("FOP-2425-H10-Private")
+            rubricProviderName.set("h12.H12_RubricProviderPrivate")
         }
     }
 }

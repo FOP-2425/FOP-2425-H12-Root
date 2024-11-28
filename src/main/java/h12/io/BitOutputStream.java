@@ -4,7 +4,6 @@ import h12.lang.MyBit;
 import h12.lang.MyByte;
 import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
-import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.io.IOException;
@@ -65,6 +64,7 @@ public final class BitOutputStream extends OutputStream {
      * Writes the specified bit to the output stream.
      *
      * @param bit the bit to write
+     *
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.1.2")
