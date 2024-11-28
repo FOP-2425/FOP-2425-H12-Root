@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @DoNotTouch
-public final class Byte {
+public final class MyByte {
 
     @DoNotTouch
     public static final int NUMBER_OF_BITS = 8;
@@ -19,18 +19,18 @@ public final class Byte {
     public static final int MIN_VALUE = 0;
 
     @DoNotTouch
-    private final Bit[] bits = new Bit[NUMBER_OF_BITS];
+    private final MyBit[] bits = new MyBit[NUMBER_OF_BITS];
 
     @DoNotTouch
     private int value;
 
     @DoNotTouch
-    public Byte() {
+    public MyByte() {
         this(0);
     }
 
     @DoNotTouch
-    public Byte(int value) {
+    public MyByte(int value) {
         if (value < MIN_VALUE || value > MAX_VALUE) {
             throw new IllegalArgumentException(
                 "Value must be between %s and %s: %s".formatted(MIN_VALUE, MAX_VALUE, value)
@@ -39,7 +39,7 @@ public final class Byte {
         this.value = value;
         for (int i = 0; i < NUMBER_OF_BITS; i++) {
             // Reverse the bit indexing here
-            bits[i] = Bit.fromInt((value >> (NUMBER_OF_BITS - i - 1)) & 1);
+            bits[i] = MyBit.fromInt((value >> (NUMBER_OF_BITS - i - 1)) & 1);
         }
     }
 
@@ -49,47 +49,47 @@ public final class Byte {
     }
 
     @DoNotTouch
-    public Bit[] getBits() {
+    public MyBit[] getBits() {
         return bits;
     }
 
     @DoNotTouch
-    public Byte decrease(int n) {
+    public MyByte decrease(int n) {
         if (value - n < MIN_VALUE) {
             throw new IllegalStateException("Value cannot be decreased below %s".formatted(MIN_VALUE));
         }
         value -= n;
         for (int i = 0; i < NUMBER_OF_BITS; i++) {
-            bits[i] = Bit.fromInt((value >> (NUMBER_OF_BITS - i - 1)) & 1);
+            bits[i] = MyBit.fromInt((value >> (NUMBER_OF_BITS - i - 1)) & 1);
         }
         return this;
     }
 
     @DoNotTouch
-    public Byte decrease() {
+    public MyByte decrease() {
         return decrease(1);
     }
 
     @DoNotTouch
-    public Byte increase(int n) {
+    public MyByte increase(int n) {
         if (value + n > MAX_VALUE) {
             throw new IllegalStateException("Value cannot be increased above %s".formatted(MAX_VALUE));
         }
         value += n;
         for (int i = 0; i < NUMBER_OF_BITS; i++) {
             // Reverse bit indexing here as well
-            bits[i] = Bit.fromInt((value >> (NUMBER_OF_BITS - i - 1)) & 1);
+            bits[i] = MyBit.fromInt((value >> (NUMBER_OF_BITS - i - 1)) & 1);
         }
         return this;
     }
 
     @DoNotTouch
-    public Byte increase() {
+    public MyByte increase() {
         return increase(1);
     }
 
     @DoNotTouch
-    public Bit get(int index) {
+    public MyBit get(int index) {
         if (index < 0 || index >= NUMBER_OF_BITS) {
             throw new IllegalArgumentException("Index must be between 0 and %s: %s".formatted(NUMBER_OF_BITS - 1, index));
         }
@@ -98,17 +98,17 @@ public final class Byte {
     }
 
     @DoNotTouch
-    public void set(int index, Bit bit) {
+    public void set(int index, MyBit bit) {
         if (index < 0 || index >= NUMBER_OF_BITS) {
             throw new IllegalArgumentException("Index must be between 0 and %s: %s".formatted(NUMBER_OF_BITS - 1, index));
         }
         // Reverse index when setting the bit
-        Bit old = bits[NUMBER_OF_BITS - index - 1];
+        MyBit old = bits[NUMBER_OF_BITS - index - 1];
         bits[NUMBER_OF_BITS - index - 1] = bit;
         if (old == bit) {
             return;
         }
-        if (bit == Bit.ZERO) {
+        if (bit == MyBit.ZERO) {
             // Clear the bit at the correct index
             value = value & ~(1 << index);
         } else {
@@ -120,7 +120,7 @@ public final class Byte {
     @DoNotTouch
     @Override
     public boolean equals(Object o) {
-        return this == o || o instanceof Byte aByte && value == aByte.value;
+        return this == o || o instanceof MyByte aMyByte && value == aMyByte.value;
     }
 
     @DoNotTouch
@@ -135,7 +135,7 @@ public final class Byte {
         return "Byte{value=%s, bits=%s}".formatted(
             value,
             Arrays.stream(bits)
-                .map(Bit::getValue)
+                .map(MyBit::getValue)
                 .map(String::valueOf)
                 .collect(Collectors.joining())
         );

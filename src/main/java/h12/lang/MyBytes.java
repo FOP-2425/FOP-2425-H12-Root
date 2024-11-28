@@ -7,13 +7,13 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @DoNotTouch
-public final class Bytes {
+public final class MyBytes {
 
     @DoNotTouch
     private static final ByteBuffer buffer = ByteBuffer.allocate(4);
 
     @DoNotTouch
-    private Bytes() {
+    private MyBytes() {
     }
 
     @DoNotTouch
@@ -31,13 +31,13 @@ public final class Bytes {
         return (char) toInt(bytes);
     }
 
-    public static Bit[] toBits(byte[] bytes) {
-        Bit[] bits = new Bit[bytes.length * Byte.NUMBER_OF_BITS];
+    public static MyBit[] toBits(byte[] bytes) {
+        MyBit[] bits = new MyBit[bytes.length * MyByte.NUMBER_OF_BITS];
         int offset = -java.lang.Byte.MIN_VALUE;
         int index = 0;
         for (byte b : bytes) {
-            Byte value = new Byte(b + offset);
-            for (int i = Byte.NUMBER_OF_BITS - 1; i >= 0; i--) {
+            MyByte value = new MyByte(b + offset);
+            for (int i = MyByte.NUMBER_OF_BITS - 1; i >= 0; i--) {
                 bits[index++] = value.get(i);
             }
         }
@@ -46,13 +46,13 @@ public final class Bytes {
 
     public static String toBinaryString(byte[] bytes) {
         return Arrays.stream(toBits(bytes))
-                .map(Bit::getValue)
+                .map(MyBit::getValue)
                 .map(String::valueOf)
                 .collect(Collectors.joining());
     }
 
 
     public static int computeMissingBits(int length) {
-        return (Byte.NUMBER_OF_BITS - (length % Byte.NUMBER_OF_BITS)) % Byte.NUMBER_OF_BITS;
+        return (MyByte.NUMBER_OF_BITS - (length % MyByte.NUMBER_OF_BITS)) % MyByte.NUMBER_OF_BITS;
     }
 }

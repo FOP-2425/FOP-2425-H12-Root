@@ -2,9 +2,9 @@ package h12.io.compression.huffman;
 
 import h12.io.BitInputStream;
 import h12.io.compression.Decompressor;
-import h12.lang.Bit;
-import h12.lang.Byte;
-import h12.lang.Bytes;
+import h12.lang.MyBit;
+import h12.lang.MyByte;
+import h12.lang.MyBytes;
 import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
@@ -33,12 +33,12 @@ public final class HuffmanCodingDecompressor implements Decompressor {
         this.out = new OutputStreamWriter(out, StandardCharsets.UTF_8);
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.4.2")
     void skipBits() throws IOException {
-        // TODO H12
-        Byte value = new Byte();
-        for (int i = Byte.NUMBER_OF_BITS - 1; i >= 0; i--) {
-            value.set(i, Bit.fromInt(in.readBit()));
+        // TODO H12.4.2
+        MyByte value = new MyByte();
+        for (int i = MyByte.NUMBER_OF_BITS - 1; i >= 0; i--) {
+            value.set(i, MyBit.fromInt(in.readBit()));
         }
         for (int i = 0; i < value.getValue(); i++) {
             in.readBit();
@@ -56,7 +56,7 @@ public final class HuffmanCodingDecompressor implements Decompressor {
         if (in.readBit() == 1) {
             byte[] bytes = new byte[4];
             in.read(bytes);
-            return new TreeNode<>(Bytes.toChar(bytes));
+            return new TreeNode<>(MyBytes.toChar(bytes));
         }
         TreeNode<Character> left = decodeTree();
         TreeNode<Character> right = decodeTree();
@@ -66,9 +66,9 @@ public final class HuffmanCodingDecompressor implements Decompressor {
         return parent;
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.4.2")
     char decodeCharacter(int startBit, EncodingTable encodingTable) throws IOException {
-        // TODO H12
+        // TODO H12.4.2
         List<Integer> code = new ArrayList<>();
         code.add(startBit);
         while (!encodingTable.contains(code)) {
@@ -77,19 +77,19 @@ public final class HuffmanCodingDecompressor implements Decompressor {
         return encodingTable.get(code);
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.4.2")
     void decodeContent(EncodingTable encodingTable) throws IOException {
-        // TODO H12
+        // TODO H12.4.2
         int bit;
         while ((bit = in.readBit()) != -1) {
             out.write(decodeCharacter(bit, encodingTable));
         }
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.4.2")
     @Override
     public void decompress() throws IOException {
-        // TODO H12
+        // TODO H12.4.2
         skipBits();
         EncodingTable encodingTable = decodeHeader();
         decodeContent(encodingTable);

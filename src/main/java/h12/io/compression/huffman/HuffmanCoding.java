@@ -15,21 +15,17 @@ import java.util.stream.Collectors;
 @DoNotTouch
 public final class HuffmanCoding {
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.3.1")
     public Map<Character, Integer> buildFrequencyTable(String text) {
-        // TODO H12
+        // TODO H12.3.1
         return text.chars()
                .mapToObj(c -> (char) c)
-               .collect(Collectors.toMap(
-                   Function.identity(),
-                   c -> 1,
-                   Integer::sum
-               ));
+               .collect(Collectors.toMap(Function.identity(), c -> 1, Integer::sum));
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.3.2")
     <T> T removeMin(Collection<? extends T> elements, Comparator<? super T> cmp) {
-        // TODO H12
+        // TODO H12.3.2
         T min = elements.stream().min(cmp).orElseThrow();
         elements.remove(min);
         return min;

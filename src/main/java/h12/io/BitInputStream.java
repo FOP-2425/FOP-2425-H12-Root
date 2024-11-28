@@ -1,7 +1,7 @@
 package h12.io;
 
-import h12.lang.Bit;
-import h12.lang.Byte;
+import h12.lang.MyBit;
+import h12.lang.MyByte;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
@@ -20,7 +20,7 @@ public final class BitInputStream extends InputStream {
     @DoNotTouch
     private final InputStream underlying;
 
-    private @Nullable Byte buffer;
+    private @Nullable MyByte buffer;
 
     private int position = INVALID;
 
@@ -29,22 +29,22 @@ public final class BitInputStream extends InputStream {
         this.underlying = underlying;
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.1.1")
     void fetch() throws IOException {
-        // TODO H12
+        // TODO H12.1.1
         try {
-            buffer = new Byte(underlying.read());
+            buffer = new MyByte(underlying.read());
         } catch (IllegalArgumentException e) {
             // Case when the read value is EOF (-1)
             buffer = null;
             return;
         }
-        position = Byte.NUMBER_OF_BITS - 1;
+        position = MyByte.NUMBER_OF_BITS - 1;
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.1.1")
     public int readBit() throws IOException {
-        // TODO H12
+        // TODO H12.1.1
         // If we already read all bits from the buffer, fetch the next byte
         if (position < 0) {
             fetch();
@@ -58,23 +58,23 @@ public final class BitInputStream extends InputStream {
         return buffer.get(position--).getValue();
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.1.1")
     public int read() throws IOException {
-        // TODO H12
-        Byte value = new Byte();
+        // TODO H12.1.1
+        MyByte value = new MyByte();
 
         // The Loop needs to start from the most significant bit (leftmost bit)
-        for (int i = Byte.NUMBER_OF_BITS - 1; i >= 0; i--) {
+        for (int i = MyByte.NUMBER_OF_BITS - 1; i >= 0; i--) {
             int bit = readBit();
             // In case we reached the end of the stream, and the buffer is empty, return -1
-            if (bit == INVALID && i == Byte.NUMBER_OF_BITS - 1) {
+            if (bit == INVALID && i == MyByte.NUMBER_OF_BITS - 1) {
                 return INVALID;
             }
             // In case we reached the end of the stream, return the value read so far
             if (bit == INVALID) {
                 break;
             }
-            value.set(i, Bit.fromInt(bit));
+            value.set(i, MyBit.fromInt(bit));
         }
         return value.getValue();
     }

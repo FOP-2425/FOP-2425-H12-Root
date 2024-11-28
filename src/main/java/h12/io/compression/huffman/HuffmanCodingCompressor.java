@@ -2,8 +2,8 @@ package h12.io.compression.huffman;
 
 import h12.io.BitOutputStream;
 import h12.io.compression.Compressor;
-import h12.lang.Bit;
-import h12.lang.Bytes;
+import h12.lang.MyBit;
+import h12.lang.MyBytes;
 import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
@@ -32,15 +32,15 @@ public final class HuffmanCodingCompressor implements Compressor {
         this.out = out instanceof BitOutputStream bitOut ? bitOut : new BitOutputStream(out);
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.4.1")
     String getText() throws IOException {
-        // TODO H12
+        // TODO H12.4.1
         return in.lines().collect(Collectors.joining());
     }
 
     @DoNotTouch
     int computeFillBits(String text, EncodingTable encodingTable) {
-        return Bytes.computeMissingBits(computeHeaderSize(encodingTable) + computeTextSize(text, encodingTable));
+        return MyBytes.computeMissingBits(computeHeaderSize(encodingTable) + computeTextSize(text, encodingTable));
     }
 
     @DoNotTouch
@@ -57,18 +57,18 @@ public final class HuffmanCodingCompressor implements Compressor {
         }
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.4.1")
     int computeTextSize(String text, EncodingTable encodingTable) {
-        // TODO H12
+        // TODO H12.4.1
         return text.chars().map(c -> encodingTable.get((char) c).length()).sum();
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.4.1")
     void fillBits(int count) throws IOException {
-        // TODO H12
+        // TODO H12.4.1
         out.write(count);
         for (int i = 0; i < count; i++) {
-            out.writeBit(Bit.ZERO);
+            out.writeBit(MyBit.ZERO);
         }
     }
 
@@ -81,29 +81,29 @@ public final class HuffmanCodingCompressor implements Compressor {
     @SuppressWarnings("ConstantConditions")
     private void encodeHeader(TreeNode<Character> node) throws IOException {
         if (node.isLeaf()) {
-            out.writeBit(Bit.ONE);
-            out.write(Bytes.toBytes(node.getValue()));
+            out.writeBit(MyBit.ONE);
+            out.write(MyBytes.toBytes(node.getValue()));
         } else {
-            out.writeBit(Bit.ZERO);
+            out.writeBit(MyBit.ZERO);
             encodeHeader(node.getLeft());
             encodeHeader(node.getRight());
         }
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.4.1")
     void encodeContent(String text, EncodingTable encodingTable) throws IOException {
-        // TODO H12
+        // TODO H12.4.1
         for (char c : text.toCharArray()) {
             for (char bit : encodingTable.get(c).toCharArray()) {
-                out.writeBit(bit == '1' ? Bit.ONE : Bit.ZERO);
+                out.writeBit(bit == '1' ? MyBit.ONE : MyBit.ZERO);
             }
         }
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.4.1")
     @Override
     public void compress() throws IOException {
-        // TODO H12
+        // TODO H12.4.1
         String text = getText();
         HuffmanCoding huffman = new HuffmanCoding();
         Map<Character, Integer> frequencyTable = huffman.buildFrequencyTable(text);

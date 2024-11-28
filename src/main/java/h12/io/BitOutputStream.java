@@ -1,7 +1,7 @@
 package h12.io;
 
-import h12.lang.Bit;
-import h12.lang.Byte;
+import h12.lang.MyBit;
+import h12.lang.MyByte;
 import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.SolutionOnly;
@@ -19,9 +19,9 @@ public final class BitOutputStream extends OutputStream {
     @DoNotTouch
     private final OutputStream underlying;
 
-    private Byte buffer = new Byte();
+    private MyByte buffer = new MyByte();
 
-    private int position = Byte.NUMBER_OF_BITS - 1;
+    private int position = MyByte.NUMBER_OF_BITS - 1;
 
     @DoNotTouch
     public BitOutputStream(OutputStream underlying) {
@@ -29,21 +29,21 @@ public final class BitOutputStream extends OutputStream {
     }
 
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.1.2")
     void flushBuffer() throws IOException {
-        // TODO H12
+        // TODO H12.1.2
         // Flush the buffer if it is not empty
-        if (position != Byte.NUMBER_OF_BITS - 1) {
+        if (position != MyByte.NUMBER_OF_BITS - 1) {
             assert buffer != null;
             underlying.write(buffer.getValue());
-            buffer = new Byte();
-            position = Byte.NUMBER_OF_BITS - 1;
+            buffer = new MyByte();
+            position = MyByte.NUMBER_OF_BITS - 1;
         }
     }
 
-    @StudentImplementationRequired("H12")
-    public void writeBit(Bit bit) throws IOException {
-        // TODO H12
+    @StudentImplementationRequired("H12.1.2")
+    public void writeBit(MyBit bit) throws IOException {
+        // TODO H12.1.2
 
         // If buffer is full, flush it
         if (position < 0) {
@@ -54,12 +54,12 @@ public final class BitOutputStream extends OutputStream {
         buffer.set(position--, bit);
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.1.2")
     @Override
     public void write(int b) throws IOException {
         // TODO H12.1.2
-        Byte byteToWrite = new Byte(b);
-        for (int i = Byte.NUMBER_OF_BITS - 1; i >= 0; i--) {
+        MyByte byteToWrite = new MyByte(b);
+        for (int i = MyByte.NUMBER_OF_BITS - 1; i >= 0; i--) {
             writeBit(byteToWrite.get(i));
         }
     }

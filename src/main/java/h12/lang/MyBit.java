@@ -5,24 +5,24 @@ import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import java.util.Objects;
 
 @DoNotTouch
-public final class Bit {
+public final class MyBit {
 
     @DoNotTouch
-    public static final Bit ZERO = new Bit(0);
+    public static final MyBit ZERO = new MyBit(0);
 
     @DoNotTouch
-    public static final Bit ONE = new Bit(1);
+    public static final MyBit ONE = new MyBit(1);
 
     @DoNotTouch
     private final int value;
 
     @DoNotTouch
-    private Bit(int value) {
+    private MyBit(int value) {
         this.value = value;
     }
 
     @DoNotTouch
-    public static Bit fromInt(int value) {
+    public static MyBit fromInt(int value) {
         if (value != 0 && value != 1) {
             throw new IllegalArgumentException("Bit must be 0 or 1: %d".formatted(value));
         }
@@ -37,7 +37,7 @@ public final class Bit {
     @DoNotTouch
     @Override
     public boolean equals(Object o) {
-        return this == o || o instanceof Bit bit && value == bit.value;
+        return this == o || o instanceof MyBit bit && value == bit.value;
     }
 
     @DoNotTouch

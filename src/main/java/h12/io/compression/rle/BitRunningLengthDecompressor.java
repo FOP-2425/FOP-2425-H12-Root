@@ -3,8 +3,8 @@ package h12.io.compression.rle;
 import h12.io.BitInputStream;
 import h12.io.BitOutputStream;
 import h12.io.compression.Decompressor;
-import h12.lang.Bit;
-import h12.lang.Bytes;
+import h12.lang.MyBit;
+import h12.lang.MyBytes;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
@@ -27,21 +27,21 @@ public final class BitRunningLengthDecompressor implements Decompressor {
         this.out = out instanceof BitOutputStream bitOut ? bitOut : new BitOutputStream(out);
     }
 
-    @StudentImplementationRequired("H12")
-    void writeBit(int count, Bit bit) throws IOException {
-        // TODO H12
+    @StudentImplementationRequired("H12.2.2")
+    void writeBit(int count, MyBit bit) throws IOException {
+        // TODO H12.2.2
         for (int i = 0; i < count; i++) {
             out.writeBit(bit);
         }
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.2.2")
     @Override
     public void decompress() throws IOException {
-        // TODO H12
+        // TODO H12.2.2
         byte[] bytes = new byte[4];
         while (in.read(bytes) != -1) {
-            writeBit(Bytes.toInt(bytes), Bit.fromInt(in.read()));
+            writeBit(MyBytes.toInt(bytes), MyBit.fromInt(in.read()));
         }
         out.flush();
     }

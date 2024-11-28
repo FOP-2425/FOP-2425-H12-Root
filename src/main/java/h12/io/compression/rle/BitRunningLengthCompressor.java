@@ -3,7 +3,7 @@ package h12.io.compression.rle;
 import h12.io.BitInputStream;
 import h12.io.BitOutputStream;
 import h12.io.compression.Compressor;
-import h12.lang.Bytes;
+import h12.lang.MyBytes;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
@@ -28,9 +28,9 @@ public final class BitRunningLengthCompressor implements Compressor {
         this.out = out instanceof BitOutputStream bitOut ? bitOut : new BitOutputStream(out);
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.2.1")
     int getBitCount(int bit) throws IOException {
-        // TODO H12
+        // TODO H12.2.1
         int count = 1;
         while ((lastRead = in.readBit()) == bit) {
             count++;
@@ -38,15 +38,15 @@ public final class BitRunningLengthCompressor implements Compressor {
         return count;
     }
 
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.2.1")
     @Override
     public void compress() throws IOException {
-        // TODO H12
+        // TODO H12.2.1
         int bit = in.readBit();
         while (bit != -1) {
             int count = getBitCount(bit);
             // Store count as 4 bytes
-            out.write(Bytes.toBytes(count));
+            out.write(MyBytes.toBytes(count));
             // Store bit as 1 byte since Java can only read/write bytes
             out.write(bit);
             // Since we are reading the next bit in the loop from getBitCount, we need to remember it
