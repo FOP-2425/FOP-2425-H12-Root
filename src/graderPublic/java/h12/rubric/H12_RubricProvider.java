@@ -33,12 +33,12 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_1_2 = Subtask.builder()
         .description("H12.1.2 | Bits schreiben")
         .testClassName("h12.H12_1_2_Tests")
-        .criterion("Die Methode flushBuffer() aktualisiert den Puffer und Position.", "testFlushBufferUpdate")
-        .criterion("Die Methode flushBuffer() schreibt das Zeichen in den internen OutputStream korrekt.", "testFlushBufferWrite")
-        .criterion("Die Methode writeBit(Bit bit) schreibt das Zeichen in den internen OutputStream, falls der Puffer voll ist.", "testWriteBitFlush")
-        .criterion("Die Methode writeBit(Bit bit) schreibt ein Bit korrekt.", "testWriteBit")
-        .criterion("Die Methode write(int b) schreibt ein Byte korrekt.", "testWrite")
-        .criterion("Die Methode write(int b) wirft eine IllegalArgumentException, falls die Eingabe kein Byte ist.", "testWriteIllegalArgumentException")
+        .criterion("Die Methode flushBuffer() aktualisiert den Puffer und Position.", false, "testFlushBufferUpdate")
+        .criterion("Die Methode flushBuffer() schreibt das Zeichen in den internen OutputStream korrekt.", false, "testFlushBufferWrite")
+        .criterion("Die Methode writeBit(Bit bit) schreibt das Zeichen in den internen OutputStream, falls der Puffer voll ist.", false, "testWriteBitFlush")
+        .criterion("Die Methode writeBit(Bit bit) schreibt ein Bit korrekt.", false, "testWriteBit")
+        .criterion("Die Methode write(int b) schreibt ein Byte korrekt.", false, "testWrite")
+        .criterion("Die Methode write(int b) wirft eine IllegalArgumentException, falls die Eingabe kein Byte ist.", false, "testWriteIllegalArgumentException")
         .build();
 
     /**
@@ -66,9 +66,9 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_2_2 = Subtask.builder()
         .description("H12.2.2 | BitRunningLengthDecompressor")
         .testClassName("h12.H12_2_2_Tests")
-        .criterion(" Die Methode writeBit(int count, Bit bit) schreibt die Anzahl an aufeinanderfolgenden wiederholenden Bits korrek", "testWriteBit")
-        .criterion("Die Methode decompress() liest die Anzahl an aufeinanderfolgenden wiederholenden Bits.", "testDecompressBitCount")
-        .criterion("Die Methode decompress() dekomprimiert korrekt.", "testDecompress")
+        .criterion(" Die Methode writeBit(int count, Bit bit) schreibt die Anzahl an aufeinanderfolgenden wiederholenden Bits korrekt", false, "testWriteBit")
+        .criterion("Die Methode decompress() liest die Anzahl an aufeinanderfolgenden wiederholenden Bits.", false, "testDecompressBitCount")
+        .criterion("Die Methode decompress() dekomprimiert korrekt.", false, "testDecompress")
         .build();
 
     /**
@@ -85,8 +85,8 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_3_1 = Subtask.builder()
         .description("H12.3.1 | Häufigkeitstabelle")
         .testClassName("h12.H12_3_1_Tests")
-        .criterion("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mit allen Zeichen als Schlüssel korrekt.", "testBuildFrequencyTableKeys")
-        .criterion("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mt den Häufigkeiten korrekt.", "testResult")
+        .criterion("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mit allen Zeichen als Schlüssel korrekt.", false, "testBuildFrequencyTableKeys")
+        .criterion("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mt den Häufigkeiten korrekt.", false, "testResult")
         .build();
 
     /**
@@ -98,7 +98,7 @@ public abstract class H12_RubricProvider implements RubricProvider {
         .criterion("Die Methode removeMin(Collection<? extends T> elements, Comparator<? super T> cmp) entfernt das Minimum und gibt diesen korrekt zurück.", "testRemoveMin")
         .criterion("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) erstellt die Elemente mit der Funktion f korrekt.", "testBuildFunctionF")
         .criterion("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) wendet die Funktion g mit den beiden Minimumelementen korrekt an.", "testBuildFunctionG")
-        .criterion("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) ist vollständig und korrekt.", "testResult")
+        .criterion("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) ist vollständig und korrekt.",false, "testResult")
         .build();
 
     /**
@@ -127,10 +127,10 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_4_2 = Subtask.builder()
         .description("H12.4.2 | Huffman-Dekomprimierung")
         .testClassName("h12.H12_4_2_Tests")
-        .criterion("Die Methode skipBits() überspringt die Füllbits korrekt.", "testSkipBits")
-        .criterion("Die Methode decodeCharacter(int startBit, EncodingTable encodingTable) dekomprimiert einen Zeichen korrekt.", "testDecodeCharacter")
-        .criterion("Die Methode decodeContent(EncodingTable encodingTable) Dekomprimiert den Text korrekt.", "testDecodeContent")
-        .criterion("Die Methode decompress() ist vollständig und korrekt.", "testDecompress")
+        .criterion("Die Methode skipBits() überspringt die Füllbits korrekt.", false, "testSkipBits")
+        .criterion("Die Methode decodeCharacter(int startBit, EncodingTable encodingTable) dekomprimiert einen Zeichen korrekt.", false, "testDecodeCharacter")
+        .criterion("Die Methode decodeContent(EncodingTable encodingTable) Dekomprimiert den Text korrekt.", false, "testDecodeContent")
+        .criterion("Die Methode decompress() ist vollständig und korrekt.", false, "testDecompress")
         .build();
 
     /**
