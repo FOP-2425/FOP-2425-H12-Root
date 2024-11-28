@@ -4,6 +4,7 @@ package h12;
  * Main entry point in executing the program.
  */
 public class Main {
+
     /**
      * Main entry point in executing the program.
      *
