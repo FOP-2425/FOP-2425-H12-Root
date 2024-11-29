@@ -3,11 +3,13 @@ package h12;
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.Links;
 import h12.assertions.TestConstants;
-import h12.io.BitInputStream;
-import h12.io.BitOutputStream;
+import h12.io.SimpleBitInputStream;
+import h12.io.SimpleBitOutputStream;
 import h12.io.compression.Compressor;
 import h12.io.compression.rle.BitRunningLengthCompressor;
 import h12.rubric.H12_Tests;
+import h12.util.MockBitInputStream;
+import h12.util.MockBitOutputStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,6 @@ import org.tudalgo.algoutils.tutor.general.json.JsonParameterSetTest;
 import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -41,8 +42,8 @@ import java.util.function.Function;
 public class H12_2_1_TestsPublic extends H12_Tests {
 
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.of(
-            "bits", node -> JsonConverters.toList(node, JsonNode::asInt),
-            "count", JsonNode::asInt
+        "bits", JsonConverters::toBitInputStream,
+        "count", JsonNode::asInt
     );
 
     private Compressor compressor;
@@ -62,29 +63,28 @@ public class H12_2_1_TestsPublic extends H12_Tests {
     @JsonParameterSetTest(value = "H12_1_Tests_testGetBitCount.json", customConverters = CUSTOM_CONVERTERS)
     void testGetBitCount(JsonParameterSet parameters) throws Throwable {
         MethodLink getBitCount = getMethod("getBitCount", int.class);
-        List<Integer> bits = new ArrayList<>(parameters.get("bits"));
-        bits.add(-1);
+        MockBitInputStream in = parameters.get("bits");
+        int startBit = in.readBit();
+        List<Integer> otherBits = in.getBits().subList(1, in.getBits().size());
         int count = parameters.get("count");
 
         Context context = contextBuilder(getBitCount)
-                .add("First bit read", bits.getFirst())
-                .add("Stream after first read", bits)
-                .add("Expected count", count)
-                .build();
+            .add("Method call", "getBitCount(%d)".formatted(startBit))
+            .add("Stream", otherBits)
+            .add("Expected count", count)
+            .build();
 
-        BitInputStream in = Mockito.mock(BitInputStream.class);
-        Mockito.when(in.readBit()).thenReturn(bits.getFirst(), bits.subList(1, bits.size()).toArray(Integer[]::new));
-        BitOutputStream out = Mockito.mock(BitOutputStream.class);
+        MockBitOutputStream out = new MockBitOutputStream();
         compressor = new BitRunningLengthCompressor(in, out);
-        int actual = getBitCount.invoke(compressor, bits.getFirst());
+        int actual = getBitCount.invoke(compressor, in.getBits().getFirst());
 
         FieldLink lastRead = Links.getField(getType(), "lastRead");
-        int expectedLastRead = bits.getFirst() == 1 ? 0 : 1;
+        int expectedLastRead = startBit == 1 ? 0 : 1;
         int lastReadValue = lastRead.get(compressor);
         Assertions2.assertEquals(count, actual, context,
-                comment -> "Expected %d of the bit %d, but got %d.".formatted(count, bits.getFirst(), actual));
+            comment -> "Expected the bit '%d' %dx, but got %d.".formatted(startBit, count, actual));
         Assertions2.assertEquals(expectedLastRead, lastReadValue, context,
-                comment -> "The last read bit should be %d, but was %d.".formatted(expectedLastRead, lastReadValue));
+            comment -> "The last read bit should be %d, but was %d.".formatted(expectedLastRead, lastReadValue));
     }
 
     @DisplayName("Die Methode compress() schreibt die Anzahl an aufeinanderfolgenden wiederholenden Bits korrekt.")

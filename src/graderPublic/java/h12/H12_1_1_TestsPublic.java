@@ -3,7 +3,7 @@ package h12;
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.Links;
 import h12.assertions.TestConstants;
-import h12.io.BitInputStream;
+import h12.io.SimpleBitInputStream;
 import h12.lang.MyByte;
 import h12.rubric.H12_Tests;
 import org.junit.jupiter.api.AfterEach;
@@ -76,7 +76,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
     /**
      * The input stream to test.
      */
-    private BitInputStream stream;
+    private SimpleBitInputStream stream;
 
     @BeforeAll
     protected void globalSetup() {
@@ -93,7 +93,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
 
     @Override
     public Class<?> getClassType() {
-        return BitInputStream.class;
+        return SimpleBitInputStream.class;
     }
 
     @DisplayName("Die Methode fetch() aktualisiert im Falle von nicht EOF den Puffer und die Position korrekt.")
@@ -101,7 +101,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     void testFetchNotEOF() throws Throwable {
         underlying = new ByteArrayInputStream(BYTES_TO_READ);
-        stream = new BitInputStream(underlying);
+        stream = new SimpleBitInputStream(underlying);
         MethodLink fetch = Links.getMethod(getType(), "fetch");
         buffer.set(stream, new MyByte(BYTES_TO_READ[0]));
         underlying.read();
@@ -129,7 +129,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     void testFetchEOF() throws Throwable {
         underlying = new ByteArrayInputStream(BYTES_TO_READ);
-        stream = new BitInputStream(underlying);
+        stream = new SimpleBitInputStream(underlying);
         MethodLink fetch = Links.getMethod(getType(), "fetch");
         for (int i = 0; i < BYTES_TO_READ.length; i++) {
             underlying.read();
@@ -160,7 +160,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     void testReadNextByte() throws Throwable {
         underlying = new ByteArrayInputStream(BYTES_TO_READ);
-        stream = new BitInputStream(underlying);
+        stream = new SimpleBitInputStream(underlying);
         MethodLink readBit = Links.getMethod(getType(), "readBit");
         MyByte myByteBefore = new MyByte(BYTES_TO_READ[0]);
         int positionBefore = -1;
@@ -196,7 +196,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void assertReadBit(int position) throws Throwable {
         underlying = new ByteArrayInputStream(BYTES_TO_READ);
-        stream = new BitInputStream(underlying);
+        stream = new SimpleBitInputStream(underlying);
         MethodLink readBit = Links.getMethod(getType(), "readBit");
         MyByte myByte = new MyByte(BYTES_TO_READ[0]);
         this.buffer.set(stream, myByte);
@@ -241,7 +241,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     void testReadBitEOF() throws Throwable {
         underlying = new ByteArrayInputStream(BYTES_TO_READ);
-        stream = new BitInputStream(underlying);
+        stream = new SimpleBitInputStream(underlying);
         MethodLink readBit = Links.getMethod(getType(), "readBit");
         int position = -1;
         this.buffer.set(stream, null);
@@ -275,7 +275,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
     ) throws Throwable {
         byte[] bytes = parameters.get("bytes");
         underlying = new ByteArrayInputStream(bytes);
-        stream = new BitInputStream(underlying);
+        stream = new SimpleBitInputStream(underlying);
         int bytesToRead = parameters.get("bytesToRead");
         MyByte myByte = new MyByte(bytes[bytesToRead]);
         for (int i = 0; i < bytesToRead + 1; i++) {

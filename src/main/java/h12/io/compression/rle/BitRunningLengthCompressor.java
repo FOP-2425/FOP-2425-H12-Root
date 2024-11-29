@@ -1,7 +1,9 @@
 package h12.io.compression.rle;
 
 import h12.io.BitInputStream;
-import h12.io.BitOutputStream;
+import h12.io.BitOutStream;
+import h12.io.SimpleBitInputStream;
+import h12.io.SimpleBitOutputStream;
 import h12.io.compression.Compressor;
 import h12.lang.MyBytes;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
@@ -31,7 +33,7 @@ public final class BitRunningLengthCompressor implements Compressor {
      * The output stream to write to.
      */
     @DoNotTouch
-    private final BitOutputStream out;
+    private final BitOutStream out;
 
     /**
      * The last read bit.
@@ -46,8 +48,8 @@ public final class BitRunningLengthCompressor implements Compressor {
      */
     @DoNotTouch
     public BitRunningLengthCompressor(InputStream in, OutputStream out) {
-        this.in = in instanceof BitInputStream bitIn ? bitIn : new BitInputStream(in);
-        this.out = out instanceof BitOutputStream bitOut ? bitOut : new BitOutputStream(out);
+        this.in = in instanceof BitInputStream bitIn ? bitIn : new SimpleBitInputStream(in);
+        this.out = out instanceof BitOutStream bitOut ? bitOut : new SimpleBitOutputStream(out);
     }
 
     /**

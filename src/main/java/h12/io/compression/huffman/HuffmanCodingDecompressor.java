@@ -1,6 +1,7 @@
 package h12.io.compression.huffman;
 
 import h12.io.BitInputStream;
+import h12.io.SimpleBitInputStream;
 import h12.io.compression.Decompressor;
 import h12.lang.MyBit;
 import h12.lang.MyByte;
@@ -46,7 +47,7 @@ public final class HuffmanCodingDecompressor implements Decompressor {
      */
     @DoNotTouch
     public HuffmanCodingDecompressor(InputStream in, OutputStream out) {
-        this.in = in instanceof BitInputStream bitIn ? bitIn : new BitInputStream(in);
+        this.in = in instanceof BitInputStream bitIn ? bitIn : new SimpleBitInputStream(in);
         this.out = new OutputStreamWriter(out, StandardCharsets.UTF_8);
     }
 
