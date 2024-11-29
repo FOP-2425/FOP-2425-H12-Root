@@ -2,8 +2,8 @@ package h12.io.compression.rle;
 
 import h12.io.BitInputStream;
 import h12.io.BitOutStream;
-import h12.io.SimpleBitInputStream;
-import h12.io.SimpleBitOutputStream;
+import h12.io.BufferedBitInputStream;
+import h12.io.BufferedBitOutputStream;
 import h12.io.compression.Decompressor;
 import h12.lang.MyBit;
 import h12.lang.MyBytes;
@@ -44,8 +44,8 @@ public final class BitRunningLengthDecompressor implements Decompressor {
      */
     @DoNotTouch
     public BitRunningLengthDecompressor(InputStream in, OutputStream out) {
-        this.in = in instanceof BitInputStream bitIn ? bitIn : new SimpleBitInputStream(in);
-        this.out = out instanceof BitOutStream bitOut ? bitOut : new SimpleBitOutputStream(out);
+        this.in = in instanceof BitInputStream bitIn ? bitIn : new BufferedBitInputStream(in);
+        this.out = out instanceof BitOutStream bitOut ? bitOut : new BufferedBitOutputStream(out);
     }
 
     /**

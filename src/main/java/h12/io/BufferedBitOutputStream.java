@@ -15,7 +15,7 @@ import java.io.OutputStream;
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
-public final class SimpleBitOutputStream extends BitOutStream {
+public final class BufferedBitOutputStream extends BitOutStream {
 
     /**
      * The underlying output stream.
@@ -39,7 +39,7 @@ public final class SimpleBitOutputStream extends BitOutStream {
      * @param underlying the underlying output stream
      */
     @DoNotTouch
-    public SimpleBitOutputStream(OutputStream underlying) {
+    public BufferedBitOutputStream(OutputStream underlying) {
         this.underlying = underlying;
     }
 

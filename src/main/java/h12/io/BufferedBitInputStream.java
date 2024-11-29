@@ -17,7 +17,7 @@ import java.io.InputStream;
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
-public final class SimpleBitInputStream extends BitInputStream {
+public final class BufferedBitInputStream extends BitInputStream {
 
     /**
      * The value returned when the stream has reached the end or the beginning of the stream.
@@ -47,7 +47,7 @@ public final class SimpleBitInputStream extends BitInputStream {
      * @param underlying the underlying input stream
      */
     @DoNotTouch
-    public SimpleBitInputStream(InputStream underlying) {
+    public BufferedBitInputStream(InputStream underlying) {
         this.underlying = underlying;
     }
 
