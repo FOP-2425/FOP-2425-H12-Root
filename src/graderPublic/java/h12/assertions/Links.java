@@ -4,7 +4,6 @@ import org.tudalgo.algoutils.tutor.general.assertions.Assertions3;
 import org.tudalgo.algoutils.tutor.general.match.BasicStringMatchers;
 import org.tudalgo.algoutils.tutor.general.match.Matcher;
 import org.tudalgo.algoutils.tutor.general.match.MatcherFactories;
-import org.tudalgo.algoutils.tutor.general.reflections.BasicPackageLink;
 import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 import org.tudalgo.algoutils.tutor.general.reflections.PackageLink;
@@ -25,11 +24,6 @@ public final class Links {
     private static final MatcherFactories.StringMatcherFactory STRING_MATCHER_FACTORY = BasicStringMatchers::identical;
 
     /**
-     * The package link for the h10 package.
-     */
-    public static final PackageLink PACKAGE = BasicPackageLink.of("h10");
-
-    /**
      * Prevent instantiation of this utility class.
      */
     private Links() {
@@ -39,12 +33,14 @@ public final class Links {
     /**
      * Returns the type link for the given class.
      *
-     * @param clazz the class to get the type from
+     * @param packageLink the package link of the class
+     * @param clazz       the class to get the type from
+     *
      * @return the type link for the given class
      */
-    public static TypeLink getType(Class<?> clazz) {
+    public static TypeLink getType(PackageLink packageLink, Class<?> clazz) {
         return Assertions3.assertTypeExists(
-            PACKAGE,
+            packageLink,
             STRING_MATCHER_FACTORY.matcher(clazz.getSimpleName())
         );
     }
@@ -55,6 +51,7 @@ public final class Links {
      * @param type       the type to get the field from
      * @param methodName the name of the field
      * @param matchers   the matchers for additional checks to retrieve the field
+     *
      * @return the field link for the given type and field name
      */
     @SafeVarargs
@@ -66,24 +63,12 @@ public final class Links {
     }
 
     /**
-     * Returns the field link for the given class and field name.
-     *
-     * @param clazz     the class to get the field from
-     * @param fieldName the name of the field
-     * @param matchers  the matchers for additional checks to retrieve the field
-     * @return the field link for the given class and field name
-     */
-    @SafeVarargs
-    public static FieldLink getField(Class<?> clazz, String fieldName, Matcher<FieldLink>... matchers) {
-        return getField(getType(clazz), fieldName, matchers);
-    }
-
-    /**
      * Returns the method link for the given type and method name.
      *
      * @param type       the type to get the method from
      * @param methodName the name of the method
      * @param matchers   the matchers for additional checks to retrieve the method
+     *
      * @return the method link for the given type and method name
      */
     @SafeVarargs
@@ -92,18 +77,5 @@ public final class Links {
             type,
             Arrays.stream(matchers).reduce(STRING_MATCHER_FACTORY.matcher(methodName), Matcher::and)
         );
-    }
-
-    /**
-     * Returns the method link for the given class and method name.
-     *
-     * @param clazz      the class to get the method from
-     * @param methodName the name of the method
-     * @param matchers   the matchers for additional checks to retrieve the method
-     * @return the method link for the given class and method name
-     */
-    @SafeVarargs
-    public static MethodLink getMethod(Class<?> clazz, String methodName, Matcher<MethodLink>... matchers) {
-        return getMethod(getType(clazz), methodName, matchers);
     }
 }

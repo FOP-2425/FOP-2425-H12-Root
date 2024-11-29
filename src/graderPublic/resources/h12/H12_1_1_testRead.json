@@ -1,0 +1,38 @@
+[
+  {
+    "bytes": "Hello, World!",
+    "bytesToRead": 0,
+    "positionBefore": 7,
+    "expectedResult": 72
+  },
+  {
+    "bytes": "Hello, World!",
+    "bytesToRead": 0,
+    "positionBefore": 4,
+    "expectedResult": 67
+  },
+  {
+    "bytes": "Hello, World!",
+    "bytesToRead": 0,
+    "positionBefore": 0,
+    "expectedResult": 50
+  },
+  {
+    "bytes": "Hello, World!",
+    "bytesToRead": 5,
+    "positionBefore": 7,
+    "expectedResult": 44
+  },
+  {
+    "bytes": "Hello, World!",
+    "bytesToRead": 5,
+    "positionBefore": 4,
+    "expectedResult": 97
+  },
+  {
+    "bytes": "Hello, World!",
+    "bytesToRead": 5,
+    "positionBefore": 0,
+    "expectedResult": 16
+  }
+]

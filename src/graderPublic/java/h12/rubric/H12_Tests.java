@@ -11,8 +11,10 @@ import org.tudalgo.algoutils.tutor.general.annotation.SkipAfterFirstFailedTest;
 import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
 import org.tudalgo.algoutils.tutor.general.match.Matcher;
+import org.tudalgo.algoutils.tutor.general.reflections.BasicPackageLink;
 import org.tudalgo.algoutils.tutor.general.reflections.BasicTypeLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
+import org.tudalgo.algoutils.tutor.general.reflections.PackageLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
 import java.util.Arrays;
@@ -54,6 +56,11 @@ public abstract class H12_Tests {
     public static final String CUSTOM_CONVERTERS = "CONVERTERS";
 
     /**
+     * The package of the class under test.
+     */
+    private @Nullable PackageLink packageLink;
+
+    /**
      * The type of the class under test.
      */
     private @Nullable TypeLink type;
@@ -62,14 +69,21 @@ public abstract class H12_Tests {
      * Configuration for all tests.
      */
     @BeforeAll
-    void globalSetup() {
+    protected void globalSetup() {
         Assertions.assertNotNull(
             getClass().getAnnotation(TestForSubmission.class),
             "The test class is not annotated with @TestForSubmission."
         );
-
-        this.type = Links.getType(getClassType());
+        this.packageLink = BasicPackageLink.of(getPackageName());
+        this.type = Links.getType(packageLink, getClassType());
     }
+
+    /**
+     * Returns the package name of the class under test.
+     *
+     * @return the package name of the class under test
+     */
+    public abstract String getPackageName();
 
     /**
      * Returns the class type of the class under test.
@@ -97,6 +111,13 @@ public abstract class H12_Tests {
             throw new IllegalStateException("Type not initialized");
         }
         return type;
+    }
+
+    public PackageLink getPackage() {
+        if (packageLink == null) {
+            throw new IllegalStateException("Package not initialized");
+        }
+        return packageLink;
     }
 
     /**

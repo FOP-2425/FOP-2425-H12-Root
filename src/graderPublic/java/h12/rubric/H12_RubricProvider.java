@@ -3,7 +3,10 @@ package h12.rubric;
 import org.sourcegrade.jagr.api.rubric.Criterion;
 import org.sourcegrade.jagr.api.rubric.Rubric;
 import org.sourcegrade.jagr.api.rubric.RubricProvider;
+import org.tudalgo.algoutils.tutor.general.json.JsonParameterSet;
 
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /**
@@ -18,13 +21,21 @@ public abstract class H12_RubricProvider implements RubricProvider {
      */
     private static final Subtask H12_1_1 = Subtask.builder()
         .description("H12.1.1 | Bits lesen")
-        .testClassName("h10.H10_1_1Tests")
-        .criterion("Die Methode fetch() aktualisiert den Puffer und die Position korrekt.", "testFetch")
-        .criterion("Die Methode readBit() liest das nächste Byte korrekt, falls wir bereits alle Bits des vorherigen Bytes gelesen haben", "testReadBitNextByte")
-        .criterion("Die Methode readBit() gibt in allen anderen Fällen das korrekte Bit zurück.", "testReadBit")
-        .criterion("Die Methode read() gibt das korrekte Ergebnis zurück, falls wir am Ende des Streams sind.", "testReadEnd")
-        .criterion("Die Methode read() gibt das korrekte Teilergebnis zurück, falls der Stream keine 8 Bits mehr enthält.", "testReadPartial")
-        .criterion("Die Methode read() gibt in allen anderen Fallen das korrekte Ergebnis zurück.", "testRead")
+        .testClassName("h12.H12_1_1_Tests")
+        .criterion("Die Methode fetch() aktualisiert den Puffer und die Position korrekt.", Map.of(
+            "testFetchNotEOF", List.of(),
+            "testFetchEOF", List.of()
+        ))
+        .criterion("Die Methode readBit() liest das nächste Byte korrekt, falls wir bereits alle Bits des vorherigen Bytes gelesen haben", "testReadNextByte")
+        .criterion("Die Methode readBit() gibt in allen anderen Fällen das korrekte Bit zurück.", Map.of(
+            "testReadBitByteStart", List.of(),
+            "testReadBitByteMiddle", List.of(),
+            "testReadBitByteEnd", List.of(),
+            "testReadBitEOF", List.of()
+        ))
+        .criterion("Die Methode read() gibt das korrekte Ergebnis zurück, falls wir am Ende des Streams sind.", "testReadEnd", JsonParameterSet.class)
+        .criterion("Die Methode read() gibt das korrekte Teilergebnis zurück, falls der Stream keine 8 Bits mehr enthält.", "testReadPartial", JsonParameterSet.class)
+        .criterion("Die Methode read() gibt in allen anderen Fallen das korrekte Ergebnis zurück.", "testRead", JsonParameterSet.class)
         .build();
 
     /**
@@ -98,7 +109,7 @@ public abstract class H12_RubricProvider implements RubricProvider {
         .criterion("Die Methode removeMin(Collection<? extends T> elements, Comparator<? super T> cmp) entfernt das Minimum und gibt diesen korrekt zurück.", "testRemoveMin")
         .criterion("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) erstellt die Elemente mit der Funktion f korrekt.", "testBuildFunctionF")
         .criterion("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) wendet die Funktion g mit den beiden Minimumelementen korrekt an.", "testBuildFunctionG")
-        .criterion("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) ist vollständig und korrekt.",false, "testResult")
+        .criterion("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) ist vollständig und korrekt.", false, "testResult")
         .build();
 
     /**
