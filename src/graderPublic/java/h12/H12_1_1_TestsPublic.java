@@ -92,11 +92,6 @@ public class H12_1_1_TestsPublic extends H12_Tests {
     }
 
     @Override
-    public String getPackageName() {
-        return "h12.io";
-    }
-
-    @Override
     public Class<?> getClassType() {
         return BitInputStream.class;
     }
