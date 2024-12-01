@@ -66,9 +66,9 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_2_1 = Subtask.builder()
         .description("H12.2.1 | BitRunningLengthCompressor")
         .testClassName("h12.H12_2_1_Tests")
-        .criterion("Die Methode getBitCount(int bit) gibt die korrekte Anzahl an aufeinanderfolgenden wiederholenden Bits zurück.", "testGetBitCount")
-        .criterion("Die Methode compress() schreibt die Anzahl an aufeinanderfolgenden wiederholenden Bits korrekt.", "testCompressBitCount")
-        .criterion("Die Methode compress() komprimiert korrekt.", "testCompress")
+        .criterion("Die Methode getBitCount(int bit) gibt die korrekte Anzahl an aufeinanderfolgenden wiederholenden Bits zurück.", "testGetBitCount", JsonParameterSet.class)
+        .criterion("Die Methode compress() schreibt die Anzahl an aufeinanderfolgenden wiederholenden Bits korrekt.", "testCompressBitCount", JsonParameterSet.class)
+        .criterion("Die Methode compress() komprimiert korrekt.", "testCompress", JsonParameterSet.class)
         .build();
 
     /**

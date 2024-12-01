@@ -7,7 +7,6 @@ package h12.assertions;
  */
 public final class TestConstants {
 
-
     /**
      * Timeout for tests in seconds.
      */

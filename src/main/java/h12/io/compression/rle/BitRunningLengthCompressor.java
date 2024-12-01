@@ -61,7 +61,7 @@ public final class BitRunningLengthCompressor implements Compressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.2.1")
-    int getBitCount(int bit) throws IOException {
+    public int getBitCount(int bit) throws IOException {
         // TODO H12.2.1
         int count = 1;
         while ((lastRead = in.readBit()) == bit) {
@@ -84,6 +84,7 @@ public final class BitRunningLengthCompressor implements Compressor {
             // Since we are reading the next bit in the loop from getBitCount, we need to remember it
             bit = lastRead;
         }
+
         out.flush();
     }
 
