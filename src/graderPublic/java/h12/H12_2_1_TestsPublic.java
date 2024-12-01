@@ -34,7 +34,6 @@ import java.util.function.Function;
  *
  * @author Per Göttlicher, Nhan Huynh
  */
-
 @TestForSubmission
 @DisplayName("H12.2.1 | BitRunningLengthCompressor")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
