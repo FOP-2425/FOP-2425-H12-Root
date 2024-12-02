@@ -3,6 +3,7 @@ package h12.io.compression.huffman;
 import h12.io.BitOutStream;
 import h12.io.BufferedBitOutputStream;
 import h12.io.compression.Compressor;
+import h12.io.compression.EncodingTable;
 import h12.lang.MyBit;
 import h12.lang.MyBytes;
 import h12.util.TreeNode;
@@ -59,7 +60,7 @@ public final class HuffmanCodingCompressor implements Compressor {
     @StudentImplementationRequired("H12.4.1")
     String getText() throws IOException {
         // TODO H12.4.1
-        return in.lines().collect(Collectors.joining());
+        return in.lines().collect(Collectors.joining("\n"));
     }
 
     /**
@@ -72,7 +73,8 @@ public final class HuffmanCodingCompressor implements Compressor {
      */
     @DoNotTouch
     int computeFillBits(String text, EncodingTable encodingTable) {
-        return MyBytes.computeMissingBits(computeHeaderSize(encodingTable) + computeTextSize(text, encodingTable));
+        HuffmanEncodingTable table = (HuffmanEncodingTable) encodingTable;
+        return MyBytes.computeMissingBits(computeHeaderSize(table) + computeTextSize(text, table));
     }
 
     /**
@@ -84,7 +86,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      */
     @DoNotTouch
     private int computeHeaderSize(EncodingTable encodingTable) {
-        return computeHeaderSize(encodingTable.getRoot());
+        return computeHeaderSize(((HuffmanEncodingTable) encodingTable).getRoot());
     }
 
     /**
@@ -142,7 +144,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      */
     @DoNotTouch
     private void encodeHeader(EncodingTable encodingTable) throws IOException {
-        encodeHeader(encodingTable.getRoot());
+        encodeHeader(((HuffmanEncodingTable) encodingTable).getRoot());
     }
 
     /**

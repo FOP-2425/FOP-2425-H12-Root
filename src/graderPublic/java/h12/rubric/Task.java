@@ -42,6 +42,7 @@ public record Task(String description, List<Subtask> subtasks) implements Criter
          * Sets the description of the task.
          *
          * @param description the description of the task
+         *
          * @return this builder instance with the description set
          */
         TaskCriteriaBuilder description(String description);
@@ -50,6 +51,7 @@ public record Task(String description, List<Subtask> subtasks) implements Criter
          * Adds subtasks to the task.
          *
          * @param subtasks the subtasks to add
+         *
          * @return this builder instance with the subtasks added
          */
         TaskCriteriaBuilder subtasks(Subtask... subtasks);
@@ -58,6 +60,7 @@ public record Task(String description, List<Subtask> subtasks) implements Criter
          * Adds a criterion to the task.
          *
          * @param criterion the criterion to add
+         *
          * @return this builder instance with the criterion added
          */
         default TaskCriteriaBuilder subtask(Subtask criterion) {

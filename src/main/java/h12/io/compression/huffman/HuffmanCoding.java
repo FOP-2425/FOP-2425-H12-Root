@@ -1,5 +1,6 @@
 package h12.io.compression.huffman;
 
+import h12.io.compression.EncodingTable;
 import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
@@ -116,6 +117,6 @@ public final class HuffmanCoding {
      */
     @DoNotTouch
     public EncodingTable buildEncodingTable(Map<Character, Integer> frequencyTable) {
-        return new EncodingTable(buildTree(frequencyTable));
+        return new HuffmanEncodingTable(buildTree(frequencyTable));
     }
 }

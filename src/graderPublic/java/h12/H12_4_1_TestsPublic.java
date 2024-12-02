@@ -2,7 +2,7 @@ package h12;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.TestConstants;
-import h12.io.compression.huffman.EncodingTable;
+import h12.io.compression.EncodingTable;
 import h12.io.compression.huffman.HuffmanCodingCompressor;
 import h12.rubric.H12_Tests;
 import h12.util.MockBitOutputStream;
@@ -140,9 +140,9 @@ public class H12_4_1_TestsPublic extends H12_Tests {
         Assertions2.assertEquals(compressed, out.getBits(), context, comment -> "The compressed data is incorrect.");
     }
 
-    @DisplayName("Die Methode getText() liest den Text korrekt ein.")
+    @DisplayName("Die Methode compress() ist vollständig und korrekt.")
     @ParameterizedTest
-    @JsonParameterSetTest(value = "Die Methode compress() ist vollständig und korrekt.", customConverters = CUSTOM_CONVERTERS)
+    @JsonParameterSetTest(value = "H12_4_1_testCompress.json", customConverters = CUSTOM_CONVERTERS)
     void testCompress(JsonParameterSet parameters) throws IOException {
         // Access the method
         MethodLink compress = getMethod("compress");

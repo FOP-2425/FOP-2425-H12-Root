@@ -35,6 +35,7 @@ public class MockBitOutputStream extends BitOutStream {
 
     /**
      * Returns the bits written.
+     *
      * @return the bits written
      */
     public List<Integer> getBits() {

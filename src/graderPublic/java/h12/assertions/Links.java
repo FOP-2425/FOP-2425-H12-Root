@@ -7,7 +7,6 @@ import org.tudalgo.algoutils.tutor.general.match.MatcherFactories;
 import org.tudalgo.algoutils.tutor.general.reflections.BasicPackageLink;
 import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
-import org.tudalgo.algoutils.tutor.general.reflections.PackageLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
 import java.util.Arrays;
@@ -34,11 +33,11 @@ public final class Links {
     /**
      * Returns the type link for the given class.
      *
-     * @param clazz       the class to get the type from
+     * @param clazz the class to get the type from
      *
      * @return the type link for the given class
      */
-    public static TypeLink getType( Class<?> clazz) {
+    public static TypeLink getType(Class<?> clazz) {
         return Assertions3.assertTypeExists(
             BasicPackageLink.of(clazz.getPackageName()),
             STRING_MATCHER_FACTORY.matcher(clazz.getSimpleName())

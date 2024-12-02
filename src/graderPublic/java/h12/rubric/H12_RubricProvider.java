@@ -106,7 +106,7 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_3_2 = Subtask.builder()
         .description("H12.3.2 | Huffman-Baum")
         .testClassName("h12.H12_3_2_Tests")
-        .criterion("Die Methode removeMin(Collection<? extends T> elements, Comparator<? super T> cmp) entfernt das Minimum und gibt diesen korrekt zurück.", "testRemoveMin")
+        .criterion("Die Methode removeMin(Collection<? extends T> elements, Comparator<? super T> cmp) entfernt das Minimum und gibt diesen korrekt zurück.", "testRemoveMin", JsonParameterSet.class)
         .criterion("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) erstellt die Elemente mit der Funktion f korrekt.", "testBuildFunctionF")
         .criterion("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) wendet die Funktion g mit den beiden Minimumelementen korrekt an.", "testBuildFunctionG")
         .criterion("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) ist vollständig und korrekt.", false, "testResult")
@@ -127,9 +127,9 @@ public abstract class H12_RubricProvider implements RubricProvider {
         .description("H12.4.1 | Huffman-Komprimierung")
         .testClassName("h12.H12_4_1_Tests")
         .criterion("Die Methode getText() liest den Text korrekt ein.", "testGetText", JsonParameterSet.class)
-        .criterion("Die Methode computeTextSize(String text, EncodingTable encodingTable) berechnet die Anzahl an Bits, die für die Komprimierung des Textes nötig ist, korrekt.", "testComputeTextSize")
-        .criterion("Die Methode encodeContent(String text, EncodingTable encodingTable) komprimiert den Text korrekt.", "testEncodeContent")
-        .criterion("Die Methode compress() ist vollständig und korrekt.", "testCompress")
+        .criterion("Die Methode computeTextSize(String text, EncodingTable encodingTable) berechnet die Anzahl an Bits, die für die Komprimierung des Textes nötig ist, korrekt.", "testComputeTextSize", JsonParameterSet.class)
+        .criterion("Die Methode encodeContent(String text, EncodingTable encodingTable) komprimiert den Text korrekt.", "testEncodeContent", JsonParameterSet.class)
+        .criterion("Die Methode compress() ist vollständig und korrekt.", "testCompress", JsonParameterSet.class)
         .build();
 
     /**
