@@ -20,6 +20,7 @@ import java.util.stream.Stream;
  * @param description  a short description of the subtask
  * @param criteria     the subtasks that must be met to complete the subtask
  * @param requirements the requirements that must be met to complete the subtask
+ *
  * @author Nhan Huynh
  */
 public record Subtask(
@@ -55,6 +56,7 @@ public record Subtask(
          * Sets the description of the subtask.
          *
          * @param description the description of the subtask
+         *
          * @return this builder instance with the description set
          */
         SubtaskBuilder description(String description);
@@ -63,6 +65,7 @@ public record Subtask(
          * Sets the name of the test class that tests this subtask.
          *
          * @param testClassName the name of the test class that tests this subtask
+         *
          * @return this builder instance with the test class name set
          */
         SubtaskBuilder testClassName(String testClassName);
@@ -73,6 +76,7 @@ public record Subtask(
          * @param description          the description of the criterion
          * @param publicTest           whether the test is public
          * @param testMethodsSignature the signature of the test methods
+         *
          * @return this builder instance with the criterion added
          */
         SubtaskBuilder criterion(
@@ -86,6 +90,7 @@ public record Subtask(
          *
          * @param description          the description of the criterion
          * @param testMethodsSignature the signature of the test methods
+         *
          * @return this builder instance with the criterion added
          */
         default SubtaskBuilder criterion(String description, Map<String, List<Class<?>>> testMethodsSignature) {
@@ -99,6 +104,7 @@ public record Subtask(
          * @param publicTest           whether the test is public
          * @param testMethodName       the name of the test method
          * @param testMethodParameters the parameters of the test method
+         *
          * @return this builder instance with the criterion added
          */
         default SubtaskBuilder criterion(
@@ -116,6 +122,7 @@ public record Subtask(
          * @param description         the description of the criterion
          * @param testMethodName      the name of the test method
          * @param testMethodSignature the signature of the test method
+         *
          * @return this builder instance with the criterion added
          */
         default SubtaskBuilder criterion(String description, String testMethodName, Class<?>... testMethodSignature) {
@@ -127,6 +134,7 @@ public record Subtask(
          *
          * @param description          the description of the requirement
          * @param testMethodsSignature the signature of the test methods
+         *
          * @return this builder instance with the requirement added
          */
         SubtaskBuilder requirement(String description, Map<String, List<Class<?>>> testMethodsSignature);
@@ -137,6 +145,7 @@ public record Subtask(
          * @param description          the description of the requirement
          * @param testMethodName       the name of the test method
          * @param testMethodParameters the parameters of the test method
+         *
          * @return this builder instance with the requirement added
          */
         default SubtaskBuilder requirement(String description, String testMethodName, Class<?>... testMethodParameters) {
@@ -195,6 +204,7 @@ public record Subtask(
          *
          * @param description the description of the criterion
          * @param grader      the grader of the criterion
+         *
          * @return a pre-configured criterion builder with the description and grader set
          */
         private Criterion.Builder criterionBuilder(String description, Grader grader) {
@@ -208,6 +218,7 @@ public record Subtask(
          *
          * @param description the description of the criterion
          * @param testRef     the test reference of the criterion
+         *
          * @return a pre-configured criterion builder with the description and test reference set
          */
         private Criterion.Builder criterionBuilder(String description, JUnitTestRef testRef) {
@@ -229,6 +240,7 @@ public record Subtask(
          * @param className            the name of the test class that tests this subtask
          * @param testMethodsSignature the signature of the test methods
          * @param points               the points of the criterion
+         *
          * @return a criterion supplier with the given description, class name, test methods signature, and points
          */
         private Supplier<Criterion> criterion(

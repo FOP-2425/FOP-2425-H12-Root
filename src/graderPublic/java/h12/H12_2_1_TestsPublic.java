@@ -32,7 +32,7 @@ import java.util.function.Function;
 /**
  * Defines the public tests for H12.1.1.
  *
- * @author Per Göttlicher, Nhan Huynh
+ * @author Nhan Huynh
  */
 @TestForSubmission
 @DisplayName("H12.2.1 | BitRunningLengthCompressor")

@@ -11,6 +11,8 @@ import java.util.List;
  *
  * @param description a short description of the task
  * @param subtasks    the subtasks that must be met to complete the task
+ *
+ * @author Nhan Huynh
  */
 public record Task(String description, List<Subtask> subtasks) implements Criteriable {
 

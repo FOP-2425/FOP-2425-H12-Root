@@ -126,7 +126,7 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_4_1 = Subtask.builder()
         .description("H12.4.1 | Huffman-Komprimierung")
         .testClassName("h12.H12_4_1_Tests")
-        .criterion("Die Methode getText() liest den Text korrekt ein.", "testGetText")
+        .criterion("Die Methode getText() liest den Text korrekt ein.", "testGetText", JsonParameterSet.class)
         .criterion("Die Methode computeTextSize(String text, EncodingTable encodingTable) berechnet die Anzahl an Bits, die für die Komprimierung des Textes nötig ist, korrekt.", "testComputeTextSize")
         .criterion("Die Methode encodeContent(String text, EncodingTable encodingTable) komprimiert den Text korrekt.", "testEncodeContent")
         .criterion("Die Methode compress() ist vollständig und korrekt.", "testCompress")
