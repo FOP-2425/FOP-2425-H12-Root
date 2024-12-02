@@ -1,6 +1,7 @@
 package h12;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import h12.io.compression.huffman.EncodingTable;
 import h12.util.MockBitInputStream;
 
 /**
@@ -43,5 +44,13 @@ public final class JsonConverters extends org.tudalgo.algoutils.tutor.general.js
             throw new IllegalStateException("JSON node is not an array");
         }
         return toList(node, JsonNode::asInt).stream().mapToInt(i -> i).toArray();
+    }
+
+    public static EncodingTable toEncodingTable(JsonNode node) {
+        if (!node.isObject()) {
+            throw new IllegalStateException("JSON node is not an object");
+        }
+
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package h12;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.TestConstants;
 import h12.io.compression.huffman.EncodingTable;
 import h12.io.compression.huffman.HuffmanCodingCompressor;
@@ -22,6 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Defines the public tests for H12.4.1.
@@ -33,6 +36,15 @@ import java.util.List;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SkipAfterFirstFailedTest(TestConstants.SKIP_AFTER_FIRST_FAILED_TEST)
 public class H12_4_1_TestsPublic extends H12_Tests {
+
+    /**
+     * The custom converters for the JSON parameter set test annotation.
+     */
+    public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.of(
+        "text", JsonNode::asText,
+        "compressed", node -> JsonConverters.toList(node, JsonNode::asInt),
+        "encodingTable", JsonConverters::toEncodingTable
+    );
 
     /**
      * The compressor instance used for testing.
