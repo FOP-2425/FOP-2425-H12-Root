@@ -1,0 +1,79 @@
+[
+  {
+    "text": "H",
+    "encodingTable": {
+      "H": "1"
+    },
+    "textSize": 1
+  },
+  {
+    "text": "Hello, World!",
+    "encodingTable": {
+      " ": "1010",
+      "!": "1011",
+      "r": "1100",
+      "d": "1101",
+      "e": "1110",
+      "W": "1111",
+      "H": "000",
+      ",": "001",
+      "l": "01",
+      "o": "100"
+    },
+    "textSize": 42
+  },
+  {
+    "text": "Offered say visited elderly and. Waited period are played family man formed. He ye body or made on pain part meet. You one delay nor begin our folly abode. By disposed replying mr me unpacked no. As moonlight of my resolving unwilling.\n\nSupported neglected met she therefore unwilling discovery remainder. Way sentiments two indulgence uncommonly own. Diminution to frequently sentiments he connection continuing indulgence. An my exquisite conveying up defective. Shameless see the tolerably how continued. She enable men twenty elinor points appear. Whose merry ten yet was men seven ought balls.\n\nMonths on ye at by esteem desire warmth former. Sure that that way gave any fond now. His boy middleton sir nor engrossed affection excellent. Dissimilar compliment cultivated preference eat sufficient may. Well next door soon we mr he four. Assistance impression set insipidity now connection off you solicitude. Under as seems we me stuff those style at. Listening shameless by abilities pronounce oh suspected is affection. Next it draw in draw much bred.\n\nRank tall boy man them over post now. Off into she bed long fat room. Recommend existence curiosity perfectly favourite get eat she why daughters. Not may too nay busy last song must sell. An newspaper assurance discourse ye certainly. Soon gone game and why many calm have.\n\nOn then sake home is am leaf. Of suspicion do departure at extremely he believing. Do know said mind do rent they oh hope of. General enquire picture letters garrets on offices of no on. Say one hearing between excited evening all inhabit thought you. Style begin mr heard by in music tried do. To unreserved projection no introduced invitation.\n\nCan curiosity may end shameless explained. True high on said mr on come. An do mr design at little myself wholly entire though. Attended of on stronger or mr pleasure. Rich four like real yet west get. Felicity in dwelling to drawings. His pleasure new steepest for reserved formerly disposed jennings.\n\nAt as in understood an remarkably solicitude. Mean them very seen she she. Use totally written the observe pressed justice. Instantly cordially far intention recommend estimable yet her his. Ladies stairs enough esteem add fat all enable. Needed its design number winter see. Oh be me sure wise sons no. Piqued ye of am spirit regret. Stimulated discretion impossible admiration in particular conviction up.\n\nUnpacked now declared put you confined daughter improved. Celebrated imprudence few interested especially reasonable off one. Wonder bed elinor family secure met. It want gave west into high no in. Depend repair met before man admire see and. An he observe be it covered delight hastily message. Margaret no ladyship endeavor ye to settling.\n\nOut too the been like hard off. Improve enquire welcome own beloved matters her. As insipidity so mr unsatiable increasing attachment motionless cultivated. Addition mr husbands unpacked occasion he oh. Is unsatiable if projecting boisterous insensible. It recommend be resolving pretended middleton.\n\nAsk especially collecting terminated may son expression. Extremely eagerness principle estimable own was man. Men received far his dashwood subjects new. My sufficient surrounded an companions dispatched in on. Connection too unaffected expression led son possession. New smiling friends and her another. Leaf she does none love high yet. Snug love will up bore as be. Pursuit man son musical general pointed. It surprise informed mr advanced do outweigh.",
+    "encodingTable": {
+      "A": "00101011",
+      "B": "111001100110",
+      "C": "0011010101",
+      "D": "0011011111",
+      "E": "111001100111",
+      "F": "00110101000",
+      "G": "00110101001",
+      "H": "0011011010",
+      "I": "001101011",
+      "\n": "11100111",
+      "L": "0011011011",
+      "M": "001010010",
+      "N": "1110011000",
+      "O": "001101100",
+      "P": "00110111101",
+      "R": "0011011100",
+      "S": "111001101",
+      "T": "11100110010",
+      "U": "0011011101",
+      "W": "001010011",
+      "Y": "00110111100",
+      " ": "110",
+      "a": "0000",
+      "b": "001100",
+      "c": "111111",
+      "d": "11101",
+      "e": "011",
+      "f": "101001",
+      "g": "101000",
+      "h": "111110",
+      "i": "1001",
+      "j": "001010100",
+      "k": "00101000",
+      "l": "10101",
+      "m": "00111",
+      "n": "1011",
+      ".": "111100",
+      "o": "1000",
+      "p": "111000",
+      "q": "001010101",
+      "r": "0001",
+      "s": "0100",
+      "t": "0101",
+      "u": "00100",
+      "v": "1110010",
+      "w": "001011",
+      "x": "00110100",
+      "y": "111101"
+    },
+    "textSize": 15297
+  }
+]

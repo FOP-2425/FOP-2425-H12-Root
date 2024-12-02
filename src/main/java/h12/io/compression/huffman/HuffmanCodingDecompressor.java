@@ -1,7 +1,9 @@
 package h12.io.compression.huffman;
 
 import h12.io.BitInputStream;
+import h12.io.BufferedBitInputStream;
 import h12.io.compression.Decompressor;
+import h12.io.compression.EncodingTable;
 import h12.lang.MyBit;
 import h12.lang.MyByte;
 import h12.lang.MyBytes;
@@ -46,7 +48,7 @@ public final class HuffmanCodingDecompressor implements Decompressor {
      */
     @DoNotTouch
     public HuffmanCodingDecompressor(InputStream in, OutputStream out) {
-        this.in = in instanceof BitInputStream bitIn ? bitIn : new BitInputStream(in);
+        this.in = in instanceof BitInputStream bitIn ? bitIn : new BufferedBitInputStream(in);
         this.out = new OutputStreamWriter(out, StandardCharsets.UTF_8);
     }
 
@@ -75,7 +77,7 @@ public final class HuffmanCodingDecompressor implements Decompressor {
      */
     @DoNotTouch
     private EncodingTable decodeHeader() throws IOException {
-        return new EncodingTable(decodeTree());
+        return new HuffmanEncodingTable(decodeTree());
     }
 
     /**

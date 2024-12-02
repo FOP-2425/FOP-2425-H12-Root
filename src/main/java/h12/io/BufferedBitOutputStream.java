@@ -15,7 +15,7 @@ import java.io.OutputStream;
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
-public final class BitOutputStream extends OutputStream {
+public final class BufferedBitOutputStream extends BitOutStream {
 
     /**
      * The underlying output stream.
@@ -39,7 +39,7 @@ public final class BitOutputStream extends OutputStream {
      * @param underlying the underlying output stream
      */
     @DoNotTouch
-    public BitOutputStream(OutputStream underlying) {
+    public BufferedBitOutputStream(OutputStream underlying) {
         this.underlying = underlying;
     }
 
@@ -49,7 +49,7 @@ public final class BitOutputStream extends OutputStream {
      * @throws IOException if an I/O error occurso
      */
     @StudentImplementationRequired("H12.1.2")
-    void flushBuffer() throws IOException {
+    private void flushBuffer() throws IOException {
         // TODO H12.1.2
         // Flush the buffer if it is not empty
         if (position != MyByte.NUMBER_OF_BITS - 1) {
@@ -60,14 +60,8 @@ public final class BitOutputStream extends OutputStream {
         }
     }
 
-    /**
-     * Writes the specified bit to the output stream.
-     *
-     * @param bit the bit to write
-     *
-     * @throws IOException if an I/O error occurs
-     */
     @StudentImplementationRequired("H12.1.2")
+    @Override
     public void writeBit(MyBit bit) throws IOException {
         // TODO H12.1.2
 

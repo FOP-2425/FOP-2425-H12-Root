@@ -1,0 +1,8 @@
+[
+  {
+    "bytes": "Hello, World!",
+    "bytesToRead": 12,
+    "positionBefore": -1,
+    "expectedResult": -1
+  }
+]

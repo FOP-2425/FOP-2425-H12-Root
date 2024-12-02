@@ -1,5 +1,6 @@
 package h12.io.compression.huffman;
 
+import h12.io.compression.EncodingTable;
 import h12.util.TreeNode;
 import org.jetbrains.annotations.Nullable;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
@@ -19,19 +20,19 @@ import java.util.stream.StreamSupport;
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
-public final class EncodingTable {
+class HuffmanEncodingTable implements EncodingTable {
 
     /**
      * The root of the Huffman tree.
      */
     @DoNotTouch
-    private final TreeNode<Character> root;
+    protected final TreeNode<Character> root;
 
     /**
      * The map that stores the encodings of characters.
      */
     @DoNotTouch
-    private @Nullable Map<Character, String> encodings = null;
+    protected @Nullable Map<Character, String> encodings = null;
 
     /**
      * Creates a new encoding table with the given root of the Huffman tree to build the table from.
@@ -39,7 +40,7 @@ public final class EncodingTable {
      * @param root the root of the Huffman tree
      */
     @DoNotTouch
-    public EncodingTable(TreeNode<Character> root) {
+    public HuffmanEncodingTable(TreeNode<Character> root) {
         this.root = root;
     }
 
@@ -93,6 +94,7 @@ public final class EncodingTable {
      * @return true if the encoding table contains the character, false otherwise
      */
     @DoNotTouch
+    @Override
     public boolean contains(Character character) {
         if (encodings == null) {
             buildEncodingTable();
@@ -108,6 +110,7 @@ public final class EncodingTable {
      * @return true if the encoding table contains the code, false otherwise
      */
     @DoNotTouch
+    @Override
     public boolean contains(String code) {
         try {
             get(code);
@@ -125,10 +128,11 @@ public final class EncodingTable {
      * @return {@code true} if the encoding table contains the code, {@code false} otherwise
      */
     @DoNotTouch
+    @Override
     public boolean contains(Iterable<Integer> iterable) {
         return contains(StreamSupport.stream(iterable.spliterator(), false)
-                .map(String::valueOf)
-                .collect(Collectors.joining()));
+            .map(String::valueOf)
+            .collect(Collectors.joining()));
     }
 
     /**
@@ -137,11 +141,16 @@ public final class EncodingTable {
      * @param character the character to get the code for
      *
      * @return the Huffman code of the character
+     * @throws NoSuchElementException if the character is not in the encoding table
      */
     @DoNotTouch
+    @Override
     public String get(Character character) {
         if (encodings == null) {
             buildEncodingTable();
+        }
+        if (!encodings.containsKey(character)) {
+            throw new NoSuchElementException("'" + character + "'");
         }
         return encodings.get(character);
     }
@@ -152,8 +161,10 @@ public final class EncodingTable {
      * @param code the Huffman code to get the character for
      *
      * @return the character of the code
+     * @throws NoSuchElementException if the code is not in the encoding table
      */
     @DoNotTouch
+    @Override
     public Character get(String code) {
         TreeNode<Character> current = root;
         if (current.isLeaf()) {
@@ -179,18 +190,20 @@ public final class EncodingTable {
      * @param iterable the Huffman code to get the character for
      *
      * @return the character of the code
+     * @throws NoSuchElementException if the code is not in the encoding table
      */
     @DoNotTouch
+    @Override
     public Character get(Iterable<Integer> iterable) {
         return get(StreamSupport.stream(iterable.spliterator(), false)
-                .map(String::valueOf)
-                .collect(Collectors.joining()));
+            .map(String::valueOf)
+            .collect(Collectors.joining()));
     }
 
     @DoNotTouch
     @Override
     public boolean equals(Object o) {
-        return this == o || o instanceof EncodingTable that && Objects.equals(root, that.root);
+        return this == o || o instanceof HuffmanEncodingTable that && Objects.equals(root, that.root);
     }
 
     @DoNotTouch
