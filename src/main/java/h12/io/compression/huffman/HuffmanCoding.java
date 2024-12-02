@@ -68,14 +68,14 @@ public final class HuffmanCoding {
      *
      * @return the Huffman tree built from the frequency table
      */
-    @StudentImplementationRequired("H12")
+    @StudentImplementationRequired("H12.3.2")
     <T> T build(
             Map<Character, Integer> frequency,
             BiFunction<Character, Integer, T> f,
             BiFunction<T, T, T> g,
             Comparator<? super T> cmp
     ) {
-        // TODO H12
+        // TODO H12.3.2
         Collection<T> builder = new ArrayList<>();
         frequency.forEach((character, freq) -> builder.add(f.apply(character, freq)));
         while (builder.size() > 1) {
