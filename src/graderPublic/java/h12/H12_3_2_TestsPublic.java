@@ -16,6 +16,7 @@ import org.tudalgo.algoutils.tutor.general.json.JsonParameterSetTest;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -51,11 +52,11 @@ public class H12_3_2_TestsPublic extends H12_Tests {
     @JsonParameterSetTest(value = "H12_3_2_Tests_testRemoveMin.json", customConverters = CUSTOM_CONVERTERS)
     public void testRemoveMin(JsonParameterSet parameters) throws Throwable {
         // Access the method to test
-        MethodLink removeMin = getMethod("removeMin", List.class, Comparator.class);
+        MethodLink removeMin = getMethod("removeMin", Collection.class, Comparator.class);
 
         // Get the parameters for the test
         List<Integer> ints = new ArrayList<>(parameters.get("ints"));
-        List<Integer> expected = new ArrayList<>(parameters.get("minlist"));
+        List<Integer> expected = parameters.get("minList");
         int min = parameters.getInt("min");
         Comparator<Integer> cmp = Comparator.naturalOrder();
 
