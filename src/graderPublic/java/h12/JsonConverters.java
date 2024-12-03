@@ -20,6 +20,24 @@ public final class JsonConverters extends org.tudalgo.algoutils.tutor.general.js
     }
 
     /**
+     * Converts a JSON node to a byte array.
+     *
+     * @param node the JSON node containing the bytes
+     *
+     * @return the byte array
+     */
+    public static byte[] toByteArray(JsonNode node) {
+        if (!node.isArray()) {
+            throw new IllegalStateException("JSON node is not an array");
+        }
+        byte[] bytes = new byte[node.size()];
+        for (int i = 0; i < node.size(); i++) {
+            bytes[i] = (byte) node.get(i).asInt();
+        }
+        return bytes;
+    }
+
+    /**
      * Converts a JSON node to a mock bit input stream.
      *
      * @param node the JSON node containing the bits

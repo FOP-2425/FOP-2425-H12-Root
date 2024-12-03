@@ -45,14 +45,17 @@ public abstract class H12_RubricProvider implements RubricProvider {
         .description("H12.1.2 | Bits schreiben")
         .testClassName("h12.H12_1_2_Tests")
         .criterion("Die Methode flushBuffer() aktualisiert den Puffer und Position korrekt, wenn nötig.", false, Map.of(
-                "testFlushBufferUpdateYes", List.of(),
-                "testFlushBufferUpdateNo", List.of()
+            "testFlushBufferUpdateYes", List.of(),
+            "testFlushBufferUpdateNo", List.of()
         ))
         .criterion("Die Methode flushBuffer() schreibt das Zeichen in den internen OutputStream korrekt.", false, "testFlushBufferWrite")
-        .criterion("Die Methode writeBit(Bit bit) schreibt das Zeichen in den internen OutputStream, falls der Puffer voll ist.", false, "testWriteBitFlush")
-        .criterion("Die Methode writeBit(Bit bit) schreibt ein Bit korrekt.", false, "testWriteBit")
-        .criterion("Die Methode write(int b) schreibt ein Byte korrekt.", false, "testWrite")
-        .criterion("Die Methode write(int b) wirft eine IllegalArgumentException, falls die Eingabe kein Byte ist.", false, "testWriteIllegalArgumentException")
+        .criterion("Die Methode writeBit(Bit bit) schreibt das Zeichen in den internen OutputStream, falls der Puffer voll ist.", false, Map.of(
+            "testWriteBitFlushYes", List.of(),
+            "testWriteBitFlushNo", List.of()
+        ))
+        .criterion("Die Methode writeBit(Bit bit) schreibt ein Bit korrekt.", false, "testWriteBit", JsonParameterSet.class)
+        .criterion("Die Methode write(int b) schreibt ein Byte korrekt.", false, "testWrite", JsonParameterSet.class)
+        .criterion("Die Methode write(int b) wirft eine IllegalArgumentException, falls die Eingabe kein Byte ist.", false, "testWriteIllegalArgumentException", JsonParameterSet.class)
         .build();
 
     /**
