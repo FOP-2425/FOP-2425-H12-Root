@@ -17,5 +17,4 @@ import org.tudalgo.algoutils.tutor.general.annotation.SkipAfterFirstFailedTest;
 @SkipAfterFirstFailedTest(TestConstants.SKIP_AFTER_FIRST_FAILED_TEST)
 public class H12_3_2_TestsPrivate extends H12_3_2_TestsPublic {
 
-
 }

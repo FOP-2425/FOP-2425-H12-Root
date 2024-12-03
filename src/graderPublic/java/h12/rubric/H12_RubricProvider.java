@@ -102,7 +102,7 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_3_1 = Subtask.builder()
         .description("H12.3.1 | Häufigkeitstabelle")
         .testClassName("h12.H12_3_1_Tests")
-        .criterion("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mit allen Zeichen als Schlüssel korrekt.", false, "testBuildFrequencyTableKeys")
+        .criterion("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mit allen Zeichen als Schlüssel korrekt.", false, "testBuildFrequencyTableKeys", JsonParameterSet.class)
         .criterion("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mt den Häufigkeiten korrekt.", false, "testResult")
         .build();
 

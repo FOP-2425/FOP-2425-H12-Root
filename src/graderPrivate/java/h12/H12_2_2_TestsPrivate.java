@@ -2,8 +2,6 @@ package h12;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.TestConstants;
-import h12.io.compression.Compressor;
-import h12.io.compression.rle.BitRunningLengthCompressor;
 import h12.io.compression.rle.BitRunningLengthDecompressor;
 import h12.lang.MyBit;
 import h12.rubric.H12_Tests;
@@ -11,7 +9,6 @@ import h12.util.MockBitInputStream;
 import h12.util.MockBitOutputStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
@@ -26,9 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
-import java.util.stream.IntStream;
 
 /**
  * Defines the private tests for H12.2.2.
@@ -48,7 +43,7 @@ public class H12_2_2_TestsPrivate extends H12_Tests {
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.of(
         "in", node -> JsonConverters.toList(node, JsonNode::asInt),
         "out", node -> JsonConverters.toList(node, JsonNode::asInt),
-        "bit" , node -> MyBit.fromInt(node.asInt()),
+        "bit", node -> MyBit.fromInt(node.asInt()),
         "countsCheck", node -> JsonConverters.toList(node, JsonNode::asInt),
         "bitsCheck", node -> JsonConverters.toList(node, element -> MyBit.fromInt(element.asInt()))
     );
@@ -138,16 +133,6 @@ public class H12_2_2_TestsPrivate extends H12_Tests {
             comment -> "Wrong counts written to the output stream.");
         Assertions2.assertEquals(expectedBits, bitsCheck, context,
             comment -> "Wrong bits written to the output stream.");
-    }
-
-    @Test
-    void test() throws IOException {
-
-        MockBitInputStream in = new MockBitInputStream(   IntStream.range(0, 50).map(i -> ThreadLocalRandom.current().nextInt(2)).boxed().toList());
-        MockBitOutputStream out = new MockBitOutputStream();
-        Compressor compressor = new BitRunningLengthCompressor(in, out);
-        compressor.compress();
-        System.out.println(out.getBits());
     }
 
     @DisplayName("Die Methode decompress() dekomprimiert korrekt.")
