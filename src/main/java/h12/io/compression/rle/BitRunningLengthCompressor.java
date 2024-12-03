@@ -21,7 +21,7 @@ import java.io.OutputStream;
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
-public final class BitRunningLengthCompressor implements Compressor {
+public class BitRunningLengthCompressor implements Compressor {
 
     /**
      * The input stream to read from.
