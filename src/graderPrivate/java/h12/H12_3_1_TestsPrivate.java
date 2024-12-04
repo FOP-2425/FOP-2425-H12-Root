@@ -32,11 +32,6 @@ import java.util.function.Function;
 @SkipAfterFirstFailedTest(TestConstants.SKIP_AFTER_FIRST_FAILED_TEST)
 public class H12_3_1_TestsPrivate extends H12_Tests {
 
-    @Override
-    public Class<?> getClassType() {
-        return HuffmanCoding.class;
-    }
-
     /**
      * The custom converters for the JSON parameter set test annotation.
      */
@@ -45,6 +40,12 @@ public class H12_3_1_TestsPrivate extends H12_Tests {
         "keys", node -> new HashSet<>(JsonConverters.toList(node, JsonNode::asText)),
         "frequency", node -> JsonConverters.toMap(node, key -> key.charAt(0), JsonNode::asInt)
     );
+
+
+    @Override
+    public Class<?> getClassType() {
+        return HuffmanCoding.class;
+    }
 
     @DisplayName("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mit allen Zeichen als Schlüssel korrekt.")
     @ParameterizedTest
