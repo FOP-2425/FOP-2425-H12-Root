@@ -3,12 +3,14 @@ package h12;
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.TestConstants;
 import h12.io.compression.EncodingTable;
+import h12.io.compression.huffman.HuffmanCodingCompressor;
 import h12.io.compression.huffman.HuffmanCodingDecompressor;
 import h12.rubric.H12_Tests;
 import h12.util.MockBitInputStream;
 import h12.util.MockBitOutputStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
@@ -19,7 +21,9 @@ import org.tudalgo.algoutils.tutor.general.json.JsonParameterSet;
 import org.tudalgo.algoutils.tutor.general.json.JsonParameterSetTest;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -62,7 +66,6 @@ public class H12_4_2_TestsPrivate extends H12_Tests {
         return HuffmanCodingDecompressor.class;
     }
 
-
     @DisplayName("Die Methode skipBits() überspringt die Füllbits korrekt.")
     @ParameterizedTest
     @JsonParameterSetTest(value = "H12_4_2_testSkipBits.json", customConverters = CUSTOM_CONVERTERS)
@@ -100,10 +103,11 @@ public class H12_4_2_TestsPrivate extends H12_Tests {
 
         // Test data
         MockBitInputStream in = parameters.get("in");
-        List<Integer> bits = parameters.get("bits");
+        List<Integer> bits = in.getBits();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         decompressor = new HuffmanCodingDecompressor(in, out);
         int startBit = bits.getFirst();
+        in.readBit();
         EncodingTable encodingTable = parameters.get("encodingTable");
 
         // Context information
@@ -115,6 +119,7 @@ public class H12_4_2_TestsPrivate extends H12_Tests {
 
         // Test the method
         char actual = method.invoke(decompressor, startBit, encodingTable);
+
 
         // Validate the output
         char expected = parameters.get("character");
@@ -132,7 +137,7 @@ public class H12_4_2_TestsPrivate extends H12_Tests {
 
         // Test data
         MockBitInputStream in = parameters.get("in");
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        MockBitOutputStream out = new MockBitOutputStream();
         decompressor = new HuffmanCodingDecompressor(in, out);
         EncodingTable encodingTable = parameters.get("encodingTable");
 
@@ -144,6 +149,7 @@ public class H12_4_2_TestsPrivate extends H12_Tests {
 
         // Test the method
         method.invoke(decompressor, encodingTable);
+        out.flush();
 
         // Validate the output
         String actual = out.toString();
@@ -163,6 +169,7 @@ public class H12_4_2_TestsPrivate extends H12_Tests {
         // Test data
         MockBitInputStream in = parameters.get("in");
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        decompressor = new HuffmanCodingDecompressor(in, out);
 
         // Context information
         Context context = contextBuilder(method)
