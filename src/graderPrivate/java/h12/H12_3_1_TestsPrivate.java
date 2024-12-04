@@ -15,7 +15,6 @@ import org.tudalgo.algoutils.tutor.general.json.JsonParameterSet;
 import org.tudalgo.algoutils.tutor.general.json.JsonParameterSetTest;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -37,7 +36,6 @@ public class H12_3_1_TestsPrivate extends H12_Tests {
      */
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.of(
         "text", JsonNode::asText,
-        "keys", node -> new HashSet<>(JsonConverters.toList(node, JsonNode::asText)),
         "frequency", node -> JsonConverters.toMap(node, key -> key.charAt(0), JsonNode::asInt)
     );
 
@@ -49,7 +47,7 @@ public class H12_3_1_TestsPrivate extends H12_Tests {
 
     @DisplayName("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mit allen Zeichen als Schlüssel korrekt.")
     @ParameterizedTest
-    @JsonParameterSetTest(value = "H12_3_1_testBuildFrequencyTableKeys.json", customConverters = CUSTOM_CONVERTERS)
+    @JsonParameterSetTest(value = "H12_3_1_testBuildFrequencyTable.json", customConverters = CUSTOM_CONVERTERS)
     void testBuildFrequencyTableKeys(JsonParameterSet parameters) throws Throwable {
         // Access the method
         MethodLink method = getMethod("buildFrequencyTable", String.class);
@@ -67,14 +65,16 @@ public class H12_3_1_TestsPrivate extends H12_Tests {
         Map<Character, Integer> frequency = method.invoke(coding, text);
 
         // Validate the output
-        Set<String> keys = parameters.get("keys");
+        Map<Character, Integer> expected = parameters.get("frequency");
+        Set<Character> keys = expected.keySet();
+
         Assertions2.assertEquals(keys, frequency.keySet(), context,
             comment -> "The keys of the frequency table are not correct.");
     }
 
     @DisplayName("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mt den Häufigkeiten korrekt.")
     @ParameterizedTest
-    @JsonParameterSetTest(value = "H12_3_1_testResult.json", customConverters = CUSTOM_CONVERTERS)
+    @JsonParameterSetTest(value = "H12_3_1_testBuildFrequencyTable.json", customConverters = CUSTOM_CONVERTERS)
     void testResult(JsonParameterSet parameters) throws Throwable {
         // Access the method
         MethodLink method = getMethod("buildFrequencyTable", String.class);
@@ -93,7 +93,7 @@ public class H12_3_1_TestsPrivate extends H12_Tests {
 
         // Validate the output
         Map<Character, Integer> expected = parameters.get("frequency");
-        Assertions2.assertEquals(expected, frequency.keySet(), context,
+        Assertions2.assertEquals(expected, frequency, context,
             comment -> "The frequency table is not correct.");
     }
 }
