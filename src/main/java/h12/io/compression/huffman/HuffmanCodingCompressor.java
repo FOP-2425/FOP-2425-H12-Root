@@ -16,8 +16,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -180,14 +178,11 @@ public final class HuffmanCodingCompressor implements Compressor {
     @StudentImplementationRequired("H12.4.1")
     void encodeContent(String text, EncodingTable encodingTable) throws IOException {
         // TODO H12.4.1
-        List<Integer> bits = new ArrayList<>();
         for (char c : text.toCharArray()) {
             for (char bit : encodingTable.get(c).toCharArray()) {
-                bits.add(bit == '1' ? 1 : 0);
                 out.writeBit(bit == '1' ? MyBit.ONE : MyBit.ZERO);
             }
         }
-        System.out.println(text + " -> " + bits);
     }
 
     @StudentImplementationRequired("H12.4.1")
@@ -199,11 +194,6 @@ public final class HuffmanCodingCompressor implements Compressor {
         HuffmanCoding huffman = new HuffmanCoding();
         Map<Character, Integer> frequencyTable = huffman.buildFrequencyTable(text);
         EncodingTable encodingTable = huffman.buildEncodingTable(frequencyTable);
-        HuffmanEncodingTable huffmanEncodingTable = (HuffmanEncodingTable) encodingTable;
-        encodingTable.toString();
-        ((HuffmanEncodingTable) encodingTable).encodings.entrySet().forEach(e -> {
-            System.out.println("\"" + e.getKey() + "\": " + "\"" + e.getValue() + "\",");
-        });
         fillBits(computeFillBits(text, encodingTable));
         encodeHeader(encodingTable);
         encodeContent(text, encodingTable);
