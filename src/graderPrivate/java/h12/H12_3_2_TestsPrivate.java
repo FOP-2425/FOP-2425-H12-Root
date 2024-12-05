@@ -26,7 +26,6 @@ import java.util.function.BiFunction;
 @SkipAfterFirstFailedTest(TestConstants.SKIP_AFTER_FIRST_FAILED_TEST)
 public class H12_3_2_TestsPrivate extends H12_3_2_TestsPublic {
 
-
     @DisplayName("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) ist vollständig und korrekt.")
     @Test
     void testResult() throws Throwable {
