@@ -120,6 +120,8 @@ public class H12_4_2_TestsPrivate extends H12_Tests {
         // Test the method
         char actual = method.invoke(decompressor, startBit, encodingTable);
 
+        // Close it to flush the output
+        decompressor.close();
 
         // Validate the output
         char expected = parameters.get("character");
@@ -149,7 +151,9 @@ public class H12_4_2_TestsPrivate extends H12_Tests {
 
         // Test the method
         method.invoke(decompressor, encodingTable);
-        out.flush();
+
+        // Close it to flush the output
+        decompressor.close();
 
         // Validate the output
         String actual = out.toString();
