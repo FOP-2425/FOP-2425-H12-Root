@@ -22,7 +22,7 @@ import java.io.OutputStream;
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
-public final class BitRunningLengthDecompressor implements Decompressor {
+public class BitRunningLengthDecompressor implements Decompressor {
 
     /**
      * The input stream to decompress from.
@@ -57,7 +57,7 @@ public final class BitRunningLengthDecompressor implements Decompressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.2.2")
-    void writeBit(int count, MyBit bit) throws IOException {
+    protected void writeBit(int count, MyBit bit) throws IOException {
         // TODO H12.2.2
         for (int i = 0; i < count; i++) {
             out.writeBit(bit);

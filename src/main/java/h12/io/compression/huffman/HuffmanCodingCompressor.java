@@ -187,7 +187,8 @@ public final class HuffmanCodingCompressor implements Compressor {
 
     @StudentImplementationRequired("H12.4.1")
     @Override
-    public void compress() throws IOException {
+    public void
+    compress() throws IOException {
         // TODO H12.4.1
         String text = getText();
         HuffmanCoding huffman = new HuffmanCoding();

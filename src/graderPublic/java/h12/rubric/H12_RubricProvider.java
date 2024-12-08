@@ -44,12 +44,18 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_1_2 = Subtask.builder()
         .description("H12.1.2 | Bits schreiben")
         .testClassName("h12.H12_1_2_Tests")
-        .criterion("Die Methode flushBuffer() aktualisiert den Puffer und Position.", false, "testFlushBufferUpdate")
+        .criterion("Die Methode flushBuffer() aktualisiert den Puffer und Position korrekt, wenn nötig.", false, Map.of(
+            "testFlushBufferUpdateYes", List.of(),
+            "testFlushBufferUpdateNo", List.of()
+        ))
         .criterion("Die Methode flushBuffer() schreibt das Zeichen in den internen OutputStream korrekt.", false, "testFlushBufferWrite")
-        .criterion("Die Methode writeBit(Bit bit) schreibt das Zeichen in den internen OutputStream, falls der Puffer voll ist.", false, "testWriteBitFlush")
-        .criterion("Die Methode writeBit(Bit bit) schreibt ein Bit korrekt.", false, "testWriteBit")
-        .criterion("Die Methode write(int b) schreibt ein Byte korrekt.", false, "testWrite")
-        .criterion("Die Methode write(int b) wirft eine IllegalArgumentException, falls die Eingabe kein Byte ist.", false, "testWriteIllegalArgumentException")
+        .criterion("Die Methode writeBit(Bit bit) schreibt das Zeichen in den internen OutputStream, falls der Puffer voll ist.", false, Map.of(
+            "testWriteBitFlushYes", List.of(),
+            "testWriteBitFlushNo", List.of()
+        ))
+        .criterion("Die Methode writeBit(Bit bit) schreibt ein Bit korrekt.", false, "testWriteBit", JsonParameterSet.class)
+        .criterion("Die Methode write(int b) schreibt ein Byte korrekt.", false, "testWrite", JsonParameterSet.class)
+        .criterion("Die Methode write(int b) wirft eine IllegalArgumentException, falls die Eingabe kein Byte ist.", false, "testWriteIllegalArgumentException", JsonParameterSet.class)
         .build();
 
     /**
@@ -77,9 +83,9 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_2_2 = Subtask.builder()
         .description("H12.2.2 | BitRunningLengthDecompressor")
         .testClassName("h12.H12_2_2_Tests")
-        .criterion(" Die Methode writeBit(int count, Bit bit) schreibt die Anzahl an aufeinanderfolgenden wiederholenden Bits korrekt", false, "testWriteBit")
-        .criterion("Die Methode decompress() liest die Anzahl an aufeinanderfolgenden wiederholenden Bits.", false, "testDecompressBitCount")
-        .criterion("Die Methode decompress() dekomprimiert korrekt.", false, "testDecompress")
+        .criterion("Die Methode writeBit(int count, Bit bit) schreibt die Anzahl an aufeinanderfolgenden wiederholenden Bits korrekt.", false, "testWriteBit", JsonParameterSet.class)
+        .criterion("Die Methode decompress() liest die Anzahl an aufeinanderfolgenden wiederholenden Bits.", false, "testDecompressBitCount", JsonParameterSet.class)
+        .criterion("Die Methode decompress() dekomprimiert korrekt.", false, "testDecompress", JsonParameterSet.class)
         .build();
 
     /**
@@ -96,8 +102,8 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_3_1 = Subtask.builder()
         .description("H12.3.1 | Häufigkeitstabelle")
         .testClassName("h12.H12_3_1_Tests")
-        .criterion("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mit allen Zeichen als Schlüssel korrekt.", false, "testBuildFrequencyTableKeys")
-        .criterion("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mt den Häufigkeiten korrekt.", false, "testResult")
+        .criterion("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mit allen Zeichen als Schlüssel korrekt.", false, "testBuildFrequencyTableKeys", JsonParameterSet.class)
+        .criterion("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mt den Häufigkeiten korrekt.", false, "testResult", JsonParameterSet.class)
         .build();
 
     /**
@@ -138,10 +144,10 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_4_2 = Subtask.builder()
         .description("H12.4.2 | Huffman-Dekomprimierung")
         .testClassName("h12.H12_4_2_Tests")
-        .criterion("Die Methode skipBits() überspringt die Füllbits korrekt.", false, "testSkipBits")
-        .criterion("Die Methode decodeCharacter(int startBit, EncodingTable encodingTable) dekomprimiert einen Zeichen korrekt.", false, "testDecodeCharacter")
-        .criterion("Die Methode decodeContent(EncodingTable encodingTable) Dekomprimiert den Text korrekt.", false, "testDecodeContent")
-        .criterion("Die Methode decompress() ist vollständig und korrekt.", false, "testDecompress")
+        .criterion("Die Methode skipBits() überspringt die Füllbits korrekt.", false, "testSkipBits", JsonParameterSet.class)
+        .criterion("Die Methode decodeCharacter(int startBit, EncodingTable encodingTable) dekomprimiert einen Zeichen korrekt.", false, "testDecodeCharacter", JsonParameterSet.class)
+        .criterion("Die Methode decodeContent(EncodingTable encodingTable) Dekomprimiert den Text korrekt.", false, "testDecodeContent", JsonParameterSet.class)
+        .criterion("Die Methode decompress() ist vollständig und korrekt.", false, "testDecompress", JsonParameterSet.class)
         .build();
 
     /**

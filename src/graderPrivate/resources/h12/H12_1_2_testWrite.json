@@ -1,0 +1,41 @@
+[
+  {
+    "initialPosition": 7,
+    "initialBuffer": 0,
+    "byte": 69,
+    "expectedPosition": -1,
+    "expectedBuffer": 69,
+    "expectedOutput": [
+    ]
+  },
+  {
+    "initialPosition": 4,
+    "initialBuffer": 160,
+    "byte": 69,
+    "expectedPosition": 4,
+    "expectedBuffer": 160,
+    "expectedOutput": [
+      -88
+    ]
+  },
+  {
+    "initialPosition": 0,
+    "initialBuffer": 170,
+    "byte": 69,
+    "expectedPosition": 0,
+    "expectedBuffer": 138,
+    "expectedOutput": [
+      -86
+    ]
+  },
+  {
+    "initialPosition": -1,
+    "initialBuffer": 171,
+    "byte": 69,
+    "expectedPosition": -1,
+    "expectedBuffer": 69,
+    "expectedOutput": [
+      -85
+    ]
+  }
+]

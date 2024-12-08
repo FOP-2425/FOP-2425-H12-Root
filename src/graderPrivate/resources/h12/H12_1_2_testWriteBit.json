@@ -1,0 +1,58 @@
+[
+  {
+    "initialPosition": 7,
+    "initialBuffer": 0,
+    "bit": 0,
+    "expectedPosition": 6,
+    "expectedBuffer": 0
+  },
+  {
+    "initialPosition": 7,
+    "initialBuffer": 0,
+    "bit": 1,
+    "expectedPosition": 6,
+    "expectedBuffer": 128
+  },
+  {
+    "initialPosition": 4,
+    "initialBuffer": 0,
+    "bit": 0,
+    "expectedPosition": 3,
+    "expectedBuffer": 0
+  },
+  {
+    "initialPosition": 4,
+    "initialBuffer": 0,
+    "bit": 1,
+    "expectedPosition": 3,
+    "expectedBuffer": 16
+  },
+  {
+    "initialPosition": 4,
+    "initialBuffer": 160,
+    "bit": 0,
+    "expectedPosition": 3,
+    "expectedBuffer": 160
+  },
+  {
+    "initialPosition": 4,
+    "initialBuffer": 160,
+    "bit": 1,
+    "expectedPosition": 3,
+    "expectedBuffer": 176
+  },
+  {
+    "initialPosition": 0,
+    "initialBuffer": 180,
+    "bit": 0,
+    "expectedPosition": -1,
+    "expectedBuffer": 180
+  },
+  {
+    "initialPosition": 0,
+    "initialBuffer": 180,
+    "bit": 1,
+    "expectedPosition": -1,
+    "expectedBuffer": 181
+  }
+]
