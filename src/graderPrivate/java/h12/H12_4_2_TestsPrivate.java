@@ -137,7 +137,7 @@ public class H12_4_2_TestsPrivate extends H12_Tests {
 
         // Test data
         MockBitInputStream in = parameters.get("in");
-        MockBitOutputStream out = new MockBitOutputStream();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         decompressor = new HuffmanCodingDecompressor(in, out);
         EncodingTable encodingTable = parameters.get("encodingTable");
 
