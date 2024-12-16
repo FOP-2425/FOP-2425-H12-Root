@@ -26,9 +26,9 @@ import java.io.OutputStream;
 public class BitRunningLengthCompressor implements Compressor {
 
     /**
-     * The maximum count that can be stored in a byte.
+     * The maximum count that can be stored in a byte without the bit at position 7 (X111 1111 = 127).
      */
-    public static final int MAX_COUNT = (int) Math.pow(2, 7);
+    public static final int MAX_COUNT = (int) Math.pow(2, 7) - 1;
 
     /**
      * The input stream to read from.
@@ -68,7 +68,7 @@ public class BitRunningLengthCompressor implements Compressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.2.1")
-    public int getBitCount(int bit) throws IOException {
+    protected int getBitCount(int bit) throws IOException {
         // TODO H12.2.1
         int count = 1;
         while (count < MAX_COUNT && (lastRead = in.readBit()) == bit) {

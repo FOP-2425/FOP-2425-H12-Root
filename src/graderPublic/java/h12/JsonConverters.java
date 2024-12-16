@@ -30,6 +30,13 @@ public final class JsonConverters extends org.tudalgo.algoutils.tutor.general.js
         return new MyByte(node.asInt());
     }
 
+    /**
+     * Converts the given JSON node to a bit input stream.
+     *
+     * @param node the JSON node to convert
+     *
+     * @return the bit input stream
+     */
     public static MockBitInputStream toBitInputStream(JsonNode node) {
         if (!node.isArray()) {
             throw new IllegalStateException("JSON node is not an array");

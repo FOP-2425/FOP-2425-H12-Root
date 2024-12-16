@@ -26,7 +26,7 @@ public class MockBitInputStream extends BitInputStream {
     /**
      * The iterator for reading the bits.
      */
-    private final Iterator<Integer> read;
+    private Iterator<Integer> read;
 
     /**
      * Creates a new mock bit input stream with the given bits.
@@ -76,17 +76,24 @@ public class MockBitInputStream extends BitInputStream {
         return bits;
     }
 
-    public List<MyByte> getBytes() {
-        Iterator<Integer> it = bits.iterator();
-        List<MyByte> myBytes = new ArrayList<>();
-        while (it.hasNext()) {
-            MyByte myByte = new MyByte();
-            for (int i = MyByte.MAX_POSITION; i >= 0 && it.hasNext(); i--) {
-                myByte.set(i, MyBit.fromInt(it.next()));
-            }
-            myBytes.add(myByte);
-        }
-        return myBytes;
+    /**
+     * Returns the remaining bits that this mock bit input stream can read.
+     *
+     * @return the remaining bits that this mock bit input stream can read
+     */
+    public List<Integer> getRemainingBits() {
+        List<Integer> remainingBits = new ArrayList<>();
+        read.forEachRemaining(remainingBits::add);
+        setRemainingBits(remainingBits);
+        return remainingBits;
+    }
+
+    /**
+     * Sets the remaining bits that this mock bit input stream can read.
+     * @param elements the remaining bits to read
+     */
+    public void setRemainingBits(Iterable<Integer> elements) {
+        this.read = elements.iterator();
     }
 
     @Override

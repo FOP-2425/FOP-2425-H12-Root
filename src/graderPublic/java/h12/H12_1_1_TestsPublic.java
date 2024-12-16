@@ -120,14 +120,14 @@ public class H12_1_1_TestsPublic extends H12_Tests {
         return testInformation(method)
             .preState(
                 TestInformation.builder()
-                    .add("Stream", underlying.getBits())
+                    .add("underlying", underlying.getBits())
                     .add("buffer", bufferPreState)
                     .add("position", positionPreState)
                     .build()
             )
             .postState(
                 TestInformation.builder()
-                    .add("Stream", bitsPostState)
+                    .add("underlying", bitsPostState)
                     .add("buffer", bufferPostState)
                     .add("position", positionPostState)
                     .build()
@@ -157,14 +157,12 @@ public class H12_1_1_TestsPublic extends H12_Tests {
         MyByte bufferActualState = buffer.get(stream);
         int positionActualState = position.get(stream);
 
-        Context context = builder
-            .actualState(
-                TestInformation.builder()
-                    .add("buffer", bufferActualState)
-                    .add("position", positionActualState)
-                    .build()
-            )
-            .build();
+        Context context = builder.actualState(
+            TestInformation.builder()
+                .add("buffer", bufferActualState)
+                .add("position", positionActualState)
+                .build()
+        ).build();
 
         Assertions2.assertEquals(bufferPostState, bufferActualState, context, comment -> "Buffer is not updated correctly.");
         Assertions2.assertEquals(positionPostState, positionActualState, context,
@@ -207,14 +205,13 @@ public class H12_1_1_TestsPublic extends H12_Tests {
         MyByte bufferActualState = buffer.get(stream);
         int positionActualState = position.get(stream);
 
-        Context context = builder
-            .actualState(
-                TestInformation.builder()
-                    .add("buffer", bufferActualState)
-                    .add("position", positionActualState)
-                    .build()
-            )
-            .build();
+        Context context = builder.actualState(
+            TestInformation.builder()
+                .add("buffer", bufferActualState)
+                .add("position", positionActualState)
+                .build()
+        ).build();
+
         Assertions2.assertEquals(expectedBit, actualBit, context,
             comment -> "Return value is not correct.");
     }
@@ -276,15 +273,12 @@ public class H12_1_1_TestsPublic extends H12_Tests {
         MyByte bufferActualState = buffer.get(stream);
         int positionActualState = position.get(stream);
 
-        Context context = builder
-            .actualState(
-                TestInformation.builder()
-                    .add("buffer", bufferActualState)
-                    .add("position", positionActualState)
-                    .build()
-            )
-            .build();
-
+        Context context = builder.actualState(
+            TestInformation.builder()
+                .add("buffer", bufferActualState)
+                .add("position", positionActualState)
+                .build()
+        ).build();
 
         Assertions2.assertEquals(expectedByte, actualByte, context, comment -> "Return value is not correct.");
     }
