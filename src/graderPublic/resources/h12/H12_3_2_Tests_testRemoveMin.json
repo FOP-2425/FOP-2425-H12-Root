@@ -1,0 +1,118 @@
+[
+  {
+    "elementsPreState": [
+      1
+    ],
+    "elementsPostState": [
+    ],
+    "minimumElement": 1
+  },
+  {
+    "elementsPreState": [
+      2,
+      3
+    ],
+    "elementsPostState": [
+      3
+    ],
+    "minimumElement": 2
+  },
+  {
+    "elementsPreState": [
+      2,
+      1
+    ],
+    "elementsPostState": [
+      2
+    ],
+    "minimumElement": 1
+  },
+  {
+    "elementsPreState": [
+      2,
+      4,
+      3,
+      7,
+      2,
+      6,
+      54
+    ],
+    "elementsPostState": [
+      4,
+      3,
+      7,
+      2,
+      6,
+      54
+    ],
+    "minimumElement": 2
+  },
+  {
+    "elementsPreState": [
+      4,
+      3,
+      7,
+      2,
+      6,
+      54,
+      2
+    ],
+    "elementsPostState": [
+      4,
+      3,
+      7,
+      6,
+      54,
+      2
+    ],
+    "minimumElement": 2
+  },
+  {
+    "elementsPreState": [
+      5,
+      3,
+      7,
+      2,
+      6,
+      54,
+      2
+    ],
+    "elementsPostState": [
+      5,
+      3,
+      7,
+      6,
+      54,
+      2
+    ],
+    "minimumElement": 2
+  },
+  {
+    "elementsPreState": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "elementsPostState": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "minimumElement": 2
+  }
+]

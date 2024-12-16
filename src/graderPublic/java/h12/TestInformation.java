@@ -55,9 +55,6 @@ public class TestInformation implements Context {
         if (postState != null) {
             addState(builder, "Post state", postState);
         }
-        if (preState != null && postState == null || preState == null && postState != null) {
-            throw new IllegalStateException("Pre state and post state must be set together");
-        }
         if (actualState != null) {
             addState(builder, "Actual state", actualState);
         }

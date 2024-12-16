@@ -143,7 +143,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
      */
     void assertFetch(JsonParameterSet parameters) throws Throwable {
         // Access method to test
-        MethodLink method = Links.getMethod(getType(), "fetch");
+        MethodLink method = getMethod( "fetch");
 
         // Test setup
         TestInformation.TestInformationBuilder builder = initTest(method, parameters);
@@ -192,7 +192,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
      */
     private void assertReadBit(JsonParameterSet parameters) throws Throwable {
         // Access method to test
-        MethodLink method = Links.getMethod(getType(), "readBit");
+        MethodLink method = getMethod("readBit");
 
         // Test setup
         TestInformation.TestInformationBuilder builder = initTest(method, parameters);
@@ -260,7 +260,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
      */
     private void assertRead(JsonParameterSet parameters) throws Throwable {
         // Access method to test
-        MethodLink method = Links.getMethod(getType(), "read", Matcher.of(m -> m.typeList().isEmpty()));
+        MethodLink method = getMethod("read");
 
         // Test setup
         TestInformation.TestInformationBuilder builder = initTest(method, parameters);

@@ -14,6 +14,7 @@ import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -51,6 +52,24 @@ public abstract class H12_Tests {
      * The attribute name for custom converters in the JSON parameter set test annotation.
      */
     public static final String CUSTOM_CONVERTERS = "CONVERTERS";
+
+    /**
+     * The custom comparator for comparing integers.
+     */
+    public static final Comparator<Integer> COMPARATOR = new Comparator<Integer>() {
+
+        private static final Comparator<Integer> delegate = Comparator.naturalOrder();
+
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return delegate.compare(o1, o2);
+        }
+
+        @Override
+        public String toString() {
+            return "o1 <= o2";
+        }
+    };
 
     /**
      * The type of the class under test.

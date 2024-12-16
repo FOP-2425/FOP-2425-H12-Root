@@ -18,7 +18,6 @@ import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
 import org.tudalgo.algoutils.tutor.general.json.JsonParameterSet;
 import org.tudalgo.algoutils.tutor.general.json.JsonParameterSetTest;
-import org.tudalgo.algoutils.tutor.general.match.Matcher;
 import org.tudalgo.algoutils.tutor.general.reflections.BasicTypeLink;
 import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
@@ -92,9 +91,7 @@ public class H12_2_1_TestsPublic extends H12_Tests {
      */
     private void assertGetBitCount(JsonParameterSet parameters) throws Throwable {
         // Access method to test
-        List<TypeLink> methodParameters = List.of(BasicTypeLink.of(int.class));
-        MethodLink method = Links.getMethod(getType(), "getBitCount",
-            Matcher.of(m -> m.typeList().equals(methodParameters)));
+        MethodLink method = getMethod("getBitCount", int.class);
 
         // Test setup
         MockBitInputStream in = parameters.get("bitsPreState");
