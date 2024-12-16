@@ -83,7 +83,7 @@ public final class BufferedBitInputStream extends BitInputStream {
             return INVALID;
         }
 
-        return buffer.get(position--).getValue();
+        return buffer.get(position--).intValue();
     }
 
     @StudentImplementationRequired("H12.1.1")
@@ -105,7 +105,7 @@ public final class BufferedBitInputStream extends BitInputStream {
             }
             value.set(i, MyBit.fromInt(bit));
         }
-        return value.getValue();
+        return value.intValue();
     }
 
     /**

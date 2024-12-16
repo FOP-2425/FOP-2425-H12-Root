@@ -23,15 +23,15 @@ public abstract class H12_RubricProvider implements RubricProvider {
         .description("H12.1.1 | Bits lesen")
         .testClassName("h12.H12_1_1_Tests")
         .criterion("Die Methode fetch() aktualisiert den Puffer und die Position korrekt.", Map.of(
-            "testFetchNotEOF", List.of(),
-            "testFetchEOF", List.of()
+            "testFetchNotEOF", List.of(JsonParameterSet.class),
+            "testFetchEOF", List.of(JsonParameterSet.class)
         ))
-        .criterion("Die Methode readBit() liest das nächste Byte korrekt, falls wir bereits alle Bits des vorherigen Bytes gelesen haben", "testReadNextByte")
+        .criterion("Die Methode readBit() liest das nächste Byte korrekt, falls wir bereits alle Bits des vorherigen Bytes gelesen haben", "testReadBitNextByte", JsonParameterSet.class)
         .criterion("Die Methode readBit() gibt in allen anderen Fällen das korrekte Bit zurück.", Map.of(
-            "testReadBitByteStart", List.of(),
-            "testReadBitByteMiddle", List.of(),
-            "testReadBitByteEnd", List.of(),
-            "testReadBitEOF", List.of()
+            "testReadBitByteStart", List.of(JsonParameterSet.class),
+            "testReadBitByteMiddle", List.of(JsonParameterSet.class),
+            "testReadBitByteEnd", List.of(JsonParameterSet.class),
+            "testReadBitEOF", List.of(JsonParameterSet.class)
         ))
         .criterion("Die Methode read() gibt das korrekte Ergebnis zurück, falls wir am Ende des Streams sind.", "testReadEnd", JsonParameterSet.class)
         .criterion("Die Methode read() gibt das korrekte Teilergebnis zurück, falls der Stream keine 8 Bits mehr enthält.", "testReadPartial", JsonParameterSet.class)

@@ -54,7 +54,7 @@ public final class BufferedBitOutputStream extends BitOutStream {
         // Flush the buffer if it is not empty
         if (position != MyByte.NUMBER_OF_BITS - 1) {
             assert buffer != null;
-            underlying.write(buffer.getValue());
+            underlying.write(buffer.intValue());
             buffer = new MyByte();
             position = MyByte.NUMBER_OF_BITS - 1;
         }

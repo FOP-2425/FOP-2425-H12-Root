@@ -5,7 +5,8 @@ import h12.io.BitOutStream;
 import h12.io.BufferedBitInputStream;
 import h12.io.BufferedBitOutputStream;
 import h12.io.compression.Compressor;
-import h12.lang.MyBytes;
+import h12.lang.MyBit;
+import h12.lang.MyByte;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
@@ -16,12 +17,18 @@ import java.io.OutputStream;
 /**
  * A simple compressor that uses the running length encoding algorithm to compress data.
  *
- * <p>E.g. the input 111111110000111111 would be compressed to 8 1 4 0 6 1 to represent 8 ones, 4 zeros, and 6 ones.
+ * <p>E.g. the input 111111111111111111110000111111 would be compressed to 100010000000010010000110 to represent 20
+ * ones, 4 zeros, and 6 ones.
  *
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
 public class BitRunningLengthCompressor implements Compressor {
+
+    /**
+     * The maximum count that can be stored in a byte.
+     */
+    public static final int MAX_COUNT = (int) Math.pow(2, 7);
 
     /**
      * The input stream to read from.
@@ -64,7 +71,7 @@ public class BitRunningLengthCompressor implements Compressor {
     public int getBitCount(int bit) throws IOException {
         // TODO H12.2.1
         int count = 1;
-        while ((lastRead = in.readBit()) == bit) {
+        while (count < MAX_COUNT && (lastRead = in.readBit()) == bit) {
             count++;
         }
         return count;
@@ -77,10 +84,12 @@ public class BitRunningLengthCompressor implements Compressor {
         int bit = in.readBit();
         while (bit != -1) {
             int count = getBitCount(bit);
-            // Store count as 4 bytes
-            out.write(MyBytes.toBytes(count));
-            // Store bit as 1 byte since Java can only read/write bytes
-            out.write(bit);
+            // The first bit (position 7) is the bit we are counting
+            // The rest of the bits are the count
+            MyByte myByte = new MyByte(count);
+            myByte.set(MyByte.NUMBER_OF_BITS - 1, MyBit.fromInt(bit));
+            out.write(myByte.intValue());
+
             // Since we are reading the next bit in the loop from getBitCount, we need to remember it
             bit = lastRead;
         }

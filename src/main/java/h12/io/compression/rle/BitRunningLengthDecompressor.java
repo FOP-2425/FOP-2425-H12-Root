@@ -6,7 +6,7 @@ import h12.io.BufferedBitInputStream;
 import h12.io.BufferedBitOutputStream;
 import h12.io.compression.Decompressor;
 import h12.lang.MyBit;
-import h12.lang.MyBytes;
+import h12.lang.MyByte;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
@@ -17,7 +17,8 @@ import java.io.OutputStream;
 /**
  * A simple decompressor that uses the running length encoding algorithm to decompress data.
  *
- * <p>E.g. the input 8 1 4 0 6 1 would be decompressed to 111111110000111111 to represent 8 ones, 4 zeros, and 6 ones.
+ * <p>E.g. the input 100010000000010010000110 would be decompressed to 111111111111111111110000111111 to represent
+ * 20 ones, 4 zeros, and 6 ones.
  *
  * @author Per Göttlicher, Nhan Huynh
  */
@@ -68,9 +69,12 @@ public class BitRunningLengthDecompressor implements Decompressor {
     @Override
     public void decompress() throws IOException {
         // TODO H12.2.2
-        byte[] bytes = new byte[4];
-        while (in.read(bytes) != -1) {
-            writeBit(MyBytes.toInt(bytes), MyBit.fromInt(in.read()));
+        int value;
+        while ((value = in.read()) != -1) {
+            MyByte count = new MyByte(value);
+            MyBit bit = count.get(MyByte.MAX_POSITION);
+            count.set(MyByte.MAX_POSITION, MyBit.ZERO);
+            writeBit(count.intValue(), bit);
         }
         out.flush();
     }

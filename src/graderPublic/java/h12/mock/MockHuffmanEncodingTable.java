@@ -1,4 +1,4 @@
-package h12.util;
+package h12.mock;
 
 import h12.io.compression.EncodingTable;
 
@@ -67,9 +67,7 @@ public class MockHuffmanEncodingTable implements EncodingTable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MockHuffmanEncodingTable that)) return false;
-        return Objects.equals(encodings, that.encodings);
+        return this == o || o instanceof MockHuffmanEncodingTable that && encodings.equals(that.encodings);
     }
 
     @Override

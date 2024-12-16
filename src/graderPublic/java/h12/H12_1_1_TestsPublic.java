@@ -5,30 +5,27 @@ import h12.assertions.Links;
 import h12.assertions.TestConstants;
 import h12.io.BufferedBitInputStream;
 import h12.lang.MyByte;
-import h12.rubric.H12_Tests;
+import h12.mock.MockBitInputStream;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 import org.tudalgo.algoutils.tutor.general.annotation.SkipAfterFirstFailedTest;
 import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
-import org.tudalgo.algoutils.tutor.general.assertions.PreCommentSupplier;
-import org.tudalgo.algoutils.tutor.general.assertions.ResultOfObject;
 import org.tudalgo.algoutils.tutor.general.json.JsonParameterSet;
 import org.tudalgo.algoutils.tutor.general.json.JsonParameterSetTest;
 import org.tudalgo.algoutils.tutor.general.match.Matcher;
 import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -47,16 +44,19 @@ public class H12_1_1_TestsPublic extends H12_Tests {
      * The custom converters for the JSON parameter set test annotation.
      */
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.of(
-        "bytes", node -> node.asText().getBytes(StandardCharsets.UTF_8),
-        "bytesToRead", JsonNode::intValue,
-        "positionBefore", JsonNode::intValue,
-        "expectedResult", JsonNode::intValue
+        "bitsPreState", JsonConverters::toBitInputStream,
+        "bufferPreState", JsonConverters::toMyByte,
+        "positionPreState", JsonNode::asInt,
+        "bitsPostState", node -> JsonConverters.toList(node, JsonNode::asInt),
+        "bufferPostState", JsonConverters::toMyByte,
+        "positionPostState", JsonNode::asInt,
+        "expectedBit", JsonNode::asInt
     );
 
-    /**
-     * The example bytes to read.
-     */
-    private static final byte[] BYTES_TO_READ = "Hello, World!".getBytes(StandardCharsets.UTF_8);
+    @Override
+    public Class<?> getTestClass() {
+        return BufferedBitInputStream.class;
+    }
 
     /**
      * The field link for the buffer field.
@@ -71,12 +71,12 @@ public class H12_1_1_TestsPublic extends H12_Tests {
     /**
      * The underlying byte array input stream for the input stream to test.
      */
-    private ByteArrayInputStream underlying;
+    private @Nullable MockBitInputStream underlying;
 
     /**
      * The input stream to test.
      */
-    private BufferedBitInputStream stream;
+    private @Nullable BufferedBitInputStream stream;
 
     @BeforeAll
     protected void globalSetup() {
@@ -87,234 +87,226 @@ public class H12_1_1_TestsPublic extends H12_Tests {
 
     @AfterEach
     void tearDown() throws IOException {
-        underlying.close();
-        stream.close();
-    }
-
-    @Override
-    public Class<?> getClassType() {
-        return BufferedBitInputStream.class;
-    }
-
-    @DisplayName("Die Methode fetch() aktualisiert im Falle von nicht EOF den Puffer und die Position korrekt.")
-    @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    void testFetchNotEOF() throws Throwable {
-        underlying = new ByteArrayInputStream(BYTES_TO_READ);
-        stream = new BufferedBitInputStream(underlying);
-        MethodLink fetch = Links.getMethod(getType(), "fetch");
-        buffer.set(stream, new MyByte(BYTES_TO_READ[0]));
-        underlying.read();
-        MyByte expectedBuffer = new MyByte(BYTES_TO_READ[1]);
-        int expectedPosition = 7;
-        Context context = contextBuilder(fetch)
-            .add("Buffer before", buffer.get(stream))
-            .add("Position before", position.get(stream))
-            .add("Expected buffer after", expectedBuffer)
-            .add("Expected position after", expectedPosition)
-            .build();
-
-        fetch.invoke(stream);
-
-        MyByte actualBuffer = buffer.get(stream);
-        int actualPosition = position.get(stream);
-
-        Assertions2.assertEquals(expectedBuffer, actualBuffer, context, comment -> "Buffer is not updated correctly.");
-        Assertions2.assertEquals(expectedPosition, actualPosition, context,
-            comment -> "Position is not updated correctly.");
-    }
-
-    @DisplayName("Die Methode fetch() aktualisiert im Falle von EOF den Puffer und die Position korrekt.")
-    @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    void testFetchEOF() throws Throwable {
-        underlying = new ByteArrayInputStream(BYTES_TO_READ);
-        stream = new BufferedBitInputStream(underlying);
-        MethodLink fetch = Links.getMethod(getType(), "fetch");
-        for (int i = 0; i < BYTES_TO_READ.length; i++) {
-            underlying.read();
+        if (underlying != null) {
+            underlying.close();
         }
-        buffer.set(stream, new MyByte(BYTES_TO_READ[BYTES_TO_READ.length - 1]));
-        position.set(stream, -1);
-
-        int expectedPosition = -1;
-        Context context = contextBuilder(fetch)
-            .add("Buffer before", buffer.get(stream))
-            .add("Position before", position.get(stream))
-            .add("Expected buffer after", "null")
-            .add("Expected position after", expectedPosition)
-            .build();
-
-        fetch.invoke(stream);
-
-        MyByte actualBuffer = buffer.get(stream);
-        int actualPosition = position.get(stream);
-
-        Assertions2.assertNull(actualBuffer, context, comment -> "Buffer is not updated correctly.");
-        Assertions2.assertEquals(expectedPosition, actualPosition, context,
-            comment -> "Position is not updated correctly.");
-    }
-
-    @DisplayName("Die Methode readBit() liest das nächste Byte korrekt, falls wir bereits alle Bits des vorherigen Bytes gelesen haben")
-    @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    void testReadNextByte() throws Throwable {
-        underlying = new ByteArrayInputStream(BYTES_TO_READ);
-        stream = new BufferedBitInputStream(underlying);
-        MethodLink readBit = Links.getMethod(getType(), "readBit");
-        MyByte myByteBefore = new MyByte(BYTES_TO_READ[0]);
-        int positionBefore = -1;
-        this.buffer.set(stream, myByteBefore);
-        this.position.set(stream, positionBefore);
-
-        // Skip the first byte
-        underlying.read();
-
-        MyByte myByteAfter = new MyByte(BYTES_TO_READ[1]);
-        int positionAfter = 7;
-        int expectedBit = myByteAfter.get(positionAfter).getValue();
-        Context context = contextBuilder(readBit)
-            .add("Buffer before", buffer.get(stream))
-            .add("Position before", this.position.get(stream))
-            .add("Expected buffer after", myByteAfter)
-            .add("Expected position after", positionAfter)
-            .add("Expected bit", expectedBit)
-            .build();
-
-        int actualBit = readBit.invoke(stream);
-        Assertions2.assertEquals(expectedBit, actualBit, context,
-            comment -> "The method should return the correct bit.");
+        if (stream != null) {
+            stream.close();
+        }
     }
 
     /**
-     * Asserts that the method readBit() returns the correct bit when reading the bit at the given position.
+     * Initializes the test with the context.
      *
-     * @param position the position to read the bit from
+     * @param method     the method to test
+     * @param parameters the parameters for the test
+     *
+     * @return the test information builder used to specify the test information
+     */
+    private TestInformation.TestInformationBuilder initTest(MethodLink method, JsonParameterSet parameters) {
+        // Test setup
+        underlying = Objects.requireNonNull(parameters.get("bitsPreState"));
+        stream = new BufferedBitInputStream(underlying);
+
+        MyByte bufferPreState = parameters.get("bufferPreState");
+        buffer.set(stream, bufferPreState);
+        int positionPreState = parameters.get("positionPreState");
+        position.set(stream, positionPreState);
+
+        List<Integer> bitsPostState = parameters.get("bitsPostState");
+        MyByte bufferPostState = parameters.get("bufferPostState");
+        int positionPostState = parameters.get("positionPostState");
+
+        return testInformation(method)
+            .preState(
+                TestInformation.builder()
+                    .add("Stream", underlying.getBits())
+                    .add("buffer", bufferPreState)
+                    .add("position", positionPreState)
+                    .build()
+            )
+            .postState(
+                TestInformation.builder()
+                    .add("Stream", bitsPostState)
+                    .add("buffer", bufferPostState)
+                    .add("position", positionPostState)
+                    .build()
+            );
+    }
+
+    /**
+     * Asserts the fetch() method.
+     *
+     * @param parameters the parameters for the test
      *
      * @throws Throwable if an error occurs
      */
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void assertReadBit(int position) throws Throwable {
-        underlying = new ByteArrayInputStream(BYTES_TO_READ);
-        stream = new BufferedBitInputStream(underlying);
-        MethodLink readBit = Links.getMethod(getType(), "readBit");
-        MyByte myByte = new MyByte(BYTES_TO_READ[0]);
-        this.buffer.set(stream, myByte);
-        this.position.set(stream, position);
+    void assertFetch(JsonParameterSet parameters) throws Throwable {
+        // Access method to test
+        MethodLink method = Links.getMethod(getType(), "fetch");
 
-        // Skip the first byte
-        underlying.read();
+        // Test setup
+        TestInformation.TestInformationBuilder builder = initTest(method, parameters);
 
-        int expectedBit = myByte.get(position).getValue();
-        Context context = contextBuilder(readBit)
-            .add("Buffer before", buffer.get(stream))
-            .add("Position before", this.position.get(stream))
-            .add("Expected bit", expectedBit)
-            .add("Position after", position - 1)
+        // Test execution
+        method.invoke(stream);
+
+        // Test evaluation
+        MyByte bufferPostState = parameters.get("bufferPostState");
+        int positionPostState = parameters.get("positionPostState");
+        MyByte bufferActualState = buffer.get(stream);
+        int positionActualState = position.get(stream);
+
+        Context context = builder
+            .actualState(
+                TestInformation.builder()
+                    .add("buffer", bufferActualState)
+                    .add("position", positionActualState)
+                    .build()
+            )
             .build();
 
-        int actualBit = readBit.invoke(stream);
+        Assertions2.assertEquals(bufferPostState, bufferActualState, context, comment -> "Buffer is not updated correctly.");
+        Assertions2.assertEquals(positionPostState, positionActualState, context,
+            comment -> "Position is not updated correctly.");
+    }
+
+    @DisplayName("Die Methode fetch() aktualisiert im Falle von nicht EOF den Puffer und die Position korrekt.")
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H12_1_1_testFetchNotEOF.json", customConverters = CUSTOM_CONVERTERS)
+    void testFetchNotEOF(JsonParameterSet parameters) throws Throwable {
+        assertFetch(parameters);
+    }
+
+    @DisplayName("Die Methode fetch() aktualisiert im Falle von EOF den Puffer und die Position korrekt.")
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H12_1_1_testFetchEOF.json", customConverters = CUSTOM_CONVERTERS)
+    void testFetchEOF(JsonParameterSet parameters) throws Throwable {
+        assertFetch(parameters);
+    }
+
+    /**
+     * Asserts the readBit() method.
+     *
+     * @param parameters the parameters for the test
+     *
+     * @throws Throwable if an error occurso
+     */
+    private void assertReadBit(JsonParameterSet parameters) throws Throwable {
+        // Access method to test
+        MethodLink method = Links.getMethod(getType(), "readBit");
+
+        // Test setup
+        TestInformation.TestInformationBuilder builder = initTest(method, parameters);
+
+        // Test execution
+        int actualBit = method.invoke(stream);
+
+        // Test evaluation
+        int expectedBit = parameters.get("expectedBit");
+        MyByte bufferActualState = buffer.get(stream);
+        int positionActualState = position.get(stream);
+
+        Context context = builder
+            .actualState(
+                TestInformation.builder()
+                    .add("buffer", bufferActualState)
+                    .add("position", positionActualState)
+                    .build()
+            )
+            .build();
         Assertions2.assertEquals(expectedBit, actualBit, context,
-            comment -> "The method should return the correct bit.");
+            comment -> "Return value is not correct.");
+    }
+
+    @DisplayName("Die Methode readBit() liest das nächste Bit korrekt, falls wir bereits alle Bits des vorherigen Bytes gelesen haben.")
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H12_1_1_testReadBitNextByte.json", customConverters = CUSTOM_CONVERTERS)
+    void testReadBitNextByte(JsonParameterSet parameters) throws Throwable {
+        assertReadBit(parameters);
     }
 
     @DisplayName("Die Methode readBit() gibt im Falle von Lesen des ersten Bit das korrekte Bit zurück.")
-    @Test
-    void testReadBitByteStart() throws Throwable {
-        assertReadBit(7);
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H12_1_1_testReadBitBufferStart.json", customConverters = CUSTOM_CONVERTERS)
+    void testReadBitByteStart(JsonParameterSet parameters) throws Throwable {
+        assertReadBit(parameters);
     }
 
     @DisplayName("Die Methode readBit() gibt im Falle von Lesen eines mittleren Bit das korrekte Bit zurück.")
-    @Test
-    void testReadBitByteMiddle() throws Throwable {
-        assertReadBit(3);
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H12_1_1_testReadBitBufferMiddle.json", customConverters = CUSTOM_CONVERTERS)
+    void testReadBitByteMiddle(JsonParameterSet parameters) throws Throwable {
+        assertReadBit(parameters);
     }
 
     @DisplayName("Die Methode readBit() gibt im Falle von Lesen des letzen Bit eines Bytes das korrekte Bit zurück.")
-    @Test
-    void testReadBitByteEnd() throws Throwable {
-        assertReadBit(0);
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H12_1_1_testReadBitBufferEnd.json", customConverters = CUSTOM_CONVERTERS)
+    void testReadBitByteEnd(JsonParameterSet parameters) throws Throwable {
+        assertReadBit(parameters);
     }
 
     @DisplayName("Die Methode readBit() gibt im Falle von EOF das korrekte Bit zurück.")
-    @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    void testReadBitEOF() throws Throwable {
-        underlying = new ByteArrayInputStream(BYTES_TO_READ);
-        stream = new BufferedBitInputStream(underlying);
-        MethodLink readBit = Links.getMethod(getType(), "readBit");
-        int position = -1;
-        this.buffer.set(stream, null);
-        this.position.set(stream, position);
-        for (int i = 0; i < BYTES_TO_READ.length; i++) {
-            underlying.read();
-        }
-
-        Context context = contextBuilder(readBit)
-            .add("Buffer before", buffer.get(stream))
-            .build();
-
-        int actualBit = readBit.invoke(stream);
-
-        Assertions2.assertEquals(-1, actualBit, context,
-            comment -> "The method should return -1 if the buffer is empty.");
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H12_1_1_testReadBitEOF.json", customConverters = CUSTOM_CONVERTERS)
+    void testReadBitEOF(JsonParameterSet parameters) throws Throwable {
+        assertReadBit(parameters);
     }
 
     /**
      * Asserts that the method read() returns the correct result.
      *
-     * @param parameters         the parameters for the test
-     * @param preCommentSupplier the supplier for the pre-comment
+     * @param parameters the parameters for the test
      *
      * @throws Throwable if an error occurs
      */
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void assertRead(
-        JsonParameterSet parameters,
-        PreCommentSupplier<? super ResultOfObject<Integer>> preCommentSupplier
-    ) throws Throwable {
-        byte[] bytes = parameters.get("bytes");
-        underlying = new ByteArrayInputStream(bytes);
-        stream = new BufferedBitInputStream(underlying);
-        int bytesToRead = parameters.get("bytesToRead");
-        MyByte myByte = new MyByte(bytes[bytesToRead]);
-        for (int i = 0; i < bytesToRead + 1; i++) {
-            stream.read();
-        }
-        int positionBefore = parameters.get("positionBefore");
-        buffer.set(stream, myByte);
-        position.set(stream, positionBefore);
+    private void assertRead(JsonParameterSet parameters) throws Throwable {
+        // Access method to test
+        MethodLink method = Links.getMethod(getType(), "read", Matcher.of(m -> m.typeList().isEmpty()));
 
-        MethodLink read = Links.getMethod(getType(), "read", Matcher.of(method -> method.typeList().isEmpty()));
-        int expected = parameters.get("expectedResult");
-        Context context = contextBuilder(read)
-            .add("Stream", Arrays.toString(bytes))
-            .add("Buffer before", buffer.get(stream))
-            .add("Position before", position.get(stream))
-            .add("Expected result", expected)
+        // Test setup
+        TestInformation.TestInformationBuilder builder = initTest(method, parameters);
+
+        // Test execution
+        int actualByte = method.invoke(stream);
+
+        // Test evaluation
+        int expectedByte = parameters.get("expectedByte");
+        MyByte bufferActualState = buffer.get(stream);
+        int positionActualState = position.get(stream);
+
+        Context context = builder
+            .actualState(
+                TestInformation.builder()
+                    .add("buffer", bufferActualState)
+                    .add("position", positionActualState)
+                    .build()
+            )
             .build();
-        int actual = read.invoke(stream);
-        Assertions2.assertEquals(expected, actual, context, preCommentSupplier);
+
+
+        Assertions2.assertEquals(expectedByte, actualByte, context, comment -> "Return value is not correct.");
     }
 
     @DisplayName("Die Methode read() gibt das korrekte Ergebnis zurück, falls wir am Ende des Streams sind.")
     @ParameterizedTest
     @JsonParameterSetTest(value = "H12_1_1_testReadEnd.json", customConverters = CUSTOM_CONVERTERS)
     void testReadEnd(JsonParameterSet parameters) throws Throwable {
-        assertRead(parameters, comment -> "The method should return -1 if we are at the end of the file.");
+        assertRead(parameters);
     }
 
     @DisplayName("Die Methode read() gibt das korrekte Teilergebnis zurück, falls der Stream keine 8 Bits mehr enthält.")
     @ParameterizedTest
     @JsonParameterSetTest(value = "H12_1_1_testReadPartial.json", customConverters = CUSTOM_CONVERTERS)
     void testReadPartial(JsonParameterSet parameters) throws Throwable {
-        assertRead(parameters, comment -> "The method should return the correct result if the stream does not contain 8 bits.");
+        assertRead(parameters);
     }
 
     @DisplayName("Die Methode read() gibt in allen anderen Fallen das korrekte Ergebnis zurück.")
     @ParameterizedTest
     @JsonParameterSetTest(value = "H12_1_1_testRead.json", customConverters = CUSTOM_CONVERTERS)
     void testRead(JsonParameterSet parameters) throws Throwable {
-        assertRead(parameters, comment -> "The method should return the correct result.");
+        assertRead(parameters);
     }
 }

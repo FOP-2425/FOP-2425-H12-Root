@@ -312,7 +312,7 @@ public record Subtask(
         @Override
         public Subtask build() {
             if (testClassName.isBlank()) {
-                throw new IllegalStateException("Test class name must be set");
+                throw new IllegalStateException("Test class name cannot be blank!");
             }
             return new Subtask(
                 description,

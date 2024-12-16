@@ -64,7 +64,7 @@ public final class HuffmanCodingDecompressor implements Decompressor {
         for (int i = MyByte.NUMBER_OF_BITS - 1; i >= 0; i--) {
             value.set(i, MyBit.fromInt(in.readBit()));
         }
-        for (int i = 0; i < value.getValue(); i++) {
+        for (int i = 0; i < value.intValue(); i++) {
             in.readBit();
         }
     }

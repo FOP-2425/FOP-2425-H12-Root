@@ -52,13 +52,13 @@ public final class HuffmanCodingCompressor implements Compressor {
     }
 
     /**
-     * Reads the text from the input stream.
+     * Reads the content to compress from the input stream.
      *
      * @return the text read from the input stream
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.1")
-    String getText() throws IOException {
+    String getContent() throws IOException {
         // TODO H12.4.1
         return in.lines().collect(Collectors.joining("\n"));
     }
@@ -190,7 +190,7 @@ public final class HuffmanCodingCompressor implements Compressor {
     public void
     compress() throws IOException {
         // TODO H12.4.1
-        String text = getText();
+        String text = getContent();
         HuffmanCoding huffman = new HuffmanCoding();
         Map<Character, Integer> frequencyTable = huffman.buildFrequencyTable(text);
         EncodingTable encodingTable = huffman.buildEncodingTable(frequencyTable);
