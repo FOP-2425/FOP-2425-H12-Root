@@ -90,6 +90,7 @@ public class MockBitInputStream extends BitInputStream {
 
     /**
      * Sets the remaining bits that this mock bit input stream can read.
+     *
      * @param elements the remaining bits to read
      */
     public void setRemainingBits(Iterable<Integer> elements) {

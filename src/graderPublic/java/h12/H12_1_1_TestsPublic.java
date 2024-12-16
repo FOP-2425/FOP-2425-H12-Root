@@ -18,7 +18,6 @@ import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
 import org.tudalgo.algoutils.tutor.general.assertions.Context;
 import org.tudalgo.algoutils.tutor.general.json.JsonParameterSet;
 import org.tudalgo.algoutils.tutor.general.json.JsonParameterSetTest;
-import org.tudalgo.algoutils.tutor.general.match.Matcher;
 import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 
@@ -143,7 +142,7 @@ public class H12_1_1_TestsPublic extends H12_Tests {
      */
     void assertFetch(JsonParameterSet parameters) throws Throwable {
         // Access method to test
-        MethodLink method = getMethod( "fetch");
+        MethodLink method = getMethod("fetch");
 
         // Test setup
         TestInformation.TestInformationBuilder builder = initTest(method, parameters);
