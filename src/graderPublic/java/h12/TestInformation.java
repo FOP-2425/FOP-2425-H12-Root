@@ -191,27 +191,18 @@ public class TestInformation implements Context {
 
         @Override
         public TestInformationBuilder preState(TestInformation preState) {
-            if (this.preState != null) {
-                throw new IllegalStateException("Pre state of the test already set");
-            }
             this.preState = preState;
             return this;
         }
 
         @Override
         public TestInformationBuilder postState(TestInformation postState) {
-            if (this.postState != null) {
-                throw new IllegalStateException("Post state of the test already set");
-            }
             this.postState = postState;
             return this;
         }
 
         @Override
         public TestInformationBuilder actualState(TestInformation actualState) {
-            if (this.actualState != null) {
-                throw new IllegalStateException("Actual state of the test already set");
-            }
             this.actualState = actualState;
             return this;
         }

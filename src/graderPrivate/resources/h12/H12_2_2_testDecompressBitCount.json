@@ -1,0 +1,68 @@
+[
+  {
+    "inPreState": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "counts": [
+      1
+    ],
+    "bits": [
+      0
+    ],
+    "inPostState": [
+    ],
+    "outPostState": [
+    ]
+  },
+  {
+    "inPreState": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "counts": [
+      127
+    ],
+    "bits": [
+      1
+    ],
+    "inPostState": [
+    ],
+    "outPostState": [
+    ]
+  },
+  {
+    "inPreState": [
+      0,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    "counts": [
+      42
+    ],
+    "bits": [
+      0
+    ],
+    "inPostState": [
+    ],
+    "outPostState": [
+    ]
+  }
+]
