@@ -1,0 +1,66 @@
+[
+  {
+    "positionPreState": 7,
+    "bufferPreState": 0,
+    "bit": 0,
+    "positionPostState": 6,
+    "bufferPostState": 0,
+    "bitsPostState": []
+  },
+  {
+    "positionPreState": 7,
+    "bufferPreState": 0,
+    "bit": 1,
+    "positionPostState": 6,
+    "bufferPostState": 128,
+    "bitsPostState": []
+  },
+  {
+    "positionPreState": 4,
+    "bufferPreState": 0,
+    "bit": 0,
+    "positionPostState": 3,
+    "bufferPostState": 0,
+    "bitsPostState": []
+  },
+  {
+    "positionPreState": 4,
+    "bufferPreState": 0,
+    "bit": 1,
+    "positionPostState": 3,
+    "bufferPostState": 16,
+    "bitsPostState": []
+  },
+  {
+    "positionPreState": 4,
+    "bufferPreState": 160,
+    "bit": 0,
+    "positionPostState": 3,
+    "bufferPostState": 160,
+    "bitsPostState": []
+  },
+  {
+    "positionPreState": 4,
+    "bufferPreState": 160,
+    "bit": 1,
+    "positionPostState": 3,
+    "bufferPostState": 176,
+    "bitsPostState": []
+  },
+  {
+    "positionPreState": 0,
+    "bufferPreState": 180,
+    "bit": 0,
+    "positionPostState": -1,
+    "bufferPostState": 180,
+    "bitsPostState": []
+  },
+  {
+    "positionPreState": 0,
+    "bufferPreState": 180,
+    "bit": 1,
+    "positionPostState": -1,
+    "bufferPostState": 181,
+    "bitsPostState": []
+  }
+]

@@ -50,8 +50,8 @@ public abstract class H12_RubricProvider implements RubricProvider {
         ))
         .criterion("Die Methode flushBuffer() schreibt das Zeichen in den internen OutputStream korrekt.", false, "testFlushBufferWrite", JsonParameterSet.class)
         .criterion("Die Methode writeBit(Bit bit) schreibt das Zeichen in den internen OutputStream, falls der Puffer voll ist.", false, Map.of(
-            "testWriteBitFlushYes", List.of(),
-            "testWriteBitFlushNo", List.of()
+            "testWriteBitFlushYes", List.of(JsonParameterSet.class),
+            "testWriteBitFlushNo", List.of(JsonParameterSet.class)
         ))
         .criterion("Die Methode writeBit(Bit bit) schreibt ein Bit korrekt.", false, "testWriteBit", JsonParameterSet.class)
         .criterion("Die Methode write(int b) schreibt ein Byte korrekt.", false, "testWrite", JsonParameterSet.class)

@@ -1,7 +1,8 @@
 [
   {
     "bufferPreState": 20,
-    "positionPreState": 4,
+    "positionPreState": -1,
+    "bit": 1,
     "bufferPostState": 0,
     "positionPostState": 7,
     "bitsPostState": [

@@ -1,0 +1,62 @@
+[
+  {
+    "positionPreState": 7,
+    "bufferPreState": 0,
+    "byte": 69,
+    "positionPostState": -1,
+    "bufferPostState": 69,
+    "bitsPostState": [
+    ]
+  },
+  {
+    "positionPreState": 4,
+    "bufferPreState": 160,
+    "byte": 69,
+    "positionPostState": 4,
+    "bufferPostState": 160,
+    "bitsPostState": [
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "positionPreState": 0,
+    "bufferPreState": 170,
+    "byte": 69,
+    "positionPostState": 0,
+    "bufferPostState": 138,
+    "bitsPostState": [
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ]
+  },
+  {
+    "positionPreState": -1,
+    "bufferPreState": 171,
+    "byte": 69,
+    "positionPostState": -1,
+    "bufferPostState": 69,
+    "bitsPostState": [
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      1
+    ]
+  }
+]

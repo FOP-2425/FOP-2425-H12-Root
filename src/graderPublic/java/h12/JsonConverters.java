@@ -2,6 +2,7 @@ package h12;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.io.compression.EncodingTable;
+import h12.lang.MyBit;
 import h12.lang.MyByte;
 import h12.mock.MockBitInputStream;
 import h12.mock.MockHuffmanEncodingTable;
@@ -76,5 +77,19 @@ public final class JsonConverters extends org.tudalgo.algoutils.tutor.general.js
             bytes[i] = (byte) node.get(i).asInt();
         }
         return bytes;
+    }
+
+    /**
+     * Converts a JSON node to a bit
+     *
+     * @param node the JSON node containing the bit
+     *
+     * @return the bit
+     */
+    public static MyBit toBit(JsonNode node) {
+        if (!node.isInt()) {
+            throw new IllegalStateException("JSON node is not an int");
+        }
+        return MyBit.fromInt(node.asInt());
     }
 }

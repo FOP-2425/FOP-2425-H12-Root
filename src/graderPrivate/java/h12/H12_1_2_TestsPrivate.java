@@ -45,6 +45,7 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.of(
         "bufferPreState", JsonConverters::toMyByte,
         "positionPreState", JsonNode::asInt,
+        "bit", JsonConverters::toBit,
         "bitsPostState", node -> JsonConverters.toList(node, JsonNode::asInt),
         "bufferPostState", JsonConverters::toMyByte,
         "positionPostState", JsonNode::asInt
@@ -121,7 +122,7 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
             .preState(
                 preStateBuilder.apply(
                     TestInformation.builder()
-                        .add("underlying", underlying.getBits())
+                        .add("underlying", underlying.getBits().toString())
                         .add("buffer", bufferPreState)
                         .add("position", positionPreState)
                 ).build()
@@ -174,7 +175,7 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
         assert underlying != null;
         Context context = builder.actualState(
             TestInformation.builder()
-                .add("underlying", underlying.getBits())
+                .add("underlying", underlying.getBits().toString())
                 .add("buffer", bufferActualState)
                 .add("position", positionActualState)
                 .build()
@@ -219,7 +220,7 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
         assert underlying != null;
         Context context = builder.actualState(
             TestInformation.builder()
-                .add("underlying", underlying.getBits())
+                .add("underlying", underlying.getBits().toString())
                 .add("buffer", bufferActualState)
                 .add("position", positionActualState)
                 .build()
@@ -265,7 +266,7 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
         assert underlying != null;
         Context context = builder.actualState(
             TestInformation.builder()
-                .add("underlying", underlying.getBits())
+                .add("underlying", underlying.getBits().toString())
                 .add("buffer", buffer.get(stream))
                 .add("position", position.get(stream))
                 .build()
@@ -286,7 +287,7 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
 
     @DisplayName("Die Methode writeBit(Bit bit) schreibt das Zeichen in den internen OutputStream, falls der Puffer voll ist.")
     @ParameterizedTest
-    @JsonParameterSetTest(value = "testWriteBitFlushNo.json", customConverters = CUSTOM_CONVERTERS)
+    @JsonParameterSetTest(value = "H12_1_2_testWriteBitFlushNo.json", customConverters = CUSTOM_CONVERTERS)
     void testWriteBitFlushNo(JsonParameterSet parameters) throws Throwable {
         assertWriteBitFlush(parameters);
     }
