@@ -134,7 +134,7 @@ public abstract class H12_RubricProvider implements RubricProvider {
         .testClassName("h12.H12_4_1_Tests")
         .criterion("Die Methode getText() liest den Text korrekt ein.", "testGetText", JsonParameterSet.class)
         .criterion("Die Methode computeTextSize(String text, EncodingTable encodingTable) berechnet die Anzahl an Bits, die für die Komprimierung des Textes nötig ist, korrekt.", "testComputeTextSize", JsonParameterSet.class)
-        .criterion("Die Methode encodeContent(String text, EncodingTable encodingTable) komprimiert den Text korrekt.", "testEncodeContent", JsonParameterSet.class)
+        .criterion("Die Methode encodeText(String text, EncodingTable encodingTable) komprimiert den Text korrekt.", "testEncodeText", JsonParameterSet.class)
         .criterion("Die Methode compress() ist vollständig und korrekt.", "testCompress", JsonParameterSet.class)
         .build();
 
