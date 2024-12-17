@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.Links;
 import h12.assertions.TestConstants;
 import h12.io.BufferedBitOutputStream;
+import h12.lang.MyBit;
 import h12.lang.MyByte;
 import h12.mock.MockBitOutputStream;
 import org.jetbrains.annotations.Nullable;
@@ -227,5 +228,178 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
         List<Integer> bitsPostState = parameters.get("bitsPostState");
         Assertions2.assertEquals(bitsPostState, underlying.getBits(),
             context, comment -> "Buffer was written correctly");
+    }
+
+    /**
+     * Initializes the test for the writeBit(MyBit) method.
+     *
+     * @param parameters the parameters for the test
+     */
+    private TestInformation.TestInformationBuilder initWriteBitTest(JsonParameterSet parameters) {
+        // Access method to test
+        return initTest(
+            getMethod("writeBit", MyBit.class),
+            builder -> builder.add("bit", parameters.get("bit")),
+            Function.identity(),
+            parameters
+        );
+    }
+
+    /**
+     * Asserts that the buffer is written correctly after calling the writeBit method.
+     *
+     * @param parameters the parameters for the test
+     */
+    private void assertWriteBitFlush(JsonParameterSet parameters) throws Throwable {
+        // Access method to test
+        MethodLink method = getMethod("writeBit", MyBit.class);
+
+        // Test setup
+        TestInformation.TestInformationBuilder builder = initWriteBitTest(parameters);
+        MyBit bit = parameters.get("bit");
+
+        // Test execution
+        method.invoke(stream, bit);
+
+        // Test evaluation
+        assert underlying != null;
+        Context context = builder.actualState(
+            TestInformation.builder()
+                .add("underlying", underlying.getBits())
+                .add("buffer", buffer.get(stream))
+                .add("position", position.get(stream))
+                .build()
+        ).build();
+        List<Integer> bitsPostState = parameters.get("bitsPostState");
+
+        // Validate output
+        Assertions2.assertEquals(bitsPostState, underlying.getBits(), context,
+            comment -> "Buffer was not written correctly.");
+    }
+
+    @DisplayName("Die Methode writeBit(Bit bit) schreibt das Zeichen in den internen OutputStream, falls der Puffer voll ist.")
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H12_1_2_testWriteBitFlushYes.json", customConverters = CUSTOM_CONVERTERS)
+    void testWriteBitFlushYes(JsonParameterSet parameters) throws Throwable {
+        assertWriteBitFlush(parameters);
+    }
+
+    @DisplayName("Die Methode writeBit(Bit bit) schreibt das Zeichen in den internen OutputStream, falls der Puffer voll ist.")
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "testWriteBitFlushNo.json", customConverters = CUSTOM_CONVERTERS)
+    void testWriteBitFlushNo(JsonParameterSet parameters) throws Throwable {
+        assertWriteBitFlush(parameters);
+    }
+
+    @DisplayName("Die Methode writeBit(Bit bit) schreibt ein Bit korrekt.")
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H12_1_2_testWriteBit.json", customConverters = CUSTOM_CONVERTERS)
+    void testWriteBit(JsonParameterSet parameters) throws Throwable {
+        // Access method to test
+        MethodLink method = getMethod("writeBit", MyBit.class);
+
+        // Test setup
+        TestInformation.TestInformationBuilder builder = initWriteBitTest(parameters);
+        MyBit bit = parameters.get("bit");
+
+        // Test execution
+        method.invoke(stream, bit);
+
+        // Test evaluation
+        MyByte bufferActualState = buffer.get(stream);
+        int positionActualState = position.get(stream);
+        assert underlying != null;
+        Context context = builder.actualState(
+            TestInformation.builder()
+                .add("underlying", bufferActualState)
+                .add("buffer", buffer.get(stream))
+                .add("position", positionActualState)
+                .build()
+        ).build();
+
+        Assertions2.assertEquals(parameters.get("positionPostState"), positionActualState,
+            context, comment -> "Position was not updated correctly.");
+        Assertions2.assertEquals(parameters.get("bufferPostState"), bufferActualState,
+            context, comment -> "Buffer was not updated correctly.");
+    }
+
+    /**
+     * Initializes the test for the write(int) method.
+     *
+     * @param parameters the parameters for the test
+     */
+    private TestInformation.TestInformationBuilder initWriteTest(JsonParameterSet parameters) {
+        // Access method to test
+        return initTest(
+            getMethod("writeBit", MyBit.class),
+            builder -> builder.add("byte", parameters.get("byte")),
+            Function.identity(),
+            parameters
+        );
+    }
+
+    @DisplayName("Die Methode write(int b) schreibt ein Byte korrekt.")
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H12_1_2_testWrite.json", customConverters = CUSTOM_CONVERTERS)
+    void testWrite(JsonParameterSet parameters) throws Throwable {
+        // Access method to test
+        MethodLink method = getMethod("write", int.class);
+
+        // Test setup
+        TestInformation.TestInformationBuilder builder = initWriteTest(parameters);
+        int byteValue = parameters.getInt("byte");
+
+        // Test execution
+        method.invoke(stream, byteValue);
+
+        // Test evaluation
+        MyByte bufferActualState = buffer.get(stream);
+        int positionActualState = position.get(stream);
+        assert underlying != null;
+        Context context = builder.actualState(
+            TestInformation.builder()
+                .add("underlying", bufferActualState)
+                .add("buffer", buffer.get(stream))
+                .add("position", positionActualState)
+                .build()
+        ).build();
+
+        int positionPostState = parameters.getInt("positionPostState");
+        MyByte bufferPostState = parameters.get("bufferPostState");
+        List<Integer> bitsPostState = parameters.get("bitsPostState");
+
+        Assertions2.assertEquals(positionPostState, positionActualState,
+            context, comment -> "Position was not updated correctly.");
+        Assertions2.assertEquals(bufferPostState, bufferActualState,
+            context, comment -> "Buffer was not updated correctly.");
+        Assertions2.assertEquals(bitsPostState, underlying.getBits(),
+            context, comment -> "Buffer was not written correctly.");
+    }
+
+    @DisplayName("Die Methode write(int b) wirft eine IllegalArgumentException, falls die Eingabe kein Byte ist.")
+    @ParameterizedTest
+    @JsonParameterSetTest(value = "H12_1_2_testWriteIllegalArgumentException.json", customConverters = CUSTOM_CONVERTERS)
+    void testWriteIllegalArgumentException(JsonParameterSet parameters) throws Throwable {
+        // Access method to test
+        MethodLink method = getMethod("write", int.class);
+
+        // Test setup
+        TestInformation.TestInformationBuilder builder = initWriteTest(parameters);
+        int byteValue = parameters.getInt("byte");
+
+        // Test execution and evaluation
+        MyByte bufferActualState = buffer.get(stream);
+        int positionActualState = position.get(stream);
+        assert underlying != null;
+        Context context = builder.actualState(
+            TestInformation.builder()
+                .add("underlying", bufferActualState)
+                .add("buffer", buffer.get(stream))
+                .add("position", positionActualState)
+                .build()
+        ).build();
+
+        Assertions2.assertThrows(IllegalArgumentException.class, () -> method.invoke(stream, byteValue),
+            context, comment -> "IllegalArgumentException was not thrown.");
     }
 }
