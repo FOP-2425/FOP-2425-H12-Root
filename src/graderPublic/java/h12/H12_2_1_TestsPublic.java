@@ -3,7 +3,7 @@ package h12;
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.Links;
 import h12.assertions.TestConstants;
-import h12.io.compression.rle.BitRunningLengthCompressor;
+import h12.io.compress.rle.BitRunningLengthCompressor;
 import h12.mock.MockBitInputStream;
 import h12.mock.MockBitOutputStream;
 import org.jetbrains.annotations.Nullable;

@@ -1,4 +1,4 @@
-package h12.io.compression;
+package h12.io.compress;
 
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
@@ -19,7 +19,7 @@ public interface EncodingTable {
      *
      * @return true if the encoding table contains the character, false otherwise
      */
-    boolean contains(Character character);
+    boolean containsCharacter(Character character);
 
     /**
      * Returns whether the encoding table contains the given code.
@@ -28,7 +28,7 @@ public interface EncodingTable {
      *
      * @return true if the encoding table contains the code, false otherwise
      */
-    boolean contains(String code);
+    boolean containsCode(String code);
 
     /**
      * Returns whether the encoding table contains the given code.
@@ -37,7 +37,7 @@ public interface EncodingTable {
      *
      * @return {@code true} if the encoding table contains the code, {@code false} otherwise
      */
-    boolean contains(Iterable<Integer> iterable);
+    boolean containsCode(Iterable<Integer> iterable);
 
     /**
      * Returns the Huffman code of the given character.
@@ -47,7 +47,7 @@ public interface EncodingTable {
      * @return the Huffman code of the character
      * @throws NoSuchElementException if the character is not in the encoding table
      */
-    String get(Character character);
+    String getCode(Character character);
 
     /**
      * Returns the character of the given Huffman code.
@@ -57,7 +57,7 @@ public interface EncodingTable {
      * @return the character of the code
      * @throws NoSuchElementException if the code is not in the encoding table
      */
-    Character get(String code);
+    Character getCharacter(String code);
 
     /**
      * Returns the character of the given Huffman code.
@@ -67,5 +67,5 @@ public interface EncodingTable {
      * @return the character of the code
      * @throws NoSuchElementException if the code is not in the encoding table
      */
-    Character get(Iterable<Integer> iterable);
+    Character getCharacter(Iterable<Integer> iterable);
 }

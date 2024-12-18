@@ -1,6 +1,6 @@
-package h12.io.compression.huffman;
+package h12.io.compress.huffman;
 
-import h12.io.compression.EncodingTable;
+import h12.io.compress.EncodingTable;
 import h12.util.TreeNode;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;

@@ -1,6 +1,6 @@
 package h12.mock;
 
-import h12.io.compression.EncodingTable;
+import h12.io.compress.EncodingTable;
 
 import java.util.Map;
 import java.util.Objects;
@@ -28,29 +28,29 @@ public class MockHuffmanEncodingTable implements EncodingTable {
     }
 
     @Override
-    public boolean contains(Character character) {
+    public boolean containsCharacter(Character character) {
         return encodings.containsKey(character);
     }
 
     @Override
-    public boolean contains(String code) {
+    public boolean containsCode(String code) {
         return encodings.containsValue(code);
     }
 
     @Override
-    public boolean contains(Iterable<Integer> iterable) {
-        return contains(StreamSupport.stream(iterable.spliterator(), false)
+    public boolean containsCode(Iterable<Integer> iterable) {
+        return containsCode(StreamSupport.stream(iterable.spliterator(), false)
             .map(String::valueOf)
             .reduce("", String::concat));
     }
 
     @Override
-    public String get(Character character) {
+    public String getCode(Character character) {
         return encodings.get(character);
     }
 
     @Override
-    public Character get(String code) {
+    public Character getCharacter(String code) {
         return encodings.entrySet().stream()
             .filter(entry -> entry.getValue().equals(code))
             .map(Map.Entry::getKey)
@@ -59,8 +59,8 @@ public class MockHuffmanEncodingTable implements EncodingTable {
     }
 
     @Override
-    public Character get(Iterable<Integer> iterable) {
-        return get(StreamSupport.stream(iterable.spliterator(), false)
+    public Character getCharacter(Iterable<Integer> iterable) {
+        return getCharacter(StreamSupport.stream(iterable.spliterator(), false)
             .map(String::valueOf)
             .reduce("", String::concat));
     }

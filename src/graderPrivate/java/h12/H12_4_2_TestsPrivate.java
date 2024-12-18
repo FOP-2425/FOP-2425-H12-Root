@@ -2,8 +2,8 @@ package h12;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.TestConstants;
-import h12.io.compression.EncodingTable;
-import h12.io.compression.huffman.HuffmanCodingDecompressor;
+import h12.io.compress.EncodingTable;
+import h12.io.compress.huffman.HuffmanCodingDecompressor;
 import h12.lang.MyByte;
 import h12.mock.MockBitInputStream;
 import h12.mock.MockBitOutputStream;
@@ -172,12 +172,12 @@ public class H12_4_2_TestsPrivate extends H12_Tests {
         );
     }
 
-    @DisplayName("Die Methode decodeContent(EncodingTable encodingTable) dekomprimiert den Text korrekt.")
+    @DisplayName("Die Methode decodeText(EncodingTable encodingTable) dekomprimiert den Text korrekt.")
     @ParameterizedTest
-    @JsonParameterSetTest(value = "H12_4_2_testDecodeContent.json", customConverters = CUSTOM_CONVERTERS)
-    void testDecodeContent(JsonParameterSet parameters) throws Throwable {
+    @JsonParameterSetTest(value = "H12_4_2_testDecodeText.json", customConverters = CUSTOM_CONVERTERS)
+    void testDecodeText(JsonParameterSet parameters) throws Throwable {
         // Access the method
-        MethodLink method = getMethod("decodeContent", EncodingTable.class);
+        MethodLink method = getMethod("decodeText", EncodingTable.class);
 
         // Test setup
         in = parameters.get("inPreState");

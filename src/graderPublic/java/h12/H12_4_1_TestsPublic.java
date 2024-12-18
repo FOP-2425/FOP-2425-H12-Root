@@ -2,8 +2,8 @@ package h12;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.TestConstants;
-import h12.io.compression.EncodingTable;
-import h12.io.compression.huffman.HuffmanCodingCompressor;
+import h12.io.compress.EncodingTable;
+import h12.io.compress.huffman.HuffmanCodingCompressor;
 import h12.mock.MockBitOutputStream;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.AfterEach;

@@ -1,7 +1,7 @@
 package h12;
 
 import h12.assertions.TestConstants;
-import h12.io.compression.huffman.HuffmanCoding;
+import h12.io.compress.huffman.HuffmanCoding;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

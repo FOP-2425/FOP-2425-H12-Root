@@ -1,10 +1,10 @@
-package h12.io.compression.rle;
+package h12.io.compress.rle;
 
 import h12.io.BitInputStream;
 import h12.io.BitOutStream;
 import h12.io.BufferedBitInputStream;
 import h12.io.BufferedBitOutputStream;
-import h12.io.compression.Decompressor;
+import h12.io.compress.Decompressor;
 import h12.lang.MyBit;
 import h12.lang.MyByte;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;

@@ -1,22 +1,22 @@
-package h12.io.compression;
+package h12.io.compress;
 
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 
 import java.io.IOException;
 
 /**
- * Represents a compressor that can compress a file.
+ * Represents a decompressor that can decompress a file.
  *
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
-public interface Compressor extends AutoCloseable {
+public interface Decompressor extends AutoCloseable {
 
     /**
-     * Compresses the file.
+     * Decompresses the file.
      *
      * @throws IOException if an I/O error occurs
      */
     @DoNotTouch
-    void compress() throws IOException;
+    void decompress() throws IOException;
 }

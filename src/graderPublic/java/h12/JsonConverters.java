@@ -1,7 +1,7 @@
 package h12;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import h12.io.compression.EncodingTable;
+import h12.io.compress.EncodingTable;
 import h12.lang.MyBit;
 import h12.lang.MyByte;
 import h12.mock.MockBitInputStream;

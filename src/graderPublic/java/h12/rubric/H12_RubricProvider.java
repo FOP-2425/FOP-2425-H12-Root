@@ -146,7 +146,7 @@ public abstract class H12_RubricProvider implements RubricProvider {
         .testClassName("h12.H12_4_2_Tests")
         .criterion("Die Methode skipBits() überspringt die Füllbits korrekt.", false, "testSkipBits", JsonParameterSet.class)
         .criterion("Die Methode decodeCharacter(int startBit, EncodingTable encodingTable) dekomprimiert einen Zeichen korrekt.", false, "testDecodeCharacter", JsonParameterSet.class)
-        .criterion("Die Methode decodeContent(EncodingTable encodingTable) Dekomprimiert den Text korrekt.", false, "testDecodeContent", JsonParameterSet.class)
+        .criterion("Die Methode decodeText(EncodingTable encodingTable) Dekomprimiert den Text korrekt.", false, "testDecodeText", JsonParameterSet.class)
         .criterion("Die Methode decompress() ist vollständig und korrekt.", false, "testDecompress", JsonParameterSet.class)
         .build();
 
