@@ -46,7 +46,7 @@ public final class BufferedBitOutputStream extends BitOutStream {
     /**
      * Flushes the buffer if it is not empty to write the remaining bits to the underlying output stream.
      *
-     * @throws IOException if an I/O error occurso
+     * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.1.2")
     private void flushBuffer() throws IOException {
@@ -65,7 +65,7 @@ public final class BufferedBitOutputStream extends BitOutStream {
     public void writeBit(MyBit bit) throws IOException {
         // TODO H12.1.2
 
-        // If buffer is full, flush it
+        // If the buffer is full, flush it
         if (position < 0) {
             flushBuffer();
         }

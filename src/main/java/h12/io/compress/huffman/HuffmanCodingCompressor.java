@@ -55,10 +55,9 @@ public final class HuffmanCodingCompressor implements Compressor {
      * Reads the content to compress from the input stream.
      *
      * @return the text read from the input stream
-     * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.1")
-    String getText() throws IOException {
+    String getText() {
         // TODO H12.4.1
         return in.lines().collect(Collectors.joining("\n"));
     }
@@ -82,7 +81,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      *
      * @param encodingTable the encoding table to use
      *
-     * @return the size of the header in bitso
+     * @return the size of the header in bits
      */
     @DoNotTouch
     private int computeHeaderSize(EncodingTable encodingTable) {
