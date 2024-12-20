@@ -2,7 +2,6 @@ package h12.io;
 
 import h12.lang.MyBit;
 import h12.lang.MyByte;
-import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
@@ -81,14 +80,6 @@ public final class BufferedBitOutputStream extends BitOutStream {
         MyByte byteToWrite = new MyByte(b);
         for (int i = MyByte.NUMBER_OF_BITS - 1; i >= 0; i--) {
             writeBit(byteToWrite.get(i));
-        }
-    }
-
-    @DoNotTouch
-    @Override
-    public void write(byte @NotNull [] b, int off, int len) throws IOException {
-        for (int i = off; i < off + len; i++) {
-            write(b[i]);
         }
     }
 
