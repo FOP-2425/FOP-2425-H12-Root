@@ -1,8 +1,7 @@
 [
   {
-    "character": "H",
-    "in": [
-      1,
+    "startBit": 1,
+    "inPreState": [
       0,
       0
     ],
@@ -16,12 +15,55 @@
       "H": "100",
       "l": "01",
       "o": "101"
-    }
+    },
+    "character": "H",
+    "inPostState": [],
+    "outPostState": []
   },
   {
+    "startBit": 0,
+    "inPreState": [
+      0,
+      0
+    ],
+    "encodingTable": {
+      " ": "1100",
+      "!": "1101",
+      "r": "1110",
+      "d": "1111",
+      "e": "000",
+      "W": "001",
+      "H": "100",
+      "l": "01",
+      "o": "101"
+    },
     "character": "e",
-    "in": [
-      0,
+    "inPostState": [],
+    "outPostState": []
+  },
+  {
+    "startBit": 0,
+    "inPreState": [
+      1
+    ],
+    "encodingTable": {
+      " ": "1100",
+      "!": "1101",
+      "r": "1110",
+      "d": "1111",
+      "e": "000",
+      "W": "001",
+      "H": "100",
+      "l": "01",
+      "o": "101"
+    },
+    "character": "l",
+    "inPostState": [],
+    "outPostState": []
+  },
+  {
+    "startBit": 1,
+    "inPreState": [
       0,
       0
     ],
@@ -35,29 +77,35 @@
       "H": "100",
       "l": "01",
       "o": "101"
-    }
-  },
-  {
-    "character": "l",
-    "in": [
-      0,
-      1
-    ],
-    "encodingTable": {
-      " ": "1100",
-      "!": "1101",
-      "r": "1110",
-      "d": "1111",
-      "e": "000",
-      "W": "001",
-      "H": "100",
-      "l": "01",
-      "o": "101"
-    }
-  },
-  {
+    },
     "character": "H",
-    "in": [
+    "inPostState": [],
+    "outPostState": []
+  },
+  {
+    "startBit": 1,
+    "inPreState": [
+      0,
+      1
+    ],
+    "encodingTable": {
+      " ": "1100",
+      "!": "1101",
+      "r": "1110",
+      "d": "1111",
+      "e": "000",
+      "W": "001",
+      "H": "100",
+      "l": "01",
+      "o": "101"
+    },
+    "character": "o",
+    "inPostState": [],
+    "outPostState": []
+  },
+  {
+    "startBit": 1,
+    "inPreState": [
       1,
       0,
       0
@@ -72,34 +120,16 @@
       "H": "100",
       "l": "01",
       "o": "101"
-    }
-  },
-  {
-    "character": "o",
-    "in": [
-      1,
-      0,
-      1
-    ],
-    "encodingTable": {
-      " ": "1100",
-      "!": "1101",
-      "r": "1110",
-      "d": "1111",
-      "e": "000",
-      "W": "001",
-      "H": "100",
-      "l": "01",
-      "o": "101"
-    }
-  },
-  {
+    },
     "character": " ",
-    "in": [
-      1,
-      1,
+    "inPostState": [],
+    "outPostState": []
+  },
+  {
+    "startBit": 0,
+    "inPreState": [
       0,
-      0
+      1
     ],
     "encodingTable": {
       " ": "1100",
@@ -111,12 +141,14 @@
       "H": "100",
       "l": "01",
       "o": "101"
-    }
-  },
-  {
+    },
     "character": "W",
-    "in": [
-      0,
+    "inPostState": [],
+    "outPostState": []
+  },
+  {
+    "startBit": 1,
+    "inPreState": [
       0,
       1
     ],
@@ -130,31 +162,14 @@
       "H": "100",
       "l": "01",
       "o": "101"
-    }
-  },
-  {
+    },
     "character": "o",
-    "in": [
-      1,
-      0,
-      1
-    ],
-    "encodingTable": {
-      " ": "1100",
-      "!": "1101",
-      "r": "1110",
-      "d": "1111",
-      "e": "000",
-      "W": "001",
-      "H": "100",
-      "l": "01",
-      "o": "101"
-    }
+    "inPostState": [],
+    "outPostState": []
   },
   {
-    "character": "r",
-    "in": [
-      1,
+    "startBit": 1,
+    "inPreState": [
       1,
       1,
       0
@@ -169,12 +184,36 @@
       "H": "100",
       "l": "01",
       "o": "101"
-    }
+    },
+    "character": "r",
+    "inPostState": [],
+    "outPostState": []
   },
   {
+    "startBit": 0,
+    "inPreState": [
+      1
+    ],
+    "encodingTable": {
+      " ": "1100",
+      "!": "1101",
+      "r": "1110",
+      "d": "1111",
+      "e": "000",
+      "W": "001",
+      "H": "100",
+      "l": "01",
+      "o": "101"
+    },
     "character": "l",
-    "in": [
-      0,
+    "inPostState": [],
+    "outPostState": []
+  },
+  {
+    "startBit": 1,
+    "inPreState": [
+      1,
+      1,
       1
     ],
     "encodingTable": {
@@ -187,32 +226,14 @@
       "H": "100",
       "l": "01",
       "o": "101"
-    }
-  },
-  {
+    },
     "character": "d",
-    "in": [
-      1,
-      1,
-      1,
-      1
-    ],
-    "encodingTable": {
-      " ": "1100",
-      "!": "1101",
-      "r": "1110",
-      "d": "1111",
-      "e": "000",
-      "W": "001",
-      "H": "100",
-      "l": "01",
-      "o": "101"
-    }
+    "inPostState": [],
+    "outPostState": []
   },
   {
-    "character": "!",
-    "in": [
-      1,
+    "startBit": 1,
+    "inPreState": [
       1,
       0,
       1
@@ -227,6 +248,9 @@
       "H": "100",
       "l": "01",
       "o": "101"
-    }
+    },
+    "character": "!",
+    "inPostState": [],
+    "outPostState": []
   }
 ]

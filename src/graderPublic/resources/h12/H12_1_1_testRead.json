@@ -1,38 +1,115 @@
 [
   {
-    "bytes": "Hello, World!",
-    "bytesToRead": 0,
-    "positionBefore": 7,
-    "expectedResult": 72
+    "bitsPreState": [
+      1,
+      0,
+      1,
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      1
+    ],
+    "bufferPreState": 69,
+    "positionPreState": 7,
+    "bitsPostState": [
+      1,
+      0,
+      1,
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      1
+    ],
+    "bufferPostState": 69,
+    "positionPostState": -1,
+    "expectedByte": 69
   },
   {
-    "bytes": "Hello, World!",
-    "bytesToRead": 0,
-    "positionBefore": 4,
-    "expectedResult": 67
+    "bitsPreState": [
+      1,
+      0,
+      1,
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      1
+    ],
+    "bufferPreState": 69,
+    "positionPreState": 3,
+    "bitsPostState": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      1
+    ],
+    "bufferPostState": 178,
+    "positionPostState": 0,
+    "expectedByte": 91
   },
   {
-    "bytes": "Hello, World!",
-    "bytesToRead": 0,
-    "positionBefore": 0,
-    "expectedResult": 50
-  },
-  {
-    "bytes": "Hello, World!",
-    "bytesToRead": 5,
-    "positionBefore": 7,
-    "expectedResult": 44
-  },
-  {
-    "bytes": "Hello, World!",
-    "bytesToRead": 5,
-    "positionBefore": 4,
-    "expectedResult": 97
-  },
-  {
-    "bytes": "Hello, World!",
-    "bytesToRead": 5,
-    "positionBefore": 0,
-    "expectedResult": 16
+    "bitsPreState": [
+      1,
+      0,
+      1,
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      1
+    ],
+    "bufferPreState": 69,
+    "positionPreState": 0,
+    "bitsPostState": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      1
+    ],
+    "bufferPostState": 178,
+    "positionPostState": 0,
+    "expectedByte": 217
   }
 ]

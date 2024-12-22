@@ -1,7 +1,7 @@
 package h12;
 
 import h12.assertions.TestConstants;
-import h12.io.compression.huffman.HuffmanCoding;
+import h12.io.compress.huffman.HuffmanCoding;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -29,11 +29,10 @@ public class H12_3_2_TestsPrivate extends H12_3_2_TestsPublic {
     @DisplayName("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) ist vollständig und korrekt.")
     @Test
     void testResult() throws Throwable {
-        // Access test method
-        MethodLink method = getMethod("build", Map.class, BiFunction.class,
-            BiFunction.class, java.util.Comparator.class);
+         // Access method to test
+        MethodLink method = getMethod("build", Map.class, BiFunction.class, BiFunction.class, Comparator.class);
 
-        // Test data
+        // Test setup
         Map<Character, Integer> frequency = Map.of('a', 1, 'b', 2, 'c', 3, 'd', 4);
         BiFunction<Character, Integer, Map.Entry<Character, Integer>> f = Map::entry;
         BiFunction<Map.Entry<Character, Integer>, Map.Entry<Character, Integer>, Map.Entry<Character, Integer>> g =
@@ -41,7 +40,7 @@ public class H12_3_2_TestsPrivate extends H12_3_2_TestsPublic {
         Comparator<Map.Entry<Character, Integer>> cmp = Comparator.comparingInt(Map.Entry::getValue);
 
         // Context information
-        Context context = contextBuilder(method)
+        Context context = testInformation(method)
             .add("frequency", frequency)
             .add("f", "(Character, Integer) -> Map.Entry<Character, Integer>")
             .add("g", "(Map.Entry<Character, Integer>, Map.Entry<Character, Integer>) -> Map.Entry<Character, Integer>")
@@ -53,6 +52,6 @@ public class H12_3_2_TestsPrivate extends H12_3_2_TestsPublic {
         Map.Entry<Character, Integer> actual = method.invoke(coding, frequency, f, g, cmp);
         Map.Entry<Character, Integer> expected = Map.entry('d', 10);
 
-        Assertions2.assertEquals(expected, actual, context, comment -> "Wrong result");
+        Assertions2.assertEquals(expected, actual, context, comment -> "The computed result is not correct.");
     }
 }

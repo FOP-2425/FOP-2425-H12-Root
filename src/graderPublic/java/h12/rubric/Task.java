@@ -98,7 +98,7 @@ public record Task(String description, List<Subtask> subtasks) implements Criter
         @Override
         public Task build() {
             if (description.isBlank()) {
-                throw new IllegalArgumentException("Description cannot be blank");
+                throw new IllegalArgumentException("Description cannot be blank!");
             }
             return new Task(description, criteria);
         }

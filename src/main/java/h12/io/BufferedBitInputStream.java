@@ -5,7 +5,6 @@ import h12.lang.MyByte;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
-import org.tudalgo.algoutils.student.annotation.SolutionOnly;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
 import java.io.IOException;
@@ -22,7 +21,6 @@ public final class BufferedBitInputStream extends BitInputStream {
     /**
      * The value returned when the stream has reached the end or the beginning of the stream.
      */
-    @SolutionOnly
     private static final int INVALID = -1;
 
     /**
@@ -83,7 +81,7 @@ public final class BufferedBitInputStream extends BitInputStream {
             return INVALID;
         }
 
-        return buffer.get(position--).getValue();
+        return buffer.get(position--).intValue();
     }
 
     @StudentImplementationRequired("H12.1.1")
@@ -105,7 +103,7 @@ public final class BufferedBitInputStream extends BitInputStream {
             }
             value.set(i, MyBit.fromInt(bit));
         }
-        return value.getValue();
+        return value.intValue();
     }
 
     /**

@@ -2,8 +2,7 @@ package h12;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.TestConstants;
-import h12.io.compression.huffman.HuffmanCoding;
-import h12.rubric.H12_Tests;
+import h12.io.compress.huffman.HuffmanCoding;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,59 +40,77 @@ public class H12_3_1_TestsPrivate extends H12_Tests {
 
 
     @Override
-    public Class<?> getClassType() {
+    public Class<?> getTestClass() {
         return HuffmanCoding.class;
+    }
+
+    private TestInformation.TestInformationBuilder initTest(JsonParameterSet parameters) {
+        // Access method to test
+        MethodLink method = getMethod("buildFrequencyTable", String.class);
+
+        // Test setup
+        String text = parameters.get("text");
+
+        return testInformation(method).preState(
+            TestInformation.builder()
+                .add("text", text)
+                .build()
+        );
     }
 
     @DisplayName("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mit allen Zeichen als Schlüssel korrekt.")
     @ParameterizedTest
     @JsonParameterSetTest(value = "H12_3_1_testBuildFrequencyTable.json", customConverters = CUSTOM_CONVERTERS)
     void testBuildFrequencyTableKeys(JsonParameterSet parameters) throws Throwable {
-        // Access the method
+        // Access method to test
         MethodLink method = getMethod("buildFrequencyTable", String.class);
 
-        // Test data
+        // Test setup
         String text = parameters.get("text");
 
-        // Context information
-        Context context = contextBuilder(method)
-            .add("text", text)
-            .build();
+        TestInformation.TestInformationBuilder builder = testInformation(method).preState(
+            TestInformation.builder()
+                .add("text", text)
+                .build()
+        );
 
-        // Test the method
+        // Test execution
         HuffmanCoding coding = new HuffmanCoding();
-        Map<Character, Integer> frequency = method.invoke(coding, text);
+        Map<Character, Integer> actualFrequency = method.invoke(coding, text);
 
-        // Validate the output
-        Map<Character, Integer> expected = parameters.get("frequency");
-        Set<Character> keys = expected.keySet();
+        // Test evaluation
+        Map<Character, Integer> frequency = parameters.get("frequency");
+        Set<Character> keys = frequency.keySet();
 
-        Assertions2.assertEquals(keys, frequency.keySet(), context,
-            comment -> "The keys of the frequency table are not correct.");
+        Context context = builder.build();
+        Assertions2.assertEquals(keys, actualFrequency.keySet(), context,
+            comment -> "The keys of the built frequency table are not correct.");
     }
 
     @DisplayName("Die Methode buildFrequencyTable(String text) erstellt die Häufigkeitstabelle mt den Häufigkeiten korrekt.")
     @ParameterizedTest
     @JsonParameterSetTest(value = "H12_3_1_testBuildFrequencyTable.json", customConverters = CUSTOM_CONVERTERS)
     void testResult(JsonParameterSet parameters) throws Throwable {
-        // Access the method
+        // Access method to test
         MethodLink method = getMethod("buildFrequencyTable", String.class);
 
-        // Test data
+        // Test setup
         String text = parameters.get("text");
 
-        // Context information
-        Context context = contextBuilder(method)
-            .add("text", text)
-            .build();
+        TestInformation.TestInformationBuilder builder = testInformation(method).preState(
+            TestInformation.builder()
+                .add("text", text)
+                .build()
+        );
 
-        // Test the method
+        // Test execution
         HuffmanCoding coding = new HuffmanCoding();
-        Map<Character, Integer> frequency = method.invoke(coding, text);
+        Map<Character, Integer> actualFrequency = method.invoke(coding, text);
 
-        // Validate the output
-        Map<Character, Integer> expected = parameters.get("frequency");
-        Assertions2.assertEquals(expected, frequency, context,
-            comment -> "The frequency table is not correct.");
+        // Test evaluation
+        Map<Character, Integer> frequency = parameters.get("frequency");
+        Context context = builder.build();
+        Assertions2.assertEquals(frequency, actualFrequency, context,
+            comment -> "The built frequency table is not correct.");
     }
 }

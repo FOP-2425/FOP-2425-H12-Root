@@ -1,58 +1,66 @@
 [
   {
-    "initialPosition": 7,
-    "initialBuffer": 0,
+    "positionPreState": 7,
+    "bufferPreState": 0,
     "bit": 0,
-    "expectedPosition": 6,
-    "expectedBuffer": 0
+    "positionPostState": 6,
+    "bufferPostState": 0,
+    "bitsPostState": []
   },
   {
-    "initialPosition": 7,
-    "initialBuffer": 0,
+    "positionPreState": 7,
+    "bufferPreState": 0,
     "bit": 1,
-    "expectedPosition": 6,
-    "expectedBuffer": 128
+    "positionPostState": 6,
+    "bufferPostState": 128,
+    "bitsPostState": []
   },
   {
-    "initialPosition": 4,
-    "initialBuffer": 0,
+    "positionPreState": 4,
+    "bufferPreState": 0,
     "bit": 0,
-    "expectedPosition": 3,
-    "expectedBuffer": 0
+    "positionPostState": 3,
+    "bufferPostState": 0,
+    "bitsPostState": []
   },
   {
-    "initialPosition": 4,
-    "initialBuffer": 0,
+    "positionPreState": 4,
+    "bufferPreState": 0,
     "bit": 1,
-    "expectedPosition": 3,
-    "expectedBuffer": 16
+    "positionPostState": 3,
+    "bufferPostState": 16,
+    "bitsPostState": []
   },
   {
-    "initialPosition": 4,
-    "initialBuffer": 160,
+    "positionPreState": 4,
+    "bufferPreState": 160,
     "bit": 0,
-    "expectedPosition": 3,
-    "expectedBuffer": 160
+    "positionPostState": 3,
+    "bufferPostState": 160,
+    "bitsPostState": []
   },
   {
-    "initialPosition": 4,
-    "initialBuffer": 160,
+    "positionPreState": 4,
+    "bufferPreState": 160,
     "bit": 1,
-    "expectedPosition": 3,
-    "expectedBuffer": 176
+    "positionPostState": 3,
+    "bufferPostState": 176,
+    "bitsPostState": []
   },
   {
-    "initialPosition": 0,
-    "initialBuffer": 180,
+    "positionPreState": 0,
+    "bufferPreState": 180,
     "bit": 0,
-    "expectedPosition": -1,
-    "expectedBuffer": 180
+    "positionPostState": -1,
+    "bufferPostState": 180,
+    "bitsPostState": []
   },
   {
-    "initialPosition": 0,
-    "initialBuffer": 180,
+    "positionPreState": 0,
+    "bufferPreState": 180,
     "bit": 1,
-    "expectedPosition": -1,
-    "expectedBuffer": 181
+    "positionPostState": -1,
+    "bufferPostState": 181,
+    "bitsPostState": []
   }
 ]

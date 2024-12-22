@@ -1,9 +1,9 @@
-package h12.io.compression.huffman;
+package h12.io.compress.huffman;
 
 import h12.io.BitInputStream;
 import h12.io.BufferedBitInputStream;
-import h12.io.compression.Decompressor;
-import h12.io.compression.EncodingTable;
+import h12.io.compress.Decompressor;
+import h12.io.compress.EncodingTable;
 import h12.lang.MyBit;
 import h12.lang.MyByte;
 import h12.lang.MyBytes;
@@ -64,7 +64,7 @@ public final class HuffmanCodingDecompressor implements Decompressor {
         for (int i = MyByte.NUMBER_OF_BITS - 1; i >= 0; i--) {
             value.set(i, MyBit.fromInt(in.readBit()));
         }
-        for (int i = 0; i < value.getValue(); i++) {
+        for (int i = 0; i < value.intValue(); i++) {
             in.readBit();
         }
     }
@@ -116,10 +116,10 @@ public final class HuffmanCodingDecompressor implements Decompressor {
         // TODO H12.4.2
         List<Integer> code = new ArrayList<>();
         code.add(startBit);
-        while (!encodingTable.contains(code)) {
+        while (!encodingTable.containsCode(code)) {
             code.add(in.readBit());
         }
-        return encodingTable.get(code);
+        return encodingTable.getCharacter(code);
     }
 
     /**
@@ -130,7 +130,7 @@ public final class HuffmanCodingDecompressor implements Decompressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.2")
-    void decodeContent(EncodingTable encodingTable) throws IOException {
+    void decodeText(EncodingTable encodingTable) throws IOException {
         // TODO H12.4.2
         int bit;
         while ((bit = in.readBit()) != -1) {
@@ -149,7 +149,7 @@ public final class HuffmanCodingDecompressor implements Decompressor {
         // TODO H12.4.2
         skipBits();
         EncodingTable encodingTable = decodeHeader();
-        decodeContent(encodingTable);
+        decodeText(encodingTable);
         out.flush();
     }
 

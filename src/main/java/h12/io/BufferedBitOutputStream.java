@@ -2,7 +2,6 @@ package h12.io;
 
 import h12.lang.MyBit;
 import h12.lang.MyByte;
-import org.jetbrains.annotations.NotNull;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
 import org.tudalgo.algoutils.student.annotation.StudentImplementationRequired;
 
@@ -46,7 +45,7 @@ public final class BufferedBitOutputStream extends BitOutStream {
     /**
      * Flushes the buffer if it is not empty to write the remaining bits to the underlying output stream.
      *
-     * @throws IOException if an I/O error occurso
+     * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.1.2")
     private void flushBuffer() throws IOException {
@@ -54,7 +53,7 @@ public final class BufferedBitOutputStream extends BitOutStream {
         // Flush the buffer if it is not empty
         if (position != MyByte.NUMBER_OF_BITS - 1) {
             assert buffer != null;
-            underlying.write(buffer.getValue());
+            underlying.write(buffer.intValue());
             buffer = new MyByte();
             position = MyByte.NUMBER_OF_BITS - 1;
         }
@@ -65,7 +64,7 @@ public final class BufferedBitOutputStream extends BitOutStream {
     public void writeBit(MyBit bit) throws IOException {
         // TODO H12.1.2
 
-        // If buffer is full, flush it
+        // If the buffer is full, flush it
         if (position < 0) {
             flushBuffer();
         }
@@ -81,14 +80,6 @@ public final class BufferedBitOutputStream extends BitOutStream {
         MyByte byteToWrite = new MyByte(b);
         for (int i = MyByte.NUMBER_OF_BITS - 1; i >= 0; i--) {
             writeBit(byteToWrite.get(i));
-        }
-    }
-
-    @DoNotTouch
-    @Override
-    public void write(byte @NotNull [] b, int off, int len) throws IOException {
-        for (int i = off; i < off + len; i++) {
-            write(b[i]);
         }
     }
 

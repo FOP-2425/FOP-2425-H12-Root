@@ -1,6 +1,6 @@
-package h12.io.compression.huffman;
+package h12.io.compress.huffman;
 
-import h12.io.compression.EncodingTable;
+import h12.io.compress.EncodingTable;
 import h12.util.TreeNode;
 import org.jetbrains.annotations.Nullable;
 import org.tudalgo.algoutils.student.annotation.DoNotTouch;
@@ -95,7 +95,7 @@ class HuffmanEncodingTable implements EncodingTable {
      */
     @DoNotTouch
     @Override
-    public boolean contains(Character character) {
+    public boolean containsCharacter(Character character) {
         if (encodings == null) {
             buildEncodingTable();
         }
@@ -111,9 +111,9 @@ class HuffmanEncodingTable implements EncodingTable {
      */
     @DoNotTouch
     @Override
-    public boolean contains(String code) {
+    public boolean containsCode(String code) {
         try {
-            get(code);
+            getCharacter(code);
             return true;
         } catch (NoSuchElementException e) {
             return false;
@@ -129,8 +129,8 @@ class HuffmanEncodingTable implements EncodingTable {
      */
     @DoNotTouch
     @Override
-    public boolean contains(Iterable<Integer> iterable) {
-        return contains(StreamSupport.stream(iterable.spliterator(), false)
+    public boolean containsCode(Iterable<Integer> iterable) {
+        return containsCode(StreamSupport.stream(iterable.spliterator(), false)
             .map(String::valueOf)
             .collect(Collectors.joining()));
     }
@@ -145,7 +145,7 @@ class HuffmanEncodingTable implements EncodingTable {
      */
     @DoNotTouch
     @Override
-    public String get(Character character) {
+    public String getCode(Character character) {
         if (encodings == null) {
             buildEncodingTable();
         }
@@ -165,7 +165,7 @@ class HuffmanEncodingTable implements EncodingTable {
      */
     @DoNotTouch
     @Override
-    public Character get(String code) {
+    public Character getCharacter(String code) {
         TreeNode<Character> current = root;
         if (current.isLeaf()) {
             return current.getValue();
@@ -194,8 +194,8 @@ class HuffmanEncodingTable implements EncodingTable {
      */
     @DoNotTouch
     @Override
-    public Character get(Iterable<Integer> iterable) {
-        return get(StreamSupport.stream(iterable.spliterator(), false)
+    public Character getCharacter(Iterable<Integer> iterable) {
+        return getCharacter(StreamSupport.stream(iterable.spliterator(), false)
             .map(String::valueOf)
             .collect(Collectors.joining()));
     }

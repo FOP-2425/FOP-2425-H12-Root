@@ -74,7 +74,7 @@ public class TreeNode<T> {
      * Constructs a new tree node with the given children and parent.
      *
      * @param left  the left child of the node
-     * @param right the right child of the nodeo
+     * @param right the right child of the node
      */
     @DoNotTouch
     public TreeNode(TreeNode<T> left, TreeNode<T> right) {

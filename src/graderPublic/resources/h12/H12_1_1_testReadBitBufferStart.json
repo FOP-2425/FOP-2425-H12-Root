@@ -1,0 +1,45 @@
+[
+  {
+    "bitsPreState": [
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "bufferPreState": 69,
+    "positionPreState": 7,
+    "bitsPostState": [
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "bufferPostState": 69,
+    "positionPostState": 6,
+    "expectedBit": 0
+  }
+]

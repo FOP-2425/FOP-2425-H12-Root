@@ -2,10 +2,10 @@ package h12;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.TestConstants;
-import h12.io.compression.EncodingTable;
-import h12.io.compression.huffman.HuffmanCodingCompressor;
-import h12.rubric.H12_Tests;
-import h12.util.MockBitOutputStream;
+import h12.io.compress.EncodingTable;
+import h12.io.compress.huffman.HuffmanCodingCompressor;
+import h12.mock.MockBitOutputStream;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
@@ -49,15 +49,17 @@ public class H12_4_1_TestsPublic extends H12_Tests {
     /**
      * The compressor instance used for testing.
      */
-    private HuffmanCodingCompressor compressor;
+    private @Nullable HuffmanCodingCompressor compressor;
 
     @AfterEach
     void tearDown() throws Exception {
-        compressor.close();
+        if (compressor != null) {
+            compressor.close();
+        }
     }
 
     @Override
-    public Class<?> getClassType() {
+    public Class<?> getTestClass() {
         return HuffmanCodingCompressor.class;
     }
 
@@ -65,78 +67,107 @@ public class H12_4_1_TestsPublic extends H12_Tests {
     @ParameterizedTest
     @JsonParameterSetTest(value = "H12_4_1_testGetText.json", customConverters = CUSTOM_CONVERTERS)
     void testGetText(JsonParameterSet parameters) throws Throwable {
-        // Access the method
-        MethodLink getText = getMethod("getText");
+        // Access method to test
+        MethodLink method = getMethod("getText");
 
-        // Test data
+        // Test setup
         String text = parameters.getString("text");
 
-        // Context information
-        Context context = contextBuilder(getText)
-            .add("Text", text)
-            .build();
+        TestInformation.TestInformationBuilder builder = testInformation(method)
+            .preState(
+                TestInformation.builder()
+                    .add("in", text)
+                    .add("out", List.of())
+                    .build()
+            )
+            .postState(
+                TestInformation.builder()
+                    .add("out", List.of())
+                    .build()
+            );
 
-        // Test the method
-        InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+        // Test execution
+        ByteArrayInputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
         MockBitOutputStream out = new MockBitOutputStream();
         compressor = new HuffmanCodingCompressor(in, out);
-        String result = getText.invoke(compressor);
+        String result = method.invoke(compressor);
+
+        // Test evaluation
+        Context context = builder.actualState(
+            TestInformation.builder()
+                .add("out", out.getBits())
+                .build()
+        ).build();
 
         // Validate the output
-        Assertions2.assertEquals(text, result, context, comment -> "The text is incorrect.");
+        Assertions2.assertEquals(text, result, context, comment -> "The read text is incorrect.");
     }
 
     @DisplayName("Die Methode computeTextSize(String text, EncodingTable encodingTable) berechnet die Anzahl an Bits, die für die Komprimierung des Textes nötig ist, korrekt.")
     @ParameterizedTest
     @JsonParameterSetTest(value = "H12_4_1_testComputeTextSize.json", customConverters = CUSTOM_CONVERTERS)
     void testComputeTextSize(JsonParameterSet parameters) throws Throwable {
-        // Access the method
-        MethodLink computeTextSize = getMethod("computeTextSize", String.class, EncodingTable.class);
+        // Access method to test
+        MethodLink method = getMethod("computeTextSize", String.class, EncodingTable.class);
 
-        // Test data
+        // Test setup
         String text = parameters.getString("text");
         EncodingTable encodingTable = parameters.get("encodingTable");
 
-        // Context information
-        Context context = contextBuilder(computeTextSize)
-            .add("Text", text)
-            .add("Encoding table", encodingTable)
-            .build();
+        Context context = testInformation(method)
+            .preState(
+                TestInformation.builder()
+                    .add("text", text)
+                    .add("encodingTable", encodingTable)
+                    .build()
+            ).build();
 
         // Test the method
         compressor = new HuffmanCodingCompressor(new ByteArrayInputStream(new byte[0]), new MockBitOutputStream());
-        int result = computeTextSize.invoke(compressor, text, encodingTable);
+        int result = method.invoke(compressor, text, encodingTable);
 
-        // Validate the output
+        // Test evaluation
         int textSize = parameters.getInt("textSize");
-        Assertions2.assertEquals(textSize, result, context, comment -> "The text size is incorrect.");
+        Assertions2.assertEquals(textSize, result, context, comment -> "Computed text size is incorrect.");
     }
 
     @DisplayName("Die Methode encodeContent(String text, EncodingTable encodingTable) komprimiert den Text korrekt.")
     @ParameterizedTest
-    @JsonParameterSetTest(value = "H12_4_1_testEncodeContent.json", customConverters = CUSTOM_CONVERTERS)
-    void testEncodeContent(JsonParameterSet parameters) throws Throwable {
-        // Access the method
-        MethodLink encodeContent = getMethod("encodeContent", String.class, EncodingTable.class);
+    @JsonParameterSetTest(value = "H12_4_1_testEncodeText.json", customConverters = CUSTOM_CONVERTERS)
+    void testEncodeText(JsonParameterSet parameters) throws Throwable {
+        // Access the method to test
+        MethodLink method = getMethod("encodeText", String.class, EncodingTable.class);
 
-        // Test data
+        // Test setup
         String text = parameters.getString("text");
         EncodingTable encodingTable = parameters.get("encodingTable");
-
-        // Context information
-        Context context = contextBuilder(encodeContent)
-            .add("Text", text)
-            .add("Encoding table", encodingTable)
-            .build();
-
-        // Test the method
+        List<Integer> compressed = parameters.get("compressed");
         InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
         MockBitOutputStream out = new MockBitOutputStream();
-        compressor = new HuffmanCodingCompressor(in, out);
-        encodeContent.invoke(compressor, text, encodingTable);
 
-        // Validate the output
-        List<Integer> compressed = parameters.get("compressed");
+        TestInformation.TestInformationBuilder builder = testInformation(method).preState(
+            TestInformation.builder()
+                .add("text", text)
+                .add("encodingTable", encodingTable)
+                .add("out", out.getBits())
+                .build()
+        ).postState(
+            TestInformation.builder()
+                .add("out", compressed)
+                .build()
+        );
+
+        // Test execution
+        compressor = new HuffmanCodingCompressor(in, out);
+        method.invoke(compressor, text, encodingTable);
+
+        // Test evaluation
+        Context context = builder.actualState(
+            TestInformation.builder()
+                .add("out", out.getBits())
+                .build()
+        ).build();
+
         Assertions2.assertEquals(compressed, out.getBits(), context, comment -> "The compressed data is incorrect.");
     }
 
@@ -144,26 +175,38 @@ public class H12_4_1_TestsPublic extends H12_Tests {
     @ParameterizedTest
     @JsonParameterSetTest(value = "H12_4_1_testCompress.json", customConverters = CUSTOM_CONVERTERS)
     void testCompress(JsonParameterSet parameters) throws IOException {
-        // Access the method
-        MethodLink compress = getMethod("compress");
+        // Access method to test
+        MethodLink method = getMethod("compress");
 
-        // Test data
+        // Test setup
         String text = parameters.getString("text");
+        EncodingTable encodingTable = parameters.get("encodingTable");
         List<Integer> compressed = parameters.get("compressed");
         InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
         MockBitOutputStream out = new MockBitOutputStream();
 
-        // Context information
-        Context context = contextBuilder(compress)
-            .add("Text", text)
-            .add("Expected compressed data", compressed)
-            .build();
+        TestInformation.TestInformationBuilder builder = testInformation(method).preState(
+            TestInformation.builder()
+                .add("text", text)
+                .add("encodingTable", encodingTable)
+                .add("out", out.getBits())
+                .build()
+        ).postState(
+            TestInformation.builder()
+                .add("out", compressed)
+                .build()
+        );
 
-        // Test the method
+        // Test execution
         compressor = new HuffmanCodingCompressor(in, out);
         compressor.compress();
 
-        // Validate the output
+        // Test evaluation
+        Context context = builder.actualState(
+            TestInformation.builder()
+                .add("out", out.getBits())
+                .build()
+        ).build();
         Assertions2.assertEquals(compressed, out.getBits(), context, comment -> "The compressed data is incorrect.");
     }
 }

@@ -1,41 +1,62 @@
 [
   {
-    "initialPosition": 7,
-    "initialBuffer": 0,
+    "positionPreState": 7,
+    "bufferPreState": 0,
     "byte": 69,
-    "expectedPosition": -1,
-    "expectedBuffer": 69,
-    "expectedOutput": [
+    "positionPostState": -1,
+    "bufferPostState": 69,
+    "bitsPostState": [
     ]
   },
   {
-    "initialPosition": 4,
-    "initialBuffer": 160,
+    "positionPreState": 4,
+    "bufferPreState": 160,
     "byte": 69,
-    "expectedPosition": 4,
-    "expectedBuffer": 160,
-    "expectedOutput": [
-      -88
+    "positionPostState": 4,
+    "bufferPostState": 160,
+    "bitsPostState": [
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0
     ]
   },
   {
-    "initialPosition": 0,
-    "initialBuffer": 170,
+    "positionPreState": 0,
+    "bufferPreState": 170,
     "byte": 69,
-    "expectedPosition": 0,
-    "expectedBuffer": 138,
-    "expectedOutput": [
-      -86
+    "positionPostState": 0,
+    "bufferPostState": 138,
+    "bitsPostState": [
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
     ]
   },
   {
-    "initialPosition": -1,
-    "initialBuffer": 171,
+    "positionPreState": -1,
+    "bufferPreState": 171,
     "byte": 69,
-    "expectedPosition": -1,
-    "expectedBuffer": 69,
-    "expectedOutput": [
-      -85
+    "positionPostState": -1,
+    "bufferPostState": 69,
+    "bitsPostState": [
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      1
     ]
   }
 ]

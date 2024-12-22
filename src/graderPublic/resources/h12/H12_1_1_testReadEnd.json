@@ -1,8 +1,13 @@
 [
   {
-    "bytes": "Hello, World!",
-    "bytesToRead": 12,
-    "positionBefore": -1,
-    "expectedResult": -1
+    "bitsPreState": [
+    ],
+    "bufferPreState": 69,
+    "positionPreState": -1,
+    "bitsPostState": [
+    ],
+    "bufferPostState": null,
+    "positionPostState": -1,
+    "expectedByte": -1
   }
 ]

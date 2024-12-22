@@ -2,8 +2,7 @@ package h12;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import h12.assertions.TestConstants;
-import h12.io.compression.huffman.HuffmanCoding;
-import h12.rubric.H12_Tests;
+import h12.io.compress.huffman.HuffmanCoding;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -40,13 +39,13 @@ public class H12_3_2_TestsPublic extends H12_Tests {
      * The custom converters for the JSON parameter set test annotation.
      */
     public static final Map<String, Function<JsonNode, ?>> CONVERTERS = Map.of(
-        "ints", node -> JsonConverters.toList(node, JsonNode::asInt),
-        "minList", node -> JsonConverters.toList(node, JsonNode::asInt),
-        "min", JsonNode::asInt
+        "elementsPreState", node -> JsonConverters.toList(node, JsonNode::asInt),
+        "elementsPostState", node -> JsonConverters.toList(node, JsonNode::asInt),
+        "minimumElement", JsonNode::asInt
     );
 
     @Override
-    public Class<?> getClassType() {
+    public Class<?> getTestClass() {
         return HuffmanCoding.class;
     }
 
@@ -54,40 +53,52 @@ public class H12_3_2_TestsPublic extends H12_Tests {
     @ParameterizedTest
     @JsonParameterSetTest(value = "H12_3_2_Tests_testRemoveMin.json", customConverters = CUSTOM_CONVERTERS)
     public void testRemoveMin(JsonParameterSet parameters) throws Throwable {
-        // Access the method to test
-        MethodLink removeMin = getMethod("removeMin", Collection.class, Comparator.class);
+        // Access method to test
+        MethodLink method = getMethod("removeMin", Collection.class, Comparator.class);
 
-        // Get the parameters for the test
-        List<Integer> ints = new ArrayList<>(parameters.get("ints"));
-        List<Integer> expected = parameters.get("minList");
-        int min = parameters.getInt("min");
-        Comparator<Integer> cmp = Comparator.naturalOrder();
+        // Test setup
+        List<Integer> elementsPreState = new ArrayList<>(parameters.get("elementsPreState"));
+        List<Integer> elementsPostState = new ArrayList<>(parameters.get("elementsPostState"));
 
-        // Context information
-        Context context = contextBuilder(removeMin)
-            .add("Elements", ints)
-            .add("Comparator", "a <= b")
-            .add("Expected list", expected)
-            .add("Expected removed element", min)
-            .build();
+        TestInformation.TestInformationBuilder builder = testInformation(method)
+            .preState(
+                TestInformation.builder()
+                    .add("elements", elementsPreState)
+                    .add("cmp", COMPARATOR)
+                    .build()
+            )
+            .postState(
+                TestInformation.builder()
+                    .add("elements", elementsPostState)
+                    .build()
+            );
 
-        // Start the test
+
+        // Test execution
         HuffmanCoding coding = new HuffmanCoding();
-        Integer removed = removeMin.invoke(coding, ints, cmp);
+        List<Integer> elementsActualState = new ArrayList<>(elementsPreState);
+        Integer removed = method.invoke(coding, elementsActualState, COMPARATOR);
 
-        // Validate the output
-        Assertions2.assertEquals(min, removed, context, comment -> "Expected the minimum element to be removed.");
-        Assertions2.assertEquals(expected, ints, context,
-            comment -> "Expected the list to remove the first occurrence of the minimum element.");
+        // Test evaluation
+        Context context = builder.actualState(
+            TestInformation.builder()
+                .add("elements", elementsPreState)
+                .build()
+        ).build();
+
+        int minimumElement = parameters.getInt("minimumElement");
+        Assertions2.assertEquals(minimumElement, removed, context, comment -> "Removed element is incorrect.");
+        Assertions2.assertEquals(elementsPostState, elementsActualState, context,
+            comment -> "Remaining elements are incorrect.");
     }
 
     @DisplayName("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) erstellt die Elemente mit der Funktion f korrekt.")
     @Test
     void testBuildFunctionF() throws Throwable {
-        // Access the method to test
-        MethodLink build = getMethod("build", Map.class, BiFunction.class, BiFunction.class, Comparator.class);
+        // Access method to test
+        MethodLink method = getMethod("build", Map.class, BiFunction.class, BiFunction.class, Comparator.class);
 
-        // Test data
+        // Test setup
         Map<Character, Integer> frequency = Map.of('a', 1, 'b', 2, 'c', 3);
         List<Character> visited = new ArrayList<>();
         BiFunction<Character, Integer, Character> f = (c, i) -> {
@@ -95,27 +106,29 @@ public class H12_3_2_TestsPublic extends H12_Tests {
             return c;
         };
         BiFunction<Character, Character, Character> g = (a, b) -> a;
-        Comparator<Integer> cmp = Comparator.naturalOrder();
-        // Context information
-        Context context = contextBuilder(build)
-            .add("Frequency table", frequency)
-            .add("Comparator", "a <= b")
-            .add("Function f", "f: (Character, Integer) -> Character")
-            .build();
 
-        // Start the test
+        Context context = testInformation(method).preState(
+            TestInformation.builder()
+                .add("frequency", frequency)
+                .add("f", "f: (Character, Integer) -> Mark character as visited")
+                .add("g", "g: (Character, Character) -> Character")
+                .add("cmp", COMPARATOR)
+                .build()
+        ).build();
+
+        // Test execution
         HuffmanCoding coding = new HuffmanCoding();
         Exception ex = null;
         try {
-            build.invoke(coding, frequency, f, g, cmp);
+            method.invoke(coding, frequency, f, g, COMPARATOR);
         } catch (Exception e) {
             ex = e;
         }
 
-        // Validate the output
+        // Test evaluation
         try {
             Assertions2.assertEquals(frequency.keySet().stream().toList(), visited, context,
-                comment -> "Expected the function f to be called for each character in the frequency table.");
+                comment -> "Function f was not called with the correct elements.");
         } catch (AssertionFailedError e) {
             if (ex != null) {
                 throw ex;
@@ -129,38 +142,41 @@ public class H12_3_2_TestsPublic extends H12_Tests {
     @Test
     void testBuildFunctionG() throws Throwable {
         // Access the method to test
-        MethodLink build = getMethod("build", Map.class, BiFunction.class, BiFunction.class, Comparator.class);
+        MethodLink method = getMethod("build", Map.class, BiFunction.class, BiFunction.class, Comparator.class);
 
-        // Test data
+        // Test setup
         Map<Character, Integer> frequency = Map.of('a', 1, 'b', 2, 'c', 3);
-        List<Map.Entry<Character, Character>> expected = List.of(Map.entry('a', 'b'), Map.entry('a', 'c'));
         List<Map.Entry<Character, Character>> visited = new ArrayList<>();
         BiFunction<Character, Integer, Character> f = (c, i) -> c;
         BiFunction<Character, Character, Character> g = (a, b) -> {
             visited.add(Map.entry(a, b));
             return a;
         };
-        Comparator<Integer> cmp = Comparator.naturalOrder();
-        // Context information
-        Context context = contextBuilder(build)
-            .add("Frequency table", frequency)
-            .add("Comparator", "a <= b")
-            .add("Function f", "f: (Character, Integer) -> Character")
-            .build();
+        List<Map.Entry<Character, Character>> expected = List.of(Map.entry('a', 'b'), Map.entry('a', 'c'));
 
-        // Start the test
+        Context context = testInformation(method).preState(
+            TestInformation.builder()
+                .add("frequency", frequency)
+                .add("f", "f: (Character, Integer) -> Mark pair (Character, Character) as visited")
+                .add("g", "g: (Character, Character) -> (Character, Character)")
+                .add("cmp", COMPARATOR)
+                .build()
+        ).build();
+
+
+        // Test execution
         HuffmanCoding coding = new HuffmanCoding();
         Exception ex = null;
         try {
-            build.invoke(coding, frequency, f, g, cmp);
+            method.invoke(coding, frequency, f, g, Comparator.naturalOrder());
         } catch (Exception e) {
             ex = e;
         }
 
-        // Validate the output
+        // Test evaluation
         try {
             Assertions2.assertEquals(expected, visited, context,
-                comment -> "Expected the function g to be called with the two minimum elements.");
+                comment -> "Function g was not called with the correct elements.");
         } catch (AssertionFailedError e) {
             if (ex != null) {
                 throw ex;

@@ -23,15 +23,15 @@ public abstract class H12_RubricProvider implements RubricProvider {
         .description("H12.1.1 | Bits lesen")
         .testClassName("h12.H12_1_1_Tests")
         .criterion("Die Methode fetch() aktualisiert den Puffer und die Position korrekt.", Map.of(
-            "testFetchNotEOF", List.of(),
-            "testFetchEOF", List.of()
+            "testFetchNotEOF", List.of(JsonParameterSet.class),
+            "testFetchEOF", List.of(JsonParameterSet.class)
         ))
-        .criterion("Die Methode readBit() liest das nächste Byte korrekt, falls wir bereits alle Bits des vorherigen Bytes gelesen haben", "testReadNextByte")
+        .criterion("Die Methode readBit() liest das nächste Byte korrekt, falls wir bereits alle Bits des vorherigen Bytes gelesen haben", "testReadBitNextByte", JsonParameterSet.class)
         .criterion("Die Methode readBit() gibt in allen anderen Fällen das korrekte Bit zurück.", Map.of(
-            "testReadBitByteStart", List.of(),
-            "testReadBitByteMiddle", List.of(),
-            "testReadBitByteEnd", List.of(),
-            "testReadBitEOF", List.of()
+            "testReadBitByteStart", List.of(JsonParameterSet.class),
+            "testReadBitByteMiddle", List.of(JsonParameterSet.class),
+            "testReadBitByteEnd", List.of(JsonParameterSet.class),
+            "testReadBitEOF", List.of(JsonParameterSet.class)
         ))
         .criterion("Die Methode read() gibt das korrekte Ergebnis zurück, falls wir am Ende des Streams sind.", "testReadEnd", JsonParameterSet.class)
         .criterion("Die Methode read() gibt das korrekte Teilergebnis zurück, falls der Stream keine 8 Bits mehr enthält.", "testReadPartial", JsonParameterSet.class)
@@ -45,13 +45,13 @@ public abstract class H12_RubricProvider implements RubricProvider {
         .description("H12.1.2 | Bits schreiben")
         .testClassName("h12.H12_1_2_Tests")
         .criterion("Die Methode flushBuffer() aktualisiert den Puffer und Position korrekt, wenn nötig.", false, Map.of(
-            "testFlushBufferUpdateYes", List.of(),
-            "testFlushBufferUpdateNo", List.of()
+            "testFlushBufferUpdateYes", List.of(JsonParameterSet.class),
+            "testFlushBufferUpdateNo", List.of(JsonParameterSet.class)
         ))
-        .criterion("Die Methode flushBuffer() schreibt das Zeichen in den internen OutputStream korrekt.", false, "testFlushBufferWrite")
+        .criterion("Die Methode flushBuffer() schreibt das Zeichen in den internen OutputStream korrekt.", false, "testFlushBufferWrite", JsonParameterSet.class)
         .criterion("Die Methode writeBit(Bit bit) schreibt das Zeichen in den internen OutputStream, falls der Puffer voll ist.", false, Map.of(
-            "testWriteBitFlushYes", List.of(),
-            "testWriteBitFlushNo", List.of()
+            "testWriteBitFlushYes", List.of(JsonParameterSet.class),
+            "testWriteBitFlushNo", List.of(JsonParameterSet.class)
         ))
         .criterion("Die Methode writeBit(Bit bit) schreibt ein Bit korrekt.", false, "testWriteBit", JsonParameterSet.class)
         .criterion("Die Methode write(int b) schreibt ein Byte korrekt.", false, "testWrite", JsonParameterSet.class)
@@ -72,8 +72,8 @@ public abstract class H12_RubricProvider implements RubricProvider {
     private static final Subtask H12_2_1 = Subtask.builder()
         .description("H12.2.1 | BitRunningLengthCompressor")
         .testClassName("h12.H12_2_1_Tests")
-        .criterion("Die Methode getBitCount(int bit) gibt die korrekte Anzahl an aufeinanderfolgenden wiederholenden Bits zurück.", "testGetBitCount", JsonParameterSet.class)
-        .criterion("Die Methode compress() schreibt die Anzahl an aufeinanderfolgenden wiederholenden Bits korrekt.", "testCompressBitCount", JsonParameterSet.class)
+        .criterion("Die Methode getBitCount(int bit) gibt die korrekte Anzahl an aufeinanderfolgenden wiederholenden Bits zurück, für den Fall, dass die Anzahl der Bits nicht maximal ist.", "testGetBitCountNotMax", JsonParameterSet.class)
+        .criterion("Die Methode getBitCount(int bit) gibt die korrekte Anzahl an aufeinanderfolgenden wiederholenden Bits zurück, für den Fall, dass die Anzahl der Bits maximal ist.", "testGetBitCountMax", JsonParameterSet.class)
         .criterion("Die Methode compress() komprimiert korrekt.", "testCompress", JsonParameterSet.class)
         .build();
 
@@ -134,7 +134,7 @@ public abstract class H12_RubricProvider implements RubricProvider {
         .testClassName("h12.H12_4_1_Tests")
         .criterion("Die Methode getText() liest den Text korrekt ein.", "testGetText", JsonParameterSet.class)
         .criterion("Die Methode computeTextSize(String text, EncodingTable encodingTable) berechnet die Anzahl an Bits, die für die Komprimierung des Textes nötig ist, korrekt.", "testComputeTextSize", JsonParameterSet.class)
-        .criterion("Die Methode encodeContent(String text, EncodingTable encodingTable) komprimiert den Text korrekt.", "testEncodeContent", JsonParameterSet.class)
+        .criterion("Die Methode encodeText(String text, EncodingTable encodingTable) komprimiert den Text korrekt.", "testEncodeText", JsonParameterSet.class)
         .criterion("Die Methode compress() ist vollständig und korrekt.", "testCompress", JsonParameterSet.class)
         .build();
 
@@ -146,7 +146,7 @@ public abstract class H12_RubricProvider implements RubricProvider {
         .testClassName("h12.H12_4_2_Tests")
         .criterion("Die Methode skipBits() überspringt die Füllbits korrekt.", false, "testSkipBits", JsonParameterSet.class)
         .criterion("Die Methode decodeCharacter(int startBit, EncodingTable encodingTable) dekomprimiert einen Zeichen korrekt.", false, "testDecodeCharacter", JsonParameterSet.class)
-        .criterion("Die Methode decodeContent(EncodingTable encodingTable) Dekomprimiert den Text korrekt.", false, "testDecodeContent", JsonParameterSet.class)
+        .criterion("Die Methode decodeText(EncodingTable encodingTable) Dekomprimiert den Text korrekt.", false, "testDecodeText", JsonParameterSet.class)
         .criterion("Die Methode decompress() ist vollständig und korrekt.", false, "testDecompress", JsonParameterSet.class)
         .build();
 

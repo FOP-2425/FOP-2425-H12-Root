@@ -1,4 +1,4 @@
-package h12.io.compression.huffman;
+package h12.io.compress.huffman;
 
 import h12.util.TreeNode;
 import org.jetbrains.annotations.NotNull;

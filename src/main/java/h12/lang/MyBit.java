@@ -53,17 +53,26 @@ public final class MyBit {
         if (value != 0 && value != 1) {
             throw new IllegalArgumentException("Bit must be 0 or 1: %d".formatted(value));
         }
-        return value == ONE.getValue() ? ONE : ZERO;
+        return value == ONE.intValue() ? ONE : ZERO;
     }
 
     /**
-     * Returns the value of the bit.
+     * Returns the value of the bit as an integer.
      *
-     * @return the value of the bit
+     * @return the value of the bit as an integer
      */
     @DoNotTouch
-    public int getValue() {
+    public int intValue() {
         return value;
+    }
+
+    /**
+     * Flips this bit.
+     *
+     * @return the flipped bit
+     */
+    public MyBit flip() {
+        return value == 0 ? ONE : ZERO;
     }
 
     @DoNotTouch

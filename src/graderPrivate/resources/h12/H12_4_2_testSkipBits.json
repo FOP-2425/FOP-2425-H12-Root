@@ -1,6 +1,6 @@
 [
   {
-    "in": [
+    "inPreState": [
       0,
       0,
       0,
@@ -394,10 +394,14 @@
       1,
       1
     ],
+    "inPostState": [
+    ],
+    "outPostState": [
+    ],
     "skipBits": 3
   },
   {
-    "in": [
+    "inPreState": [
       0,
       0,
       0,
@@ -17335,10 +17339,14 @@
       0,
       0
     ],
-    "skipBits": 0
+    "skipBits": 0,
+     "inPostState": [
+    ],
+    "outPostState": [
+    ]
   },
   {
-    "in": [
+    "inPreState": [
       0,
       0,
       0,
@@ -32979,6 +32987,10 @@
       1,
       1,
       1
+    ],
+    "inPostState": [
+    ],
+    "outPostState": [
     ],
     "skipBits": 6
   }

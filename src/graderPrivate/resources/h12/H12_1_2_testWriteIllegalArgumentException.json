@@ -1,17 +1,26 @@
 [
   {
-    "initialPosition": 7,
-    "initialBuffer": 0,
-    "byte": -1
+    "positionPreState": 7,
+    "bufferPreState": 0,
+    "byte": -1,
+    "positionPostState": 7,
+    "bufferPostState": 0,
+    "bitsPostState": []
   },
-    {
-    "initialPosition": 7,
-    "initialBuffer": 0,
-    "byte": 257
+  {
+    "positionPreState": 7,
+    "bufferPreState": 0,
+    "byte": 257,
+    "positionPostState": 7,
+    "bufferPostState": 0,
+    "bitsPostState": []
   },
-    {
-    "initialPosition": 7,
-    "initialBuffer": 0,
-    "byte": 421421
+  {
+    "positionPreState": 7,
+    "bufferPreState": 0,
+    "byte": 421421,
+    "positionPostState": 7,
+    "bufferPostState": 0,
+    "bitsPostState": []
   }
 ]

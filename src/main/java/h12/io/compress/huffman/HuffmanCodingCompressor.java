@@ -1,9 +1,9 @@
-package h12.io.compression.huffman;
+package h12.io.compress.huffman;
 
 import h12.io.BitOutStream;
 import h12.io.BufferedBitOutputStream;
-import h12.io.compression.Compressor;
-import h12.io.compression.EncodingTable;
+import h12.io.compress.Compressor;
+import h12.io.compress.EncodingTable;
 import h12.lang.MyBit;
 import h12.lang.MyBytes;
 import h12.util.TreeNode;
@@ -52,13 +52,12 @@ public final class HuffmanCodingCompressor implements Compressor {
     }
 
     /**
-     * Reads the text from the input stream.
+     * Reads the content to compress from the input stream.
      *
      * @return the text read from the input stream
-     * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.1")
-    String getText() throws IOException {
+    String getText() {
         // TODO H12.4.1
         return in.lines().collect(Collectors.joining("\n"));
     }
@@ -82,7 +81,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      *
      * @param encodingTable the encoding table to use
      *
-     * @return the size of the header in bitso
+     * @return the size of the header in bits
      */
     @DoNotTouch
     private int computeHeaderSize(EncodingTable encodingTable) {
@@ -116,11 +115,11 @@ public final class HuffmanCodingCompressor implements Compressor {
     @StudentImplementationRequired("H12.4.1")
     int computeTextSize(String text, EncodingTable encodingTable) {
         // TODO H12.4.1
-        return text.chars().map(c -> encodingTable.get((char) c).length()).sum();
+        return text.chars().map(c -> encodingTable.getCode((char) c).length()).sum();
     }
 
     /**
-     * Fills the last byte with the given number of bits.
+     * Fills the first byte with the given number of bits.
      *
      * @param count the number of bits to fill
      *
@@ -176,10 +175,10 @@ public final class HuffmanCodingCompressor implements Compressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.1")
-    void encodeContent(String text, EncodingTable encodingTable) throws IOException {
+    void encodeText(String text, EncodingTable encodingTable) throws IOException {
         // TODO H12.4.1
         for (char c : text.toCharArray()) {
-            for (char bit : encodingTable.get(c).toCharArray()) {
+            for (char bit : encodingTable.getCode(c).toCharArray()) {
                 out.writeBit(bit == '1' ? MyBit.ONE : MyBit.ZERO);
             }
         }
@@ -187,8 +186,7 @@ public final class HuffmanCodingCompressor implements Compressor {
 
     @StudentImplementationRequired("H12.4.1")
     @Override
-    public void
-    compress() throws IOException {
+    public void compress() throws IOException {
         // TODO H12.4.1
         String text = getText();
         HuffmanCoding huffman = new HuffmanCoding();
@@ -196,7 +194,7 @@ public final class HuffmanCodingCompressor implements Compressor {
         EncodingTable encodingTable = huffman.buildEncodingTable(frequencyTable);
         fillBits(computeFillBits(text, encodingTable));
         encodeHeader(encodingTable);
-        encodeContent(text, encodingTable);
+        encodeText(text, encodingTable);
         out.flush();
     }
 

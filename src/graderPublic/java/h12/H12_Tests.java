@@ -1,4 +1,4 @@
-package h12.rubric;
+package h12;
 
 import h12.assertions.Links;
 import h12.assertions.TestConstants;
@@ -8,14 +8,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 import org.tudalgo.algoutils.tutor.general.annotation.SkipAfterFirstFailedTest;
-import org.tudalgo.algoutils.tutor.general.assertions.Assertions2;
-import org.tudalgo.algoutils.tutor.general.assertions.Context;
 import org.tudalgo.algoutils.tutor.general.match.Matcher;
 import org.tudalgo.algoutils.tutor.general.reflections.BasicTypeLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 import org.tudalgo.algoutils.tutor.general.reflections.TypeLink;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -24,6 +23,7 @@ import java.util.List;
  * <p>Use the following schema:
  * <pre>{@code
  *     public class TestClass extends H12_Test {
+ *
  *          public static final Map<String, Function<JsonNode, ?>> CUSTOM_CONVERTERS = Map.of(
  *              ...
  *          );
@@ -54,6 +54,24 @@ public abstract class H12_Tests {
     public static final String CUSTOM_CONVERTERS = "CONVERTERS";
 
     /**
+     * The custom comparator for comparing integers.
+     */
+    public static final Comparator<Integer> COMPARATOR = new Comparator<Integer>() {
+
+        private static final Comparator<Integer> delegate = Comparator.naturalOrder();
+
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return delegate.compare(o1, o2);
+        }
+
+        @Override
+        public String toString() {
+            return "o1 <= o2";
+        }
+    };
+
+    /**
      * The type of the class under test.
      */
     private @Nullable TypeLink type;
@@ -65,9 +83,9 @@ public abstract class H12_Tests {
     protected void globalSetup() {
         Assertions.assertNotNull(
             getClass().getAnnotation(TestForSubmission.class),
-            "The test class is not annotated with @TestForSubmission."
+            "The test class is not annotated with @TestForSubmission which is needed for Jagr to work"
         );
-        this.type = Links.getType(getClassType());
+        this.type = Links.getType(getTestClass());
     }
 
     /**
@@ -75,7 +93,7 @@ public abstract class H12_Tests {
      *
      * @return the class type of the class under test
      */
-    public abstract Class<?> getClassType();
+    public abstract Class<?> getTestClass();
 
     /**
      * Returns the method under test.
@@ -101,7 +119,7 @@ public abstract class H12_Tests {
      */
     public TypeLink getType() {
         if (type == null) {
-            throw new IllegalStateException("Type not initialized");
+            throw new IllegalStateException("Class of the test method not set");
         }
         return type;
     }
@@ -113,7 +131,8 @@ public abstract class H12_Tests {
      *
      * @return a context builder with the method under test as the subject
      */
-    public Context.Builder<?> contextBuilder(MethodLink methodLink) {
-        return Assertions2.contextBuilder().subject(methodLink.reflection());
+    public TestInformation.TestInformationBuilder testInformation(MethodLink methodLink) {
+        return TestInformation.builder()
+            .subject(methodLink.reflection());
     }
 }

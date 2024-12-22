@@ -92,11 +92,10 @@ public final class MyBytes {
      */
     public static String toBinaryString(byte[] bytes) {
         return Arrays.stream(toBits(bytes))
-                .map(MyBit::getValue)
+                .map(MyBit::intValue)
                 .map(String::valueOf)
                 .collect(Collectors.joining());
     }
-
 
     /**
      * Returns the number of missing bits to fill the byte.

@@ -3,11 +3,10 @@
     "bitsPreState": [
     ],
     "bufferPreState": 69,
-    "positionPreState": 3,
+    "positionPreState": -1,
     "bitsPostState": [
     ],
     "bufferPostState": null,
-    "positionPostState": -1,
-    "expectedByte": 80
+    "positionPostState": -1
   }
 ]
