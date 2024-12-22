@@ -13,6 +13,6 @@ public class H12_RubricProviderPrivate extends H12_RubricProvider {
      * Constructs a new public rubric provider.
      */
     public H12_RubricProviderPrivate() {
-        super(true);
+        super(false);
     }
 }
