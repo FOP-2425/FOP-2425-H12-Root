@@ -57,7 +57,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      * @return the text read from the input stream
      */
     @StudentImplementationRequired("H12.4.1")
-    String getText() {
+    String getText() throws IOException {
         // TODO H12.4.1
         return in.lines().collect(Collectors.joining("\n"));
     }
