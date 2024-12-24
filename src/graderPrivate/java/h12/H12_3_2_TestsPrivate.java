@@ -29,7 +29,7 @@ public class H12_3_2_TestsPrivate extends H12_3_2_TestsPublic {
     @DisplayName("Die Methode build(Map<Character, Integer> frequency, BiFunction<Character, Integer, T> f, BiFunction<T, T, T> g, Comparator<? super T> cmp) ist vollständig und korrekt.")
     @Test
     void testResult() throws Throwable {
-         // Access method to test
+        // Access method to test
         MethodLink method = getMethod("build", Map.class, BiFunction.class, BiFunction.class, Comparator.class);
 
         // Test setup
