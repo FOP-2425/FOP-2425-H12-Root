@@ -92,9 +92,9 @@ public final class MyBytes {
      */
     public static String toBinaryString(byte[] bytes) {
         return Arrays.stream(toBits(bytes))
-                .map(MyBit::intValue)
-                .map(String::valueOf)
-                .collect(Collectors.joining());
+            .map(MyBit::intValue)
+            .map(String::valueOf)
+            .collect(Collectors.joining());
     }
 
     /**

@@ -45,7 +45,7 @@ public class MockBitOutputStream extends BitOutStream {
      * @return the bits written to the stream
      */
     public List<Integer> getBits() {
-        if(!flushed){
+        if (!flushed) {
             return List.of();
         }
         return bits;

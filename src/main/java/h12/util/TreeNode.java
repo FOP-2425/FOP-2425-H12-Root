@@ -47,10 +47,10 @@ public class TreeNode<T> {
      */
     @DoNotTouch
     public TreeNode(
-            @Nullable TreeNode<T> left,
-            @Nullable TreeNode<T> right,
-            @Nullable TreeNode<T> parent,
-            @Nullable T value
+        @Nullable TreeNode<T> left,
+        @Nullable TreeNode<T> right,
+        @Nullable TreeNode<T> parent,
+        @Nullable T value
     ) {
         this.left = left;
         this.right = right;
