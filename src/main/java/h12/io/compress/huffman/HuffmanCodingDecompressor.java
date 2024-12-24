@@ -26,7 +26,7 @@ import java.util.List;
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
-public final class HuffmanCodingDecompressor implements Decompressor {
+public class HuffmanCodingDecompressor implements Decompressor {
 
     /**
      * The input stream to read the compressed data from.
@@ -58,7 +58,7 @@ public final class HuffmanCodingDecompressor implements Decompressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.2")
-    void skipBits() throws IOException {
+    protected void skipBits() throws IOException {
         // TODO H12.4.2
         MyByte value = new MyByte();
         for (int i = MyByte.NUMBER_OF_BITS - 1; i >= 0; i--) {

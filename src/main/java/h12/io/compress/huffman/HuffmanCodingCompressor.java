@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
-public final class HuffmanCodingCompressor implements Compressor {
+public class HuffmanCodingCompressor implements Compressor {
 
     /**
      * The input stream to read the text from.
@@ -57,7 +57,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      * @return the text read from the input stream
      */
     @StudentImplementationRequired("H12.4.1")
-    String getText() throws IOException {
+    protected String getText() throws IOException {
         // TODO H12.4.1
         return in.lines().collect(Collectors.joining("\n"));
     }
@@ -71,7 +71,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      * @return the number of fill bits needed
      */
     @DoNotTouch
-    int computeFillBits(String text, EncodingTable encodingTable) {
+    protected int computeFillBits(String text, EncodingTable encodingTable) {
         HuffmanEncodingTable table = (HuffmanEncodingTable) encodingTable;
         return MyBytes.computeMissingBits(computeHeaderSize(table) + computeTextSize(text, table));
     }
@@ -113,7 +113,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      * @return the size of the text in bits
      */
     @StudentImplementationRequired("H12.4.1")
-    int computeTextSize(String text, EncodingTable encodingTable) {
+    protected int computeTextSize(String text, EncodingTable encodingTable) {
         // TODO H12.4.1
         return text.chars().map(c -> encodingTable.getCode((char) c).length()).sum();
     }
@@ -126,7 +126,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.1")
-    void fillBits(int count) throws IOException {
+    protected void fillBits(int count) throws IOException {
         // TODO H12.4.1
         out.write(count);
         for (int i = 0; i < count; i++) {
@@ -175,7 +175,7 @@ public final class HuffmanCodingCompressor implements Compressor {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.4.1")
-    void encodeText(String text, EncodingTable encodingTable) throws IOException {
+    protected void encodeText(String text, EncodingTable encodingTable) throws IOException {
         // TODO H12.4.1
         for (char c : text.toCharArray()) {
             for (char bit : encodingTable.getCode(c).toCharArray()) {

@@ -121,6 +121,10 @@ public class H12_2_1_TestsPublic extends H12_Tests {
         // Test execution
         int actualCount = method.invoke(compressor, bit);
 
+        // Close it to flush the output
+        assert compressor != null;
+        compressor.close();
+
         // Test evaluation
         int expectedCount = parameters.getInt("count");
         int lastReadActual = lastRead.get(compressor);
@@ -219,6 +223,8 @@ public class H12_2_1_TestsPublic extends H12_Tests {
                 .build()
         ).build();
 
+        Assertions2.assertTrue(out.isFlushed(), context,
+            comment -> "The output stream is not flushed.");
         Assertions2.assertEquals(compressedBits, out.getBits(), context,
             comment -> "The compressed bits are incorrect.");
         Assertions2.assertEquals(lastReadPostState, lastReadActual, context,
