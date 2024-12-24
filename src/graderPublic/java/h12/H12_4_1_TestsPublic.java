@@ -92,6 +92,10 @@ public class H12_4_1_TestsPublic extends H12_Tests {
         compressor = new HuffmanCodingCompressor(in, out);
         String result = method.invoke(compressor);
 
+        // Close it to flush the output
+        assert compressor != null;
+        compressor.close();
+
         // Test evaluation
         Context context = builder.actualState(
             TestInformation.builder()
@@ -125,6 +129,10 @@ public class H12_4_1_TestsPublic extends H12_Tests {
         // Test the method
         compressor = new HuffmanCodingCompressor(new ByteArrayInputStream(new byte[0]), new MockBitOutputStream());
         int result = method.invoke(compressor, text, encodingTable);
+
+        // Close it to flush the output
+        assert compressor != null;
+        compressor.close();
 
         // Test evaluation
         int textSize = parameters.getInt("textSize");
@@ -160,6 +168,10 @@ public class H12_4_1_TestsPublic extends H12_Tests {
         // Test execution
         compressor = new HuffmanCodingCompressor(in, out);
         method.invoke(compressor, text, encodingTable);
+
+        // Close it to flush the output
+        assert compressor != null;
+        compressor.close();
 
         // Test evaluation
         Context context = builder.actualState(
@@ -207,6 +219,8 @@ public class H12_4_1_TestsPublic extends H12_Tests {
                 .add("out", out.getBits())
                 .build()
         ).build();
+        Assertions2.assertTrue(out.isFlushed(), context,
+            comment -> "The output stream is not flushed.");
         Assertions2.assertEquals(compressed, out.getBits(), context, comment -> "The compressed data is incorrect.");
     }
 }

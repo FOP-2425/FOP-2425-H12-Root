@@ -192,7 +192,7 @@ public final class MyByte {
     @DoNotTouch
     public void set(int index, MyBit bit) {
         if (index < 0 || index >= NUMBER_OF_BITS) {
-               throw new IllegalArgumentException("Index must be between %s and %s: %s".formatted(MIN_POSITION, MAX_POSITION, index));
+            throw new IllegalArgumentException("Index must be between %s and %s: %s".formatted(MIN_POSITION, MAX_POSITION, index));
         }
         // Reverse index when setting the bit
         MyBit old = bits[NUMBER_OF_BITS - index - 1];

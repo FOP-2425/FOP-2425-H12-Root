@@ -145,6 +145,10 @@ public class H12_2_2_TestsPrivate extends H12_Tests {
         // Test execution
         method.invoke(decompressor, count, bit);
 
+        // Close it to flush the output
+        assert decompressor != null;
+        decompressor.close();
+
         // Test evaluation
         assert in != null;
         assert out != null;
@@ -228,6 +232,9 @@ public class H12_2_2_TestsPrivate extends H12_Tests {
                 .build()
         ).build();
         List<Integer> outPostState = parameters.get("outPostState");
+
+        Assertions2.assertTrue(out.isFlushed(), context,
+            comment -> "The output stream is not flushed.");
         Assertions2.assertEquals(outPostState, out.getBits(), context,
             comment -> "Wrong bits written to the output stream.");
     }

@@ -16,7 +16,7 @@ import java.io.InputStream;
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
-public final class BufferedBitInputStream extends BitInputStream {
+public class BufferedBitInputStream extends BitInputStream {
 
     /**
      * The value returned when the stream has reached the end or the beginning of the stream.
@@ -55,7 +55,7 @@ public final class BufferedBitInputStream extends BitInputStream {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.1.1")
-    private void fetch() throws IOException {
+    protected void fetch() throws IOException {
         // TODO H12.1.1
         try {
             buffer = new MyByte(underlying.read());

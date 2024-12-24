@@ -21,6 +21,11 @@ public class MockBitOutputStream extends BitOutStream {
      */
     private final List<Integer> bits = new ArrayList<>();
 
+    /**
+     * Whether the stream has been flushed.
+     */
+    private boolean flushed;
+
     @Override
     public void writeBit(MyBit bit) throws IOException {
         bits.add(bit.intValue());
@@ -40,7 +45,31 @@ public class MockBitOutputStream extends BitOutStream {
      * @return the bits written to the stream
      */
     public List<Integer> getBits() {
+        if (!flushed) {
+            return List.of();
+        }
         return bits;
+    }
+
+    /**
+     * Returns whether the stream has been flushed.
+     *
+     * @return whether the stream has been flushed
+     */
+    public boolean isFlushed() {
+        return flushed;
+    }
+
+    @Override
+    public void flush() throws IOException {
+        super.flush();
+        flushed = true;
+    }
+
+    @Override
+    public void close() throws IOException {
+        super.close();
+        flush();
     }
 
     @Override

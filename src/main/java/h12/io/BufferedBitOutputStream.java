@@ -14,7 +14,7 @@ import java.io.OutputStream;
  * @author Per Göttlicher, Nhan Huynh
  */
 @DoNotTouch
-public final class BufferedBitOutputStream extends BitOutStream {
+public class BufferedBitOutputStream extends BitOutStream {
 
     /**
      * The underlying output stream.
@@ -48,7 +48,7 @@ public final class BufferedBitOutputStream extends BitOutStream {
      * @throws IOException if an I/O error occurs
      */
     @StudentImplementationRequired("H12.1.2")
-    private void flushBuffer() throws IOException {
+    protected void flushBuffer() throws IOException {
         // TODO H12.1.2
         // Flush the buffer if it is not empty
         if (position != MyByte.NUMBER_OF_BITS - 1) {
