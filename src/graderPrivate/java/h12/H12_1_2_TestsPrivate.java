@@ -227,8 +227,8 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
         ).build();
 
         List<Integer> bitsPostState = parameters.get("bitsPostState");
-        Assertions2.assertEquals(bitsPostState, underlying.getBits(),
-            context, comment -> "Buffer was written correctly");
+        Assertions2.assertEquals(bitsPostState, underlying.getBitsUnflushed(),
+            context, comment -> "Buffer was written incorrectly");
     }
 
     /**
@@ -274,7 +274,7 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
         List<Integer> bitsPostState = parameters.get("bitsPostState");
 
         // Validate output
-        Assertions2.assertEquals(bitsPostState, underlying.getBits(), context,
+        Assertions2.assertEquals(bitsPostState, underlying.getBitsUnflushed(), context,
             comment -> "Buffer was not written correctly.");
     }
 
@@ -373,7 +373,7 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
             context, comment -> "Position was not updated correctly.");
         Assertions2.assertEquals(bufferPostState, bufferActualState,
             context, comment -> "Buffer was not updated correctly.");
-        Assertions2.assertEquals(bitsPostState, underlying.getBits(),
+        Assertions2.assertEquals(bitsPostState, underlying.getBitsUnflushed(),
             context, comment -> "Buffer was not written correctly.");
     }
 

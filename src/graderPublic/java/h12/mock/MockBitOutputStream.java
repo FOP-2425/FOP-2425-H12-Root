@@ -52,6 +52,16 @@ public class MockBitOutputStream extends BitOutStream {
     }
 
     /**
+     * Returns the bits written to the stream without flushing the stream. The output contains all
+     * bits written to the stream, even if the stream has not been flushed.
+     *
+     * @return the bits written to the stream without flushing the stream
+     */
+    public List<Integer> getBitsUnflushed() {
+        return bits;
+    }
+
+    /**
      * Returns whether the stream has been flushed.
      *
      * @return whether the stream has been flushed
