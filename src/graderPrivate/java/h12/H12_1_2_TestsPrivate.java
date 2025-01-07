@@ -23,6 +23,7 @@ import org.tudalgo.algoutils.tutor.general.reflections.FieldLink;
 import org.tudalgo.algoutils.tutor.general.reflections.MethodLink;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -48,7 +49,8 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
         "bit", JsonConverters::toBit,
         "bitsPostState", node -> JsonConverters.toList(node, JsonNode::asInt),
         "bufferPostState", JsonConverters::toMyByte,
-        "positionPostState", JsonNode::asInt
+        "positionPostState", JsonNode::asInt,
+        "bitsCalled", node -> JsonConverters.toList(node, JsonNode::asInt)
     );
 
     /**
@@ -96,6 +98,7 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
      * @param method           the method to test
      * @param preStateBuilder  the pre-state builder for the test information
      * @param postStateBuilder the post-state builder for the test information
+     * @param streamGenerator  the stream generator for custom stream initialization
      * @param parameters       the parameters for the test
      *
      * @return the test information builder used to specify the test information
@@ -104,10 +107,11 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
         MethodLink method,
         Function<TestInformation.TestInformationBuilder, TestInformation.TestInformationBuilder> preStateBuilder,
         Function<TestInformation.TestInformationBuilder, TestInformation.TestInformationBuilder> postStateBuilder,
+        Function<MockBitOutputStream, BufferedBitOutputStream> streamGenerator,
         JsonParameterSet parameters) {
         // Test setup
         underlying = new MockBitOutputStream();
-        stream = new BufferedBitOutputStream(underlying);
+        stream = streamGenerator.apply(underlying);
 
         MyByte bufferPreState = parameters.get("bufferPreState");
         buffer.set(stream, bufferPreState);
@@ -135,6 +139,24 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
                         .add("position", positionPostState)
                 ).build()
             );
+    }
+
+    /**
+     * Initializes the test with the context.
+     *
+     * @param method           the method to test
+     * @param preStateBuilder  the pre-state builder for the test information
+     * @param postStateBuilder the post-state builder for the test information
+     * @param parameters       the parameters for the test
+     *
+     * @return the test information builder used to specify the test information
+     */
+    private TestInformation.TestInformationBuilder initTest(
+        MethodLink method,
+        Function<TestInformation.TestInformationBuilder, TestInformation.TestInformationBuilder> preStateBuilder,
+        Function<TestInformation.TestInformationBuilder, TestInformation.TestInformationBuilder> postStateBuilder,
+        JsonParameterSet parameters) {
+        return initTest(method, preStateBuilder, postStateBuilder, BufferedBitOutputStream::new, parameters);
     }
 
     /**
@@ -327,14 +349,19 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
     /**
      * Initializes the test for the write(int) method.
      *
-     * @param parameters the parameters for the test
+     * @param streamGenerator the stream generator for custom stream initialization
+     * @param parameters      the parameters for the test
      */
-    private TestInformation.TestInformationBuilder initWriteTest(JsonParameterSet parameters) {
+    private TestInformation.TestInformationBuilder initWriteTest(
+        Function<MockBitOutputStream, BufferedBitOutputStream> streamGenerator,
+        JsonParameterSet parameters
+    ) {
         // Access method to test
         return initTest(
             getMethod("writeBit", MyBit.class),
             builder -> builder.add("byte", parameters.get("byte")),
             Function.identity(),
+            streamGenerator,
             parameters
         );
     }
@@ -347,7 +374,16 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
         MethodLink method = getMethod("write", int.class);
 
         // Test setup
-        TestInformation.TestInformationBuilder builder = initWriteTest(parameters);
+        List<Integer> bits = new ArrayList<>();
+        TestInformation.TestInformationBuilder builder = initWriteTest(
+            generator -> new BufferedBitOutputStream(generator) {
+                @Override
+                public void writeBit(MyBit bit) throws IOException {
+                    bits.add(bit.intValue());
+                }
+            },
+            parameters
+        );
         int byteValue = parameters.getInt("byte");
 
         // Test execution
@@ -359,21 +395,13 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
         assert underlying != null;
         Context context = builder.actualState(
             TestInformation.builder()
-                .add("underlying", bufferActualState)
-                .add("buffer", buffer.get(stream))
-                .add("position", positionActualState)
+                .add("Bits written", bits)
                 .build()
         ).build();
 
-        int positionPostState = parameters.getInt("positionPostState");
-        MyByte bufferPostState = parameters.get("bufferPostState");
-        List<Integer> bitsPostState = parameters.get("bitsPostState");
+        List<Integer> bitsCalled = parameters.get("bitsCalled");
 
-        Assertions2.assertEquals(positionPostState, positionActualState,
-            context, comment -> "Position was not updated correctly.");
-        Assertions2.assertEquals(bufferPostState, bufferActualState,
-            context, comment -> "Buffer was not updated correctly.");
-        Assertions2.assertEquals(bitsPostState, underlying.getBitsUnflushed(),
+        Assertions2.assertEquals(bitsCalled, bits,
             context, comment -> "Buffer was not written correctly.");
     }
 
@@ -385,7 +413,7 @@ public class H12_1_2_TestsPrivate extends H12_Tests {
         MethodLink method = getMethod("write", int.class);
 
         // Test setup
-        TestInformation.TestInformationBuilder builder = initWriteTest(parameters);
+        TestInformation.TestInformationBuilder builder = initWriteTest(BufferedBitOutputStream::new, parameters);
         int byteValue = parameters.getInt("byte");
 
         // Test execution and evaluation
