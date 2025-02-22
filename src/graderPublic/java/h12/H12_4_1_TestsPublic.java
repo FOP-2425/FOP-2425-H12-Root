@@ -63,6 +63,10 @@ public class H12_4_1_TestsPublic extends H12_Tests {
         return HuffmanCodingCompressor.class;
     }
 
+    private String unifiedLineEndings(String text) {
+        return text.replace("\r\n", "\n");
+    }
+
     @DisplayName("Die Methode getText() liest den Text korrekt ein.")
     @ParameterizedTest
     @JsonParameterSetTest(value = "H12_4_1_testGetText.json", customConverters = CUSTOM_CONVERTERS)
@@ -72,6 +76,7 @@ public class H12_4_1_TestsPublic extends H12_Tests {
 
         // Test setup
         String text = parameters.getString("text");
+        text = unifiedLineEndings(text);
 
         TestInformation.TestInformationBuilder builder = testInformation(method)
             .preState(
@@ -91,6 +96,7 @@ public class H12_4_1_TestsPublic extends H12_Tests {
         MockBitOutputStream out = new MockBitOutputStream();
         compressor = new HuffmanCodingCompressor(in, out);
         String result = method.invoke(compressor);
+        result = unifiedLineEndings(result);
 
         // Close it to flush the output
         assert compressor != null;
@@ -210,7 +216,13 @@ public class H12_4_1_TestsPublic extends H12_Tests {
         );
 
         // Test execution
-        compressor = new HuffmanCodingCompressor(in, out);
+        compressor = new HuffmanCodingCompressor(in, out) {
+
+            @Override
+            protected String getText() throws IOException {
+                return unifiedLineEndings(super.getText());
+            }
+        };
         compressor.compress();
 
         // Test evaluation
